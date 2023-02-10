@@ -156,96 +156,111 @@ const SignupForm: React.FC = () => {
 
   return (
     <KeyboardAvoidingView
-    behavior={Platform.OS === "ios" ? "padding" : undefined}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
       keyboardVerticalOffset={0}
-      style={styles.avoid}>
-        <SafeAreaView style={{flex: 1}}>
+      style={styles.avoid}
+    >
+      <SafeAreaView style={{ flex: 1 }}>
         <ScrollView
-      contentContainerStyle={styles.scrollView}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps={'handled'}>
-      <View style={styles.content}>
-        <View>
-          <Text
-            style={[
-              styles.signupSignuptext,
-              isKeyboardOpen && {marginTop: 0, fontSize: 18},
-            ]}>
-            {translate.t('signup.startRegister')}
-          </Text>
-          <View style={{flexDirection: 'row'}}>
-            <View style={[styles.countryBox]}>
-              {code?.dialCode ? (
-                <SelectItem
-                  itemKey="dialCode"
-                  defaultTitle="+995"
-                  item={code}
-                  onItemSelect={() => setCodeVisible(true)}
-                  style={styles.countryItem}
-                />
-              ) : (
-                <TouchableOpacity
-                  onPress={() => setCodeVisible(true)}
-                  style={[styles.countrySelectHandler, codeErrorStyle]}>
-                  <Text style={styles.countryPlaceholder}>+995</Text>
-                </TouchableOpacity>
-              )}
+          contentContainerStyle={styles.scrollView}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps={"handled"}
+        >
+          <View style={styles.content}>
+            <View>
+              <Text
+                style={[
+                  styles.signupSignuptext,
+                  isKeyboardOpen && { marginTop: 0, fontSize: 18 },
+                ]}
+              >
+                {translate.t("signup.startRegister")}
+              </Text>
+              <View style={{ flexDirection: "row" }}>
+                <View style={[styles.countryBox]}>
+                  {code?.dialCode ? (
+                    <SelectItem
+                      itemKey="dialCode"
+                      defaultTitle="+995"
+                      item={code}
+                      onItemSelect={() => setCodeVisible(true)}
+                      style={styles.countryItem}
+                    />
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => setCodeVisible(true)}
+                      style={[styles.countrySelectHandler, codeErrorStyle]}
+                    >
+                      <Text style={styles.countryPlaceholder}>+995</Text>
+                    </TouchableOpacity>
+                  )}
 
-              <AppSelect
-                itemKey="countryName"
-                elements={countries}
-                selectedItem={code}
-                itemVisible={codeVisible}
-                onSelect={item => {
-                  onSetCode(item);
-                  setCodeVisible(false);
+                  <AppSelect
+                    itemKey="countryName"
+                    elements={countries}
+                    selectedItem={code}
+                    itemVisible={codeVisible}
+                    onSelect={(item) => {
+                      onSetCode(item);
+                      setCodeVisible(false);
+                    }}
+                    onToggle={() => setCodeVisible(!codeVisible)}
+                  />
+                </View>
+                <Appinput
+                  requireds={[required]}
+                  customKey="phone"
+                  context={VALIDATION_CONTEXT}
+                  style={[
+                    styles.signupInput,
+                    { marginLeft: 10, flexGrow: 1 },
+                    phoneErrorStyle,
+                  ]}
+                  value={phone}
+                  onChange={(e) => {
+                    let reg = /^\d+$/;
+                    if (reg.test(e) || !e) setPhone(e);
+                  }}
+                  keyboardType={"phone-pad"}
+                  placeholder={"5XX XXX XXX"}
+                  maxLength={maxLengt}
+                />
+              </View>
+
+              <Appinput
+                requireds={[required]}
+                customKey="name"
+                context={VALIDATION_CONTEXT}
+                style={styles.signupInput}
+                value={name}
+                onChange={(e) => {
+                  if (/^[A-Za-zა-ჰ\s]*$/.test(e) || !e) setName(e);
                 }}
-                onToggle={() => setCodeVisible(!codeVisible)}
+                autoCapitalize={autoCapitalize.none}
+                placeholder={translate.t("common.name")}
+              />
+
+              <Appinput
+                requireds={[required]}
+                customKey="lname"
+                context={VALIDATION_CONTEXT}
+                style={styles.signupInput}
+                value={surname}
+                onChange={(e) => {
+                  if (/^[A-Za-zა-ჰ\s]*$/.test(e) || !e) setSurname(e);
+                }}
+                autoCapitalize={autoCapitalize.none}
+                placeholder={translate.t("common.lname")}
               />
             </View>
-            <Appinput
-              requireds={[required]}
-              customKey="phone"
-              context={VALIDATION_CONTEXT}
-              style={[styles.signupInput, {marginLeft: 10, flexGrow: 1}, phoneErrorStyle]}
-              value={phone}
-              onChange={setPhone}
-              keyboardType={'phone-pad'}
-              placeholder={'5XX XXX XXX'}
-              maxLength={maxLengt}
+
+            <AppButton
+              title={translate.t("common.next")}
+              onPress={nextStep}
+              style={styles.button}
             />
           </View>
-
-          <Appinput
-            requireds={[required]}
-            customKey="name"
-            context={VALIDATION_CONTEXT}
-            style={styles.signupInput}
-            value={name}
-            onChange={setName}
-            autoCapitalize={autoCapitalize.none}
-            placeholder={translate.t('common.name')}
-          />
-
-          <Appinput
-            requireds={[required]}
-            customKey="lname"
-            context={VALIDATION_CONTEXT}
-            style={styles.signupInput}
-            value={surname}
-            onChange={setSurname}
-            autoCapitalize={autoCapitalize.none}
-            placeholder={translate.t('common.lname')}
-          />
-        </View>
-
-        <AppButton
-          title={translate.t('common.next')}
-          onPress={nextStep}
-          style={styles.button}
-        />
-      </View>
-      </ScrollView>
+        </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );

@@ -77,7 +77,7 @@ const PasswordResetStepThree: React.FC = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.avoid}  keyboardShouldPersistTaps='always'>
+    <ScrollView contentContainerStyle={styles.avoid}  keyboardShouldPersistTaps='handled'>
     <KeyboardAvoidingView
       behavior="padding"
       keyboardVerticalOffset={0}
@@ -117,7 +117,10 @@ const PasswordResetStepThree: React.FC = () => {
               context={VALIDATION_CONTEXT}
               style={styles.pwdResetInput}
               value={phone}
-              onChange={setPhone}
+              onChange={e => {
+                let reg = /^\d+$/;
+                if (reg.test(e) || !e) setPhone(e);
+              }}
               keyboardType={'phone-pad'}
               placeholder={translate.t('services.telephone')}
             />
