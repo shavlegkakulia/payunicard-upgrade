@@ -1,0 +1,25 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/FiraGO-Bold.ttf",
+      "sha1": "6bd0898a69dc7ec71a3070ab33919edf631a69e9"
+    },
+    {
+      "path": "src/assets/fonts/FiraGO-Book.ttf",
+      "sha1": "1d39545d2f3beb5509a05ee4af03665ae7d16622"
+    },
+    {
+      "path": "src/assets/fonts/FiraGO-Medium.ttf",
+      "sha1": "fdeab3b4e1dbbce0ee5de1c14e86d64357758a51"
+    },
+    {
+      "path": "src/assets/fonts/FiraGO-Regular.ttf",
+      "sha1": "c3bd56eb59660e246584519cd378c4e58a139bb1"
+    },
+    {
+      "path": "src/assets/fonts/Montserrat-Regular.ttf",
+      "sha1": "d25b35242deb1c6ff888b8162ca2aacc356d3899"
+    }
+  ]
+}
