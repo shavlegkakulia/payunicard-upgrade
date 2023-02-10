@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   Dimensions,
   Image,
+  ImageSourcePropType,
   Keyboard,
   KeyboardAvoidingView,
   Modal,
@@ -509,6 +510,12 @@ const Settings: React.FC = () => {
 
   const actionSheetHeight = 300;
 
+  const [tempImage, setTempImage] = useState<ImageSourcePropType | undefined>();
+
+  useEffect(() => {
+    setTempImage(undefined);
+  }, [userState.userDetails]);
+
   return (
     <DashboardLayout>
     <>
@@ -522,10 +529,11 @@ const Settings: React.FC = () => {
           <View>
             <View style={styles.profile}>
               <View style={styles.coverBox}>
-                <Image
-                  source={{ uri: userState.userDetails?.imageUrl }}
-                  style={styles.userImg}
-                />
+              <Image
+                source={tempImage ? tempImage : userState.userDetails?.imageUrl ? { uri: userState.userDetails?.imageUrl } : undefined}
+                style={styles.userImg}
+                onError={() => { setTempImage(require('./../../../assets/images/user-profile.png')) }}
+              />
               </View>
               <Text style={styles.userName}>
                 {userState.userDetails?.username}

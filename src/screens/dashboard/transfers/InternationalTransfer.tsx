@@ -39,7 +39,7 @@ import PresentationServive, {
   IGetPaymentDetailsRequest,
   IGetPaymentDetailsResponseData,
 } from '../../../services/PresentationServive';
-import {IP2PTransactionRequest} from '../../../services/TransactionService';
+import TransactionService, {IP2PTransactionRequest} from '../../../services/TransactionService';
 import {IAccountBallance, ICurrency} from '../../../services/UserService';
 import {
   CurrencyConverter,
@@ -58,8 +58,6 @@ import {IAddTransferTemplateRequest} from '../../../services/TemplatesService';
 import {
   addTransactionTemplate,
   getTransferTemplates,
-  MakeP2PForeignTransaction,
-  MakeTransaction,
 } from '../../../redux/actions/transfers_actions';
 import Routes from '../../../navigation/routes';
 import {
@@ -253,6 +251,26 @@ const InternationalTransfer: React.FC<INavigationProps> = props => {
     );
   };
 
+const MakeP2PForeignTransaction = (data: IP2PTransactionRequest) => {
+  setIsLoading(true);
+    TransactionService.makeP2PForeignTransaction(data).subscribe({
+      next: Response => {
+      dispatch({
+          type: TRANSFERS_ACTION_TYPES.SET_TRANSACTION_RESPONSE,
+          transactionResponse: {...Response.data.data},
+        });
+
+        setIsLoading(true);
+      },
+      error: e => {
+        setTimeout(() => {
+          dispatch(PUSH(getString(e.data.errors?.[0]?.displayText)));
+        }, 2000);
+        setIsLoading(true);
+      },
+    });
+  }
+
   const makeTransaction = () => {
     const data: IP2PTransactionRequest = {
       toAccountNumber: TransfersStore.benificarAccount,
@@ -274,7 +292,7 @@ const InternationalTransfer: React.FC<INavigationProps> = props => {
         : selectedType?.value === ETransferType.Guaranteed ? opClassCodes.internationalEur : opClassCodes.internationalEurNotGuaranteed,
     };
 
-    dispatch(MakeP2PForeignTransaction(data));
+    MakeP2PForeignTransaction(data);
   };
 
   const setBenificarAccount = (account: string | undefined) => {
@@ -418,12 +436,6 @@ const InternationalTransfer: React.FC<INavigationProps> = props => {
       setTransferStep(Routes.TransferToBank_SUCCES);
     }
   }, [TransfersStore.transactionResponse]);
-
-  useEffect(() => {
-    if (!TransfersStore.fullScreenLoading) {
-      setIsLoading(false);
-    }
-  }, [TransfersStore.fullScreenLoading]);
 
   useEffect(() => {
     if (!TransfersStore.nomination?.trim()){

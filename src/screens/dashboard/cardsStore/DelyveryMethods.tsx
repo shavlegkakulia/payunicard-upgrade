@@ -44,7 +44,7 @@ import PresentationServive, {
 } from '../../../services/PresentationServive';
 import screenStyles from '../../../styles/screens';
 import {CurrencyConverter, getNumber} from '../../../utils/Converter';
-import { Periodes } from './choosePlane';
+import { Periodes } from './ChoosePlane';
 import {cardTypeIds} from './TarriffCalculator';
 
 export const delyveryMethods = {

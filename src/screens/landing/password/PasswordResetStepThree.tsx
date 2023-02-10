@@ -77,7 +77,7 @@ const PasswordResetStepThree: React.FC = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.avoid}  keyboardShouldPersistTaps='always'>
+    <ScrollView contentContainerStyle={styles.avoid}  keyboardShouldPersistTaps='handled'>
     <KeyboardAvoidingView
       behavior="padding"
       keyboardVerticalOffset={0}

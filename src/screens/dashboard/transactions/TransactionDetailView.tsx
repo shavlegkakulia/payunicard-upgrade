@@ -728,8 +728,8 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     color: colors.labelColor,
     marginBottom: 5,
-    flexWrap: 'wrap',
-    flex: 2
+    // flexWrap: 'wrap',
+    // flex: 2
   },
   amountccy: {
     fontFamily: 'FiraGO-Bold',
@@ -772,6 +772,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     marginTop: 5,
+    flex: 1
   },
   splitter: {
     borderColor: colors.inputBackGround,

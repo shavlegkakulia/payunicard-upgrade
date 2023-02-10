@@ -17,7 +17,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2A0A4FEAAAE146A79B648CB1 /* FiraGO-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FE6DB291A5448D59E46CAA8 /* FiraGO-Bold.ttf */; };
-		548D7E702940B1F2000D457E /* KvalifikaSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548D7E6F2940B1F2000D457E /* KvalifikaSDK.swift */; };
+		5472C8D129963D2B0007DE4C /* KvalifikaSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5472C8D029963D2B0007DE4C /* KvalifikaSDK.swift */; };
+		54D5AE5D29967B050070824F /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 54D5AE5C29967B050070824F /* main.jsbundle */; };
 		6253A5352966E5BF00FA359C /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 6253A5342966E5BF00FA359C /* assets */; };
 		7699B88040F8A987B510C191 /* libPods-Payunicard-PayunicardTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Payunicard-PayunicardTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -57,8 +58,9 @@
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-Payunicard-PayunicardTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Payunicard-PayunicardTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-Payunicard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Payunicard.debug.xcconfig"; path = "Target Support Files/Pods-Payunicard/Pods-Payunicard.debug.xcconfig"; sourceTree = "<group>"; };
 		3E52313571C74BBEAC392212 /* FiraGO-Book.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraGO-Book.ttf"; path = "../src/assets/fonts/FiraGO-Book.ttf"; sourceTree = "<group>"; };
-		548D7E6E2940B1F2000D457E /* Payunicard-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Payunicard-Bridging-Header.h"; sourceTree = "<group>"; };
-		548D7E6F2940B1F2000D457E /* KvalifikaSDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KvalifikaSDK.swift; sourceTree = "<group>"; };
+		5472C8D029963D2B0007DE4C /* KvalifikaSDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KvalifikaSDK.swift; sourceTree = "<group>"; };
+		5472C8D229963D4B0007DE4C /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
+		54D5AE5C29967B050070824F /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Payunicard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Payunicard.release.xcconfig"; path = "Target Support Files/Pods-Payunicard/Pods-Payunicard.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-Payunicard-PayunicardTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Payunicard-PayunicardTests.debug.xcconfig"; path = "Target Support Files/Pods-Payunicard-PayunicardTests/Pods-Payunicard-PayunicardTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Payunicard.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Payunicard.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,11 +135,12 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				548D7E6F2940B1F2000D457E /* KvalifikaSDK.swift */,
-				548D7E6E2940B1F2000D457E /* Payunicard-Bridging-Header.h */,
 				04B3B2042995805700B1511A /* RTCAppleWalletModule.m */,
 				04B3B2062995809100B1511A /* RTCAppleWalletModule.swift */,
 				04B3B2082995812700B1511A /* RTCAppleWalletModule.h */,
+				5472C8D029963D2B0007DE4C /* KvalifikaSDK.swift */,
+				5472C8D229963D4B0007DE4C /* Header.h */,
+				54D5AE5C29967B050070824F /* main.jsbundle */,
 			);
 			name = Payunicard;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 				6253A5352966E5BF00FA359C /* assets in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				54D5AE5D29967B050070824F /* main.jsbundle in Resources */,
 				2A0A4FEAAAE146A79B648CB1 /* FiraGO-Bold.ttf in Resources */,
 				FB365C556A5C492983BEB877 /* FiraGO-Book.ttf in Resources */,
 				8C52137BE2284357B464FFD4 /* FiraGO-Medium.ttf in Resources */,
@@ -469,10 +473,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5472C8D129963D2B0007DE4C /* KvalifikaSDK.swift in Sources */,
 				04B3B2072995809100B1511A /* RTCAppleWalletModule.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				548D7E702940B1F2000D457E /* KvalifikaSDK.swift in Sources */,
 				04B3B2052995805700B1511A /* RTCAppleWalletModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

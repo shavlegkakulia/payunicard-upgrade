@@ -1,7 +1,7 @@
-// import {
-//   KvalifikaSDK,
-//   KvalifikaSDKLocale,
-// } from '@kvalifika/react-native-sdk';
+import {
+  KvalifikaSDK,
+  KvalifikaSDKLocale,
+} from '@kvalifika/react-native-sdk';
 import React, {useEffect, useState} from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -106,48 +106,48 @@ const KvalifcaVerification: React.FC = () => {
   };
 
 
-//   useEffect(() => {
-//     KvalifikaSDK.initialize({
-//       appId: __DEV__ ? kIds.dev : kIds.prod,
-//       locale: (translate.key === ka_ge) ?  KvalifikaSDKLocale.GE: KvalifikaSDKLocale.EN,
-//       development: __DEV__ ? true : false,
-//       logo: 'logo',
-//       documentIcon: 'document_icon'
-//     });
-//   }, []);
+  useEffect(() => {
+    KvalifikaSDK.initialize({
+      appId: __DEV__ ? kIds.dev : kIds.prod,
+      locale: (translate.key === ka_ge) ?  KvalifikaSDKLocale.GE: KvalifikaSDKLocale.EN,
+      development: __DEV__ ? true : false,
+      logo: 'logo',
+      documentIcon: 'document_icon'
+    });
+  }, []);
 
-// // Now It works, sorry, It should be true, I think, can you plz try, okey sec 
-//   useEffect(() => {
-//       KvalifikaSDK.onInitialize(() => {
-//         console.log('Kvalifika', 'Kvalifika SDK Initialized');
-//         KvalifikaSDK.startSession();
-//       });
+// Now It works, sorry, It should be true, I think, can you plz try, okey sec 
+  useEffect(() => {
+      KvalifikaSDK.onInitialize(() => {
+        console.log('Kvalifika', 'Kvalifika SDK Initialized');
+        KvalifikaSDK.startSession();
+      });
 
-//       KvalifikaSDK.onStart(sessionId => {
-//         setSesId(sessionId);
-//         console.log(`Started with id: ${sessionId}`);
-//       });
+      KvalifikaSDK.onStart(sessionId => {
+        setSesId(sessionId);
+        console.log(`Started with id: ${sessionId}`);
+      });
 
-//       KvalifikaSDK.onFinish(sessionId => {
-//         console.log('Kvalifika', `Session finished with id: ${sessionId}`);
-//         closeKycSession(sessionId, true);
-//       });
+      KvalifikaSDK.onFinish(sessionId => {
+        console.log('Kvalifika', `Session finished with id: ${sessionId}`);
+        closeKycSession(sessionId, true);
+      });
 
-//       KvalifikaSDK.onError((error, message) => {
-//         console.log('OnKvalifikaError --->', error, message);
+      KvalifikaSDK.onError((error, message) => {
+        console.log('OnKvalifikaError --->', error, message);
 
-//         if(error !== 'USER_CANCELLED') {
-//           dispatch(PUSH(message));
-//         }
-//         closeKycSession(sesId, false);
-//       });
+        if(error !== 'USER_CANCELLED') {
+          dispatch(PUSH(message));
+        }
+        closeKycSession(sesId, false);
+      });
 
-//     return () => {
-//       console.log('Kvalifika Unmounted');
-//       // Remove callbacks to avoid duplicate listeners if useEffect runs multiple times or remounts
-//       KvalifikaSDK.removeCallbacks();
-//     };
-//   }, []);
+    return () => {
+      console.log('Kvalifika Unmounted');
+      // Remove callbacks to avoid duplicate listeners if useEffect runs multiple times or remounts
+      KvalifikaSDK.removeCallbacks();
+    };
+  }, []);
 
   return <View style={styles.container}>
     <ActivityIndicator size="large" color={colors.primary} />

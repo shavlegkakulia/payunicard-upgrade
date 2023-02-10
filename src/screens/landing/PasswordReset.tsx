@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Keyboard, StyleSheet, Text, View} from 'react-native';
+import {Keyboard, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import PaginationDots from '../../components/PaginationDots';
 import AppButton from '../../components/UI/AppButton';
@@ -456,6 +456,7 @@ const PasswordReset: React.FC<IProps> = props => {
   }
 
   return (
+    <ScrollView keyboardShouldPersistTaps='handled'>
     <View style={styles.passwordResetContainer}>
       <View style={styles.passwordResetHeader}>
         <PaginationDots length={6} step={pwdResetStep} />
@@ -466,6 +467,7 @@ const PasswordReset: React.FC<IProps> = props => {
         {pwdResetButton}
       </View>
     </View>
+    </ScrollView>
   );
 };
 

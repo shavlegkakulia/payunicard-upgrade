@@ -1,6 +1,6 @@
 {
   "name": "payunicard",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": true,
   "scripts": {
     "android:dev": "SET NODE_ENV=development",
@@ -14,9 +14,9 @@
     "clean": "rmdir /s /q node_modules",
     "release": "react-native run-android --variant release",
     "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
-
   },
   "dependencies": {
+    "@kvalifika/react-native-sdk": "^1.0.23",
     "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-native-clipboard/clipboard": "^1.11.1",
     "@react-native-community/netinfo": "^9.3.7",

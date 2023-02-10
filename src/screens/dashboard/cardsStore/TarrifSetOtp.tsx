@@ -27,7 +27,7 @@ import UserService, {
 } from '../../../services/UserService';
 import {delyveryMethods} from './DelyveryMethods';
 import {StoreActionType} from '.';
-import {Periodes} from './choosePlane';
+import {Periodes} from './ChoosePlane';
 import {
   ITranslateState,
   IGlobalState as ITranslateGlobalState,

@@ -128,7 +128,8 @@ export default {
         offerDetail: '',
         transactions: 'ტრანზაქციები',
         resetPassword: 'პაროლის დარესეტება',
-        termsAndCondition: 'წესები და პირობები'
+        termsAndCondition: 'წესები და პირობები',
+        toUniWallet: 'სხვის უნისაფულეზე'
     },
     settings: {
         personalInfo: 'პერსონალური ინფორმაცია',

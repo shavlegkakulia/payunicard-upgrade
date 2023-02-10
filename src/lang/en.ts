@@ -111,7 +111,8 @@ export default {
         offerDetail: '',
         transactions: 'Transactions',
         resetPassword: 'Reset Password',
-        termsAndCondition: 'Terms And Conditions'
+        termsAndCondition: 'Terms And Conditions',
+        toUniWallet: "სხვის უნისაფულეზე",
     },
     forgotPassword: {
         resetPassword: 'Reset Password',
