@@ -367,7 +367,11 @@ const PasswordReset: React.FC<IProps> = props => {
           context={VALIDATION_CONTEXT}
           style={styles.pwdResetInput}
           value={phone}
-          onChange={setPhone}
+          onChange={e => {
+              let reg = /^\d+$/;
+              if (reg.test(e) || !e) setPhone(e);
+            }
+          }
           placeholder={translate.t('services.telephone')}
         />
       </View>

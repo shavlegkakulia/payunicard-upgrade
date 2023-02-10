@@ -117,7 +117,10 @@ const PasswordResetStepThree: React.FC = () => {
               context={VALIDATION_CONTEXT}
               style={styles.pwdResetInput}
               value={phone}
-              onChange={setPhone}
+              onChange={e => {
+                let reg = /^\d+$/;
+                if (reg.test(e) || !e) setPhone(e);
+              }}
               keyboardType={'phone-pad'}
               placeholder={translate.t('services.telephone')}
             />
