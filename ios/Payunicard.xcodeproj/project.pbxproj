@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* PayunicardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PayunicardTests.m */; };
-		049F1B8B29956B9000797A3A /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 049F1B8A29956B9000797A3A /* main.jsbundle */; };
+		0446445C29964A8A006B339C /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 0446445B29964A8A006B339C /* main.jsbundle */; };
+		0446445E299659FB006B339C /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0446445D299659FB006B339C /* PassKit.framework */; };
 		04B3B2052995805700B1511A /* RTCAppleWalletModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B3B2042995805700B1511A /* RTCAppleWalletModule.m */; };
 		04B3B2072995809100B1511A /* RTCAppleWalletModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B3B2062995809100B1511A /* RTCAppleWalletModule.swift */; };
 		0C80B921A6F3F58F76C31292 /* libPods-Payunicard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-Payunicard.a */; };
@@ -40,7 +41,8 @@
 		00E356EE1AD99517003FC87E /* PayunicardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PayunicardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* PayunicardTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayunicardTests.m; sourceTree = "<group>"; };
-		049F1B8A29956B9000797A3A /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = Payunicard/main.jsbundle; sourceTree = "<group>"; };
+		0446445B29964A8A006B339C /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		0446445D299659FB006B339C /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		049F1B9129957B8000797A3A /* PayunicardRelease.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = PayunicardRelease.entitlements; path = Payunicard/PayunicardRelease.entitlements; sourceTree = "<group>"; };
 		049F1B9229957B8000797A3A /* PayunicardDebug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = PayunicardDebug.entitlements; path = Payunicard/PayunicardDebug.entitlements; sourceTree = "<group>"; };
 		04B3B2042995805700B1511A /* RTCAppleWalletModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RTCAppleWalletModule.m; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0446445E299659FB006B339C /* PassKit.framework in Frameworks */,
 				0C80B921A6F3F58F76C31292 /* libPods-Payunicard.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,6 +145,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0446445D299659FB006B339C /* PassKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-Payunicard.a */,
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-Payunicard-PayunicardTests.a */,
@@ -159,7 +163,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				049F1B8A29956B9000797A3A /* main.jsbundle */,
+				0446445B29964A8A006B339C /* main.jsbundle */,
 				6253A5342966E5BF00FA359C /* assets */,
 				13B07FAE1A68108700A75B9A /* Payunicard */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -291,10 +295,10 @@
 				6253A5352966E5BF00FA359C /* assets in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				049F1B8B29956B9000797A3A /* main.jsbundle in Resources */,
 				2A0A4FEAAAE146A79B648CB1 /* FiraGO-Bold.ttf in Resources */,
 				FB365C556A5C492983BEB877 /* FiraGO-Book.ttf in Resources */,
 				8C52137BE2284357B464FFD4 /* FiraGO-Medium.ttf in Resources */,
+				0446445C29964A8A006B339C /* main.jsbundle in Resources */,
 				A42B3B1BE8C040B6BE93B155 /* FiraGO-Regular.ttf in Resources */,
 				EA25CE8BD3924DA8B9D1720F /* Montserrat-Regular.ttf in Resources */,
 			);
@@ -545,7 +549,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3.9;
 				DEVELOPMENT_TEAM = 8J42C4RH4D;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Payunicard/Info.plist;
@@ -554,15 +558,16 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 3.9;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.payunicard;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.Payunicard;
 				PRODUCT_NAME = Payunicard;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "RTCAppleWalletModule.h";
+				SWIFT_OBJC_BRIDGING_HEADER = RTCAppleWalletModule.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -575,9 +580,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Payunicard/PayunicardRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3.9;
 				DEVELOPMENT_TEAM = 8J42C4RH4D;
 				INFOPLIST_FILE = Payunicard/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Payunicard;
@@ -585,15 +591,16 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 3.9;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.payunicard;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.Payunicard;
 				PRODUCT_NAME = Payunicard;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "RTCAppleWalletModule.h";
+				SWIFT_OBJC_BRIDGING_HEADER = RTCAppleWalletModule.h;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
