@@ -112,7 +112,7 @@ const PasswordChangeStepFour: React.FC = () => {
   };
 
   return (
-    <ScrollView keyboardShouldPersistTaps='always' style={{backgroundColor: colors.white}}>
+    <ScrollView keyboardShouldPersistTaps='handled' style={{backgroundColor: colors.white}}>
     <KeyboardAvoidingView
       behavior="padding"
       keyboardVerticalOffset={0}
