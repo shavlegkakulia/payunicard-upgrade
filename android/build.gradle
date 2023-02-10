@@ -44,10 +44,6 @@ allprojects {
             // Android JSC is installed from npm
             url("$rootDir/../node_modules/jsc-android/dist")
         }
-        maven { 
-            url 'https://s3.eu-central-1.amazonaws.com/com.kvalifika.sdk' 
-        }
-
         mavenCentral {
             // We don't want to fetch react-native from Maven Central as there are
             // older versions over there.

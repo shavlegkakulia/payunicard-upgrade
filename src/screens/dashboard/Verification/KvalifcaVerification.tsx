@@ -1,7 +1,7 @@
-// import {
-//   KvalifikaSDK,
-//   KvalifikaSDKLocale,
-// } from '@kvalifika/react-native-sdk';
+import {
+  KvalifikaSDK,
+  KvalifikaSDKLocale,
+} from '@kvalifika/react-native-sdk';
 import React, {useEffect, useState} from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
