@@ -282,7 +282,7 @@ const AppStack: React.FC = () => {
                   //@ts-ignore
                   let title = props?.route?.params?.newTemplate
                     ? translate.t('plusSign.crTransferTemplate')
-                    : translate.t('transfer.toUniWallet');
+                    : translate.t('tabNavigation.toUniWallet');
                   return DefaultOptionsDrawer({
                     navigation: props.navigation,
                     route: props.route,
@@ -298,7 +298,7 @@ const AppStack: React.FC = () => {
                   //@ts-ignore
                   let title = props?.route?.params?.newTemplate
                     ? translate.t('plusSign.crTransferTemplate')
-                    : translate.t('transfer.toUniWallet');
+                    : translate.t('tabNavigation.toUniWallet');
                   return DefaultOptionsDrawer({
                     navigation: props.navigation,
                     route: props.route,
@@ -314,7 +314,7 @@ const AppStack: React.FC = () => {
                   //@ts-ignore
                   let title = props?.route?.params?.newTemplate
                     ? translate.t('plusSign.crTransferTemplate')
-                    : translate.t('transfer.toUniWallet');
+                    : translate.t('tabNavigation.toUniWallet');
                   return DefaultOptionsDrawer({
                     navigation: props.navigation,
                     route: props.route,
@@ -330,7 +330,7 @@ const AppStack: React.FC = () => {
                   //@ts-ignore
                   let title = props?.route?.params?.newTemplate
                     ? translate.t('plusSign.crTransferTemplate')
-                    : translate.t('transfer.toUniWallet');
+                    : translate.t('tabNavigation.toUniWallet');
                   return DefaultOptionsDrawer({
                     navigation: props.navigation,
                     route: props.route,
@@ -347,7 +347,7 @@ const AppStack: React.FC = () => {
                   //@ts-ignore
                   let title = props?.route?.params?.newTemplate
                     ? translate.t('plusSign.crTransferTemplate')
-                    : translate.t('transfer.toUniWallet');
+                    : translate.t('tabNavigation.toUniWallet');
                   return DefaultOptionsDrawer({
                     navigation: props.navigation,
                     route: props.route,
