@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Platform,
+  Linking,
 } from 'react-native';
 import {
   ITranslateState,
@@ -62,8 +63,8 @@ const SignupStepThree: React.FC = () => {
     setIsApplyTerms(value ? 1 : 0);
   };
 
-  const GoToTerms = () => {
-    navigation.navigate(Routes.AgreeTerm);
+  const GoToTerms = async() => {
+    await Linking.openURL(`https://www.payunicard.ge/documents/${translate.key}/ServiceTermsOfUse.pdf?v=001`)
   };
 
   const nextStep = () => {

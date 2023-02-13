@@ -46,7 +46,7 @@ export const Periodes = {
   Year: 'Year',
 };
 
-const choosePlane: React.FC = props => {
+const ChoosePlane: React.FC = props => {
   const translate = useSelector<ITranslateGlobalState>(
     state => state.TranslateReduser,
   ) as ITranslateState;
@@ -350,4 +350,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default choosePlane;
+export default ChoosePlane;

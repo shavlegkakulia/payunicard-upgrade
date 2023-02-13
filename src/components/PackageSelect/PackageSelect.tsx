@@ -14,7 +14,7 @@ import colors from '../../constants/colors';
 import {GEL} from '../../constants/currencies';
 import {useDimension} from '../../hooks/useDimension';
 import { ITranslateState, IGlobalState as ITranslateGlobalState } from './../../redux/action_types/translate_action_types';
-import {Periodes} from '../../screens/dashboard/cardsStore/choosePlane';
+import {Periodes} from '../../screens/dashboard/cardsStore/ChoosePlane';
 import { PacketTypeIds } from '../../screens/dashboard/cardsStore/TarriffCalculator';
 import {IPackage} from './../../services/PresentationServive';
 import {

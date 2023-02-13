@@ -23,9 +23,9 @@ import AppInputText from '../../../components/UI/AppInputText';
 import colors from '../../../constants/colors';
 import {GEL} from '../../../constants/currencies';
 import {PUSH} from '../../../redux/actions/error_action';
-import {IP2PTransactionRequest} from '../../../services/TransactionService';
+import TransactionService, {IP2PTransactionRequest} from '../../../services/TransactionService';
 import {IAccountBallance, ICurrency} from '../../../services/UserService';
-import {CurrencySimbolConverter, getNumber} from '../../../utils/Converter';
+import {CurrencySimbolConverter, getNumber, getString} from '../../../utils/Converter';
 import {INavigationProps, TRANSFER_TYPES} from '.';
 import {
   ITransfersState,
@@ -38,7 +38,6 @@ import {
 } from '../../../redux/action_types/navigation_action_types';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/core';
 import Routes from '../../../navigation/routes';
-import {MakeTransaction} from '../../../redux/actions/transfers_actions';
 import {TYPE_UNICARD} from '../../../constants/accountTypes';
 import {
   IUserState,
@@ -170,6 +169,38 @@ const TransferBetweenAccounts: React.FC<INavigationProps> = props => {
     setToCurrencyVisible(!toCurrencyVisible);
   };
 
+  const MakeTransaction =
+  (toBank: boolean = false, data: IP2PTransactionRequest = {
+    beneficiaryBankName: undefined,
+    beneficiaryBankCode: undefined,
+    recipientAddress: undefined,
+    recipientCity: undefined,
+    beneficiaryRegistrationCountryCode: undefined
+  }) => { 
+    setIsLoading(true);
+    TransactionService.makeTransaction(toBank, data).subscribe({
+      next: Response => { 
+        if(Response.data.ok) {
+          dispatch({
+            type: TRANSFERS_ACTION_TYPES.SET_TRANSACTION_RESPONSE,
+            transactionResponse: {...Response.data.data},
+          });
+        } else { 
+          if(Response.data.errors) {
+            dispatch(PUSH(getString(Response.data.errors?.[0]?.displayText)));
+          }
+        }
+        setIsLoading(false);
+      },
+      error: e => { 
+        setTimeout(() => {
+          dispatch(PUSH(getString(e.data.errors?.[0]?.displayText)));
+        }, 2000);
+        setIsLoading(false);
+      },
+    });
+  };
+
   const makeTransaction = (toBank: boolean = false) => {
     const data: IP2PTransactionRequest = {
       toAccountNumber: TransfersStore.selectedToAccount?.accountNumber,
@@ -182,7 +213,7 @@ const TransferBetweenAccounts: React.FC<INavigationProps> = props => {
       otp: null,
     };
 
-    dispatch(MakeTransaction(toBank, data));
+    MakeTransaction(toBank, data);
   };
 
   //cleare state on succes
@@ -211,12 +242,6 @@ const TransferBetweenAccounts: React.FC<INavigationProps> = props => {
       setTransferStep(Routes.TransferBetweenAcctounts_SUCCES);
     }
   }, [TransfersStore.transactionResponse]);
-
-  useEffect(() => {
-    if (!TransfersStore.fullScreenLoading) {
-      setIsLoading(false);
-    }
-  }, [TransfersStore.fullScreenLoading]);
 
   useEffect(() => {
     if (userData.userAccounts && !userData.isAccountsLoading) {

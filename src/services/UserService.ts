@@ -320,7 +320,7 @@ export interface IGetTransactionDetailsResponse {
   senderBankCode?: string | undefined;
   senderBankName?: string | undefined;
   debcred?: string | undefined;
-  dateCreated?: Date;
+  dateCreated?: string;
   senderName?: string | undefined;
   senderaccount?: string | undefined;
   receiverBankName?: string | undefined;

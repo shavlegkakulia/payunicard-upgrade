@@ -600,7 +600,7 @@ console.log('---', selectedEndDate)
     mode="date"
   />
   }, [endDateVlaue])
-
+console.log(filteredStatements)
   const BottomLoading = () =>
     fetchingMore ? (
       <View style={styles.bottomLoading}>
@@ -610,7 +610,8 @@ console.log('---', selectedEndDate)
 
   return (
     <DashboardLayout>
-      <ScrollView
+    <>
+    <ScrollView
         style={screenStyles.screenContainer}
         onScroll={handleScroll}
         ref={scrollRef}
@@ -982,6 +983,7 @@ console.log('---', selectedEndDate)
           </View>
         </View>
       </ActionSheetCustom>
+    </>
     </DashboardLayout>
   );
 };

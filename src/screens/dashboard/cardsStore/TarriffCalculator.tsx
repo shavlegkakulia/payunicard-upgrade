@@ -48,7 +48,7 @@ import PresentationServive, {
 import {IAccountBallance} from './../../../services/UserService';
 import screenStyles from './../../../styles/screens';
 import {CurrencyConverter, getNumber} from './../../../utils/Converter';
-import {Periodes} from './choosePlane';
+import { Periodes } from './ChoosePlane';
 
 type RouteParamList = {
   params: {

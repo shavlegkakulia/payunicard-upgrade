@@ -196,7 +196,7 @@ const TransactionItem: React.FC<IProps> = (props) => {
         height: 40,
         borderRadius: 20,
         overflow: 'hidden',
-        backgroundColor: '#94DD3420',
+        backgroundColor: '#94DD3410',
         justifyContent: 'center',
         alignItems: 'center',
       },

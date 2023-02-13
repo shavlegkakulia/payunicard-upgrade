@@ -22,7 +22,7 @@ import EditTemplate from '../screens/dashboard/payments/PaymentSteps/EditTemplat
 import PayAll from '../screens/dashboard/payments/PayAll/PayAll';
 import PayAllSucces from '../screens/dashboard/payments/PayAll/PayAllSucces';
 import CardsStore from '../screens/dashboard/cardsStore';
-import choosePlane from '../screens/dashboard/cardsStore/choosePlane';
+import ChoosePlane from '../screens/dashboard/cardsStore/ChoosePlane';
 import TarriffCalculator from '../screens/dashboard/cardsStore/TarriffCalculator';
 import DelyveryMethods from '../screens/dashboard/cardsStore/DelyveryMethods';
 import TarrifSetOtp from '../screens/dashboard/cardsStore/TarrifSetOtp';
@@ -676,7 +676,7 @@ const AppStack: React.FC = () => {
                     backText: translate.t('common.back'),
                   })
                 }
-                component={choosePlane}
+                component={ChoosePlane}
               />
               <appStack.Screen
                 name={Routes.TarriffCalculator}

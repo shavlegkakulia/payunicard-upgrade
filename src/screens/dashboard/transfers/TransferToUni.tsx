@@ -57,7 +57,6 @@ import Routes from '../../../navigation/routes';
 import {
   addTransactionTemplate,
   getTransferTemplates,
-  MakeTransaction,
 } from '../../../redux/actions/transfers_actions';
 import {IAddTransferTemplateRequest} from '../../../services/TemplatesService';
 import {TYPE_UNICARD} from '../../../constants/accountTypes';
@@ -325,6 +324,38 @@ const TransferToUni: React.FC = () => {
     }
   };
 
+  const MakeTransaction =
+  (toBank: boolean = false, data: IP2PTransactionRequest = {
+    beneficiaryBankName: undefined,
+    beneficiaryBankCode: undefined,
+    recipientAddress: undefined,
+    recipientCity: undefined,
+    beneficiaryRegistrationCountryCode: undefined
+  }) => { 
+    setIsLoading(true);
+    TransactionService.makeTransaction(toBank, data).subscribe({
+      next: Response => { 
+        if(Response.data.ok) {
+          dispatch({
+            type: TRANSFERS_ACTION_TYPES.SET_TRANSACTION_RESPONSE,
+            transactionResponse: {...Response.data.data},
+          });
+        } else { 
+          if(Response.data.errors) {
+            dispatch(PUSH(getString(Response.data.errors?.[0]?.displayText)));
+          }
+        }
+        setIsLoading(false);
+      },
+      error: e => { 
+        setTimeout(() => {
+          dispatch(PUSH(getString(e.data.errors?.[0]?.displayText)));
+        }, 2000);
+        setIsLoading(false);
+      },
+    });
+  };
+
   const makeTransaction = (toBank: boolean = false) => {
     const data: IP2PTransactionRequest = {
       toAccountNumber: TransfersStore.selectedToAccount?.accountNumber,
@@ -356,7 +387,7 @@ const TransferToUni: React.FC = () => {
       data.ccyto = TransfersStore.selectedToCurrency?.key;
     }
 
-    dispatch(MakeTransaction(toBank, data));
+    MakeTransaction(toBank, data);
   };
 
   useEffect(() => {

@@ -1,3 +1,4 @@
+import { getString } from './../../utils/Converter';
 import TemplatesService, {
   IAddTransferTemplateRequest,
 } from '../../services/TemplatesService';
@@ -5,6 +6,7 @@ import TransactionService, {
   IP2PTransactionRequest,
 } from '../../services/TransactionService';
 import {TRANSFERS_ACTION_TYPES} from './../action_types/transfers_action_types';
+import { PUSH } from './error_action';
 
 export const addTransactionTemplate =
   (data: IAddTransferTemplateRequest, callBack?: () => void) =>
@@ -59,92 +61,6 @@ export const getTransferTemplates =
         dispatch({
           type: TRANSFERS_ACTION_TYPES.SET_ISTEMPLATES_LOADING,
           isTemplatesLoading: false,
-        });
-      },
-    });
-  };
-
-  export const MakeP2PForeignTransaction = (data: IP2PTransactionRequest) => (dispatch: any) => {
-    dispatch({
-      type: TRANSFERS_ACTION_TYPES.SET_ISLOADING,
-      isLoading: true,
-    });
-    dispatch({
-      type: TRANSFERS_ACTION_TYPES.SET_FULLSCREEN_LODING,
-      fullScreenLoading: true,
-    });
-    TransactionService.makeP2PForeignTransaction(data).subscribe({
-      next: Response => {
-      dispatch({
-          type: TRANSFERS_ACTION_TYPES.SET_TRANSACTION_RESPONSE,
-          transactionResponse: {...Response.data.data},
-        });
-      },
-      complete: () => {
-        dispatch({
-          type: TRANSFERS_ACTION_TYPES.SET_ISLOADING,
-          isLoading: false,
-        });
-        dispatch({
-          type: TRANSFERS_ACTION_TYPES.SET_FULLSCREEN_LODING,
-          fullScreenLoading: false,
-        });
-      },
-      error: _ => {
-        dispatch({
-          type: TRANSFERS_ACTION_TYPES.SET_ISLOADING,
-          isLoading: false,
-        });
-        dispatch({
-          type: TRANSFERS_ACTION_TYPES.SET_FULLSCREEN_LODING,
-          fullScreenLoading: false,
-        });
-      },
-    });
-  }
-
-export const MakeTransaction =
-  (toBank: boolean = false, data: IP2PTransactionRequest = {
-    beneficiaryBankName: undefined,
-    beneficiaryBankCode: undefined,
-    recipientAddress: undefined,
-    recipientCity: undefined,
-    beneficiaryRegistrationCountryCode: undefined
-  }) =>
-  (dispatch: any) => {
-    dispatch({
-      type: TRANSFERS_ACTION_TYPES.SET_ISLOADING,
-      isLoading: true,
-    });
-    dispatch({
-      type: TRANSFERS_ACTION_TYPES.SET_FULLSCREEN_LODING,
-      fullScreenLoading: true,
-    });
-    TransactionService.makeTransaction(toBank, data).subscribe({
-      next: Response => {
-      dispatch({
-          type: TRANSFERS_ACTION_TYPES.SET_TRANSACTION_RESPONSE,
-          transactionResponse: {...Response.data.data},
-        });
-      },
-      complete: () => {
-        dispatch({
-          type: TRANSFERS_ACTION_TYPES.SET_ISLOADING,
-          isLoading: false,
-        });
-        dispatch({
-          type: TRANSFERS_ACTION_TYPES.SET_FULLSCREEN_LODING,
-          fullScreenLoading: false,
-        });
-      },
-      error: _ => {
-        dispatch({
-          type: TRANSFERS_ACTION_TYPES.SET_ISLOADING,
-          isLoading: false,
-        });
-        dispatch({
-          type: TRANSFERS_ACTION_TYPES.SET_FULLSCREEN_LODING,
-          fullScreenLoading: false,
         });
       },
     });
