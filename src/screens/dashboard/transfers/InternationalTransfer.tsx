@@ -414,7 +414,7 @@ const MakeP2PForeignTransaction = (data: IP2PTransactionRequest) => {
   };
 
   useEffect(() => {
-    if (route.params.transferStep === Routes.TransferToBank_SET_OTP) {
+    if (route.params.transferStep === Routes.Internatinal_set_otp) {
       SendPhoneOTP();
     }
   }, []);
