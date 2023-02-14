@@ -50,7 +50,7 @@ const CategoryItem = ({item, index, onOpen}: IItemProps) => {
     <TouchableOpacity onPress={onItemHandle} style={[index === 0 && styles.firstItem]}>
       <CategoryData
         name={item.name}
-        imageUrl={item.imageUrl}
+        imageUrl={item.iconUrl || item.imageUrl}
         merchantServiceURL={item.merchantServiceURL}
         isLoading={activeIndex === index}
       />

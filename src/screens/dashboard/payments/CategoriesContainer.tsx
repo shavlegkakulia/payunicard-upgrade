@@ -174,7 +174,8 @@ const CategoriesContainer: React.FC<ICategoriesContainerProps> = props => {
                     );
                   }}>
                   <Cover
-                    imageUrl={category.imageUrl?.replace('svg', 'png')}
+                    imageUrl={category.iconUrl}
+                    isSvg={true}
                     isLoading={index === loadingIndex}
                     style={[styles.categoriesImage, category.cannotPay && {opacity: 0.5}]}
                   />

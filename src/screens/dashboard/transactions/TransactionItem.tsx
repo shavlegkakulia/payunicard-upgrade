@@ -48,7 +48,7 @@ const TransactionItem: React.FC<IProps> = (props) => {
                   <View style={styles.transactionsViewItemRight}>
                     <View style={styles.transactionsViewItemDetail}>
                       <Text style={styles.transactionsViewItemDate}>
-                        {formatDate(statement.transactionDate?.toString())}
+                        {formatDate(statement.transactionDate?.toString(), '/')}
                       </Text>
                       <Text
                         numberOfLines={1}
@@ -101,7 +101,7 @@ const TransactionItem: React.FC<IProps> = (props) => {
                     <View style={styles.transactionsViewItemRight}>
                       <View style={styles.transactionsViewItemDetail}>
                         <Text style={styles.transactionsViewItemDate}>
-                          {formatDate(st.tranDate?.toString())}
+                          {formatDate(st.tranDate?.toString(), '/')}
                         </Text>
                         <Text
                           numberOfLines={1}
@@ -145,7 +145,7 @@ const TransactionItem: React.FC<IProps> = (props) => {
                 <View style={styles.transactionsViewItemRight}>
                   <View style={styles.transactionsViewItemDetail}>
                     <Text style={styles.transactionsViewItemDate}>
-                      {formatDate(statement.datetime?.toString())}
+                      {formatDate(statement.datetime?.toString(), '/')}
                     </Text>
                     <Text
                       numberOfLines={1}

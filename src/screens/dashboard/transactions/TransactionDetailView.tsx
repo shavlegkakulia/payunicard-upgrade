@@ -91,7 +91,7 @@ const ViewCliring: React.FC<IProps> = props => {
           {props.statement?.tranDate !== undefined && (
             <View style={styles.tranDateColumn}>
               <Text style={styles.textDescStyle}>
-                {formatDate(props.statement?.tranDate)}
+                {formatDate(props.statement?.tranDate, '/')}
               </Text>
             </View>
           )}
@@ -139,7 +139,7 @@ const ViewCliring: React.FC<IProps> = props => {
           <View style={styles.directionRow}>
             <Text style={styles.textDescStyle}>{translate.t('common.payDate')}</Text>
             <Text style={styles.textDescValueStyle}>
-              {formatDate(props.statement?.tranDate)}
+              {formatDate(props.statement?.tranDate, '/')}
             </Text>
           </View>
         )}
@@ -150,7 +150,7 @@ const ViewCliring: React.FC<IProps> = props => {
               {formatDate(
                 props.statement?.dateCreated
                   ? props.statement?.dateCreated.toString()
-                  : '',
+                  : '', '/' 
               )}
             </Text>
           </View>
@@ -221,10 +221,10 @@ const ViewTransfer: React.FC<IProps> = props => {
 
           {(props.statement?.tranDate || props.statement?.dateCreated) && (
             <View style={styles.tranDateColumn}>
-              <Text style={styles.textDescValueStyle}>
+              <Text style={styles.textDescValueStyleNpBreak}>
                 {formatDate(
                   props.statement?.dateCreated?.toString() ||
-                    props.statement?.tranDate,
+                    props.statement?.tranDate, '/'
                 )}
               </Text>
             </View>
@@ -309,7 +309,7 @@ const ViewTransfer: React.FC<IProps> = props => {
           <View style={styles.directionRow}>
             <Text style={styles.textDescStyle}>{translate.t('common.payDate')}</Text>
             <Text style={styles.textDescValueStyle}>
-              {formatDate(props.statement?.tranDate)}
+              {formatDate(props.statement?.tranDate, '/')}
             </Text>
           </View>
         )}
@@ -320,7 +320,7 @@ const ViewTransfer: React.FC<IProps> = props => {
               {formatDate(
                 props.statement?.dateCreated
                   ? props.statement?.dateCreated.toString()
-                  : '',
+                  : '', '/'
               )}
             </Text>
           </View>
@@ -385,7 +385,7 @@ const ViewUtility: React.FC<IProps> = props => {
               <Text style={styles.textDescStyle}>
                 {formatDate(
                   props.statement?.dateCreated?.toString() ||
-                    props.statement?.tranDate,
+                    props.statement?.tranDate, '/'
                 )}
               </Text>
             </View>
@@ -500,7 +500,7 @@ const ViewBlocked: React.FC<IProps> = props => {
           {props.fundStatement?.transactionDate !== undefined  && (
             <View style={styles.tranDateColumn}>
               <Text style={styles.textDescStyle}>
-                {formatDate(props.fundStatement?.transactionDate)}
+                {formatDate(props.fundStatement?.transactionDate, '/')}
               </Text>
             </View>
           )}
@@ -728,8 +728,15 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     color: colors.labelColor,
     marginBottom: 5,
-    // flexWrap: 'wrap',
-    // flex: 2
+    flex: 1,
+  },
+  textDescValueStyleNpBreak: {
+    fontFamily: 'FiraGO-Book',
+    fontSize: 14,
+    lineHeight: 17,
+    textAlign: 'right',
+    color: colors.labelColor,
+    marginBottom: 5,
   },
   amountccy: {
     fontFamily: 'FiraGO-Bold',

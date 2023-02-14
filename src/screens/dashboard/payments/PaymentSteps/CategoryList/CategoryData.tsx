@@ -13,7 +13,7 @@ interface IProps {
 const CategoryData: React.FC<IProps> = (props) => {
     return (
         <View style={styles.item}>
-            <Cover imageUrl={props.imageUrl || props.merchantServiceURL} isLoading={props.isLoading} style={styles.logo} />
+            <Cover imageUrl={props.imageUrl || props.merchantServiceURL} isLoading={props.isLoading} style={styles.logo} isSvg={props.imageUrl?.endsWith('.svg')} />
             <Text numberOfLines={1} style={styles.title}>{props.name}</Text>
         </View>
     )
@@ -39,8 +39,6 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 20,
-        borderWidth: 1,
-        borderColor: colors.inputBackGround
     },
     loaderBox: {
         height: 40,

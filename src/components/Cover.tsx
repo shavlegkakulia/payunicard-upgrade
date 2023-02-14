@@ -9,6 +9,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import { SvgFromUri } from 'react-native-svg';
 import colors from '../constants/colors';
 
 interface IProps {
@@ -19,6 +20,7 @@ interface IProps {
   imgStyle?: StyleProp<ImageStyle>;
   isOverflowVisible?: boolean;
   circleBg?: string;
+  isSvg?:boolean;
 }
 
 const Cover: React.FC<IProps> = props => {
@@ -42,17 +44,21 @@ const Cover: React.FC<IProps> = props => {
         <View style={_logoBox}>
           <Image
             source={props.localImage}
-            resizeMode={'contain'}
+            resizeMode={"contain"}
             style={[styles.logo, props.imgStyle]}
           />
         </View>
       ) : (
         <View style={_logoBox}>
-          <Image
-            source={{uri: props.imageUrl}}
-            resizeMode={'contain'}
-            style={[styles.logo, props.imgStyle]}
-          />
+          {props.isSvg ? (
+            <SvgFromUri uri={props.imageUrl} width={20}></SvgFromUri>
+          ) : (
+            <Image
+              source={{ uri: props.imageUrl }}
+              resizeMode={"contain"}
+              style={[styles.logo, props.imgStyle]}
+            />
+          )}
         </View>
       )}
     </View>
