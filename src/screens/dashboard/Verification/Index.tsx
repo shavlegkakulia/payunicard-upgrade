@@ -133,6 +133,7 @@ type RouteParamList = {
   params: {
     verificationStep: number;
     retry?: boolean;
+    fetchCountries: boolean;
   };
 };
 
@@ -253,6 +254,14 @@ const Verification: React.FC = () => {
       );
     }
   }, [route.params.verificationStep])
+
+  useEffect(() => {
+    if(route.params.fetchCountries) {
+      dispatch(
+        GetCitizenshipCountries(),
+      );
+    }
+  }, [route.params.fetchCountries])
 
   const stepTwoScreenAction = () => {
     if (

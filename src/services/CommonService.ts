@@ -87,6 +87,15 @@ class CommonService {
               error: stringTranslator.t("generalErrors.errorOccurred")
             });
           }
+          if (
+            stringToObject(error.response)?.data?.error ===
+            require_password_change
+          ) {
+            store.dispatch<IErrorAction>({
+              type: PUSH_ERROR,
+              error: stringTranslator.t("login.changePassword")
+            });
+          }
         }
         return Promise.reject(error);
       },

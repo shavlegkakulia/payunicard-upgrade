@@ -704,7 +704,11 @@ return () => {
                       <AppInput
                         style={benificarAccountErrorStyle}
                         value={TransfersStore.benificarAccount}
-                        onChange={onToAccountSet}
+                        onChange={e => {
+                          if(!e || /^[a-z][a-z0-9]*$/i.test(e)) {
+                            onToAccountSet(e);
+                          }
+                        }}
                         placeholder={translate.t('transfer.beneficiaryAccount')}
                         context={ValidationContext}
                         customKey="benificarAccount"
