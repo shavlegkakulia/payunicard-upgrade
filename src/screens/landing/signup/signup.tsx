@@ -33,6 +33,7 @@ import countryCodes from '../../../constants/countryCodes';
 import { SafeAreaView } from 'react-navigation';
 import PresentationServive, { ICountry, IGetCoutries } from '../../../services/PresentationServive';
 import { getNumber, getString } from '../../../utils/Converter';
+import NetworkService from '../../../services/NetworkService';
 
 const VALIDATION_CONTEXT = 'signup';
 
@@ -139,15 +140,17 @@ const SignupForm: React.FC = () => {
   };
 
   useEffect(() => {
-    PresentationServive.GetCountries().subscribe({
-      next: response => {
-        setCountries(response.data.data.countries);
-        const c = response.data.data.countries?.filter(c => c.dialCode === '995');
-    
-        if(c.length) {
-          setCode(c[0]);
+    NetworkService.CheckConnection(() => {
+      PresentationServive.GetCountries().subscribe({
+        next: response => {
+          setCountries(response.data.data.countries);
+          const c = response.data.data.countries?.filter(c => c.dialCode === '995');
+      
+          if(c.length) {
+            setCode(c[0]);
+          }
         }
-      }
+      })
     })
 
   }, [])

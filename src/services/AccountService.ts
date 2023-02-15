@@ -88,6 +88,17 @@ class AccountServise {
     );
     return from(promise);
   }
+
+  ExportWalletAccountDetails (ccy: string, isGel: boolean) {
+    let queryStr = `${envs.API_URL}api/v2/User/ExportWalletAccountDetailsMobile?ccy=${ccy}`;
+    if (isGel) {
+      queryStr += `&isGel=${true}`
+    } console.log(queryStr)
+    const promise = axios.get<{ path?: string }>(
+      queryStr, {objectResponse: true}
+    );
+    return from(promise);
+  }
 }
 
 export default new AccountServise();

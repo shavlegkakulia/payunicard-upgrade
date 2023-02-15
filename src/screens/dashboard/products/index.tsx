@@ -43,6 +43,7 @@ import {
 } from '../../../redux/action_types/translate_action_types';
 import OrderedCard from './OrderedCard';
 import AccountCard from './AccountCard';
+import BankDetails from './BankDetails';
 
 export const PACKET_TYPE_IDS = {
   wallet: 1,
@@ -399,6 +400,7 @@ const Products: React.FC = props => {
             </ScrollView>
           </View>
         )}
+        <BankDetails />
       </ScrollView>
     </DashboardLayout>
   );

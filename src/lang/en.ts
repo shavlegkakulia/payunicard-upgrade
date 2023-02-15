@@ -61,7 +61,8 @@ export default {
         seeMore: 'See More',
         male: 'Male',
         female: 'Female',
-        addAppleWalletEasy: 'Add Your Visa card to Apple Pay. Setup is easy'
+        addAppleWalletEasy: 'Add Your Visa card to Apple Pay. Setup is easy',
+        llcPayunicard: '"Pay Unicard" LLC',
     },
     generalErrors: {
         errorOccurred: 'An Error Occurred',
@@ -235,7 +236,13 @@ export default {
         bankDetails: 'Bank Details',
         widthCard: 'With Card',
         withPayBox: 'With Pay Box',
-        walletTitle: "UNIwallet"
+        walletTitle: "UNIwallet",
+        recipeBank: 'Recipient Bank',
+        chooseCurrencyForReq: 'In order to generate requisites, please select desired currency and bank',
+        downloadRequ: 'Download Requisites',
+        correctUseNomination: "Please note that it is mandatory to fill in the destination field correctly when making a bank transfer! Otherwise, the amount will be returned to the account from which the transfer was made, and when transferring GEL, the amount will be reflected in the sender's wallet (if any)",
+        mustFillNomination: '*You must fill out description field!',
+        cards: 'Cards',
     },
     payments: {
         categories: 'Categories',

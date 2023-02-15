@@ -84,6 +84,7 @@ import AddBankCardSucces from '../screens/dashboard/addBankCard/AddBankCardSucce
 import {subscriptionService} from '../services/subscriptionService';
 import Notifications from '../screens/dashboard/notifications/Notifications';
 import InternationalTransfer from '../screens/dashboard/transfers/InternationalTransfer';
+import { useNavigationState } from '@react-navigation/core';
 
 
 const appStack = createStackNavigator();
@@ -97,6 +98,7 @@ const AppStack: React.FC = () => {
     state => state.AuthReducer,
   ) as IAuthState;
   const isDrawerOpened = useRef<boolean>();
+  const routes = useNavigationState(state => state?.routes);
 
   useEffect(() => {
     const sub = BackHandler.addEventListener('hardwareBackPress', () => {
@@ -1318,9 +1320,9 @@ const AppStack: React.FC = () => {
             </>
           )}
         </appStack.Navigator>
-        {state.isAuthenticated === true && state.accesToken?.length > 0 && (
+        {(state.isAuthenticated === true && state.accesToken?.length > 0 && !routes?.[routes?.length - 1].name.startsWith(Routes.Verification)) ? (
           <TabNav />
-        )}
+        ) : null}
       </>
     </DrawerLayout>
   );

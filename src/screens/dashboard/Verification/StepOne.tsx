@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { View, StyleSheet, Text, StyleProp, ViewStyle, TouchableOpacity, Image } from "react-native"
+import { View, StyleSheet, Text, StyleProp, ViewStyle, TouchableOpacity, Image, KeyboardAvoidingView, Platform } from "react-native"
 import { useSelector } from "react-redux";
 import AppButton from "../../../components/UI/AppButton";
 import AppInput from "../../../components/UI/AppInput";
@@ -50,7 +50,10 @@ const StepOne: React.FC<IProps> = (props) => {
         props.onComplate();
     }
 
+    const keyboardVerticalOffset = Platform.OS === 'ios' ? 100 : 0;
+
     return (
+        <KeyboardAvoidingView  behavior='position' keyboardVerticalOffset={keyboardVerticalOffset}>
         <View style={styles.container}>
             <View style={styles.addressContainer}>
                 <Text style={styles.BoxTitle}>{translate.t('verification.enterLegalAddress')}</Text>
@@ -112,6 +115,7 @@ const StepOne: React.FC<IProps> = (props) => {
                 onPress={nextHandler}
                 style={styles.button} isLoading={props.loading} />
         </View>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -119,7 +123,7 @@ const styles = StyleSheet.create({
     container: {
         maxWidth: 327,
         width: '100%',
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
     addressContainer: {
         marginTop: 40
