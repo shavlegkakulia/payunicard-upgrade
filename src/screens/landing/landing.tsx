@@ -26,12 +26,18 @@ const Main: React.FC = () => {
     }
 
     const isFirstLoad = async () => {
-        return await storage.getItem(FIRST_LOAD_KEY) === null;
+        return storage.getItem(FIRST_LOAD_KEY).then(res => {
+            return res === null;
+        }).catch(() => {
+            return false;
+        })
     }
 
     useEffect(() => {
         isFirstLoad().then(status => {
             setFirstsLoad(status);
+            setIsLoading(false);
+        }).finally(() => {
             setIsLoading(false);
         })
     }, []);
@@ -50,7 +56,7 @@ const Main: React.FC = () => {
             <View style={styles.container}>
                 <Login loginWithPassword={route.params?.loginWithPassword} />
             </View>
-            <FullScreenLoader visible={isLoading} />
+            <FullScreenLoader visible={isLoading} maxTime={2000} />
             </>
         </LandingLayout>
     )

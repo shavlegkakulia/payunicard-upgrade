@@ -318,7 +318,8 @@ const Transfers: React.FC<INavigationProps> = props => {
   return (
     <>
       <DashboardLayout>
-        {TransfersStore.fullScreenLoading && (
+      <>
+      {TransfersStore.fullScreenLoading && (
           <FullScreenLoader background={colors.none} hideLoader />
         )}
 
@@ -454,6 +455,7 @@ const Transfers: React.FC<INavigationProps> = props => {
           </View>
           </View>
         </ScrollView>
+      </>
       </DashboardLayout>
     </>
   );

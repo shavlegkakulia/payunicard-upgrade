@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import {View, ActivityIndicator, StyleSheet, Modal} from 'react-native';
 import colors from '../constants/colors';
 
@@ -6,11 +6,24 @@ interface IProps {
   background?: string;
   visible?: boolean;
   hideLoader?: boolean;
+  maxTime?: number;
 }
 
 const FullScreenLoader: FC<IProps> = props => {
+  const [getvisible, setgetvisible] = useState(props.visible ? true : false);
+  const ttl = useRef<NodeJS.Timeout>();
+  
+  useEffect(() => {
+    if(ttl.current) clearTimeout(ttl.current)
+    ttl.current = setTimeout(() => {
+      setgetvisible(false);
+    }, props.maxTime || 5000);
+
+    return () => clearTimeout(ttl.current);
+  }, [props.visible, props.maxTime]);
+  
   return (
-    <Modal animationType="fade" visible={props.visible} transparent={true}>
+    <Modal animationType="fade" visible={getvisible} transparent={true}>
       <View
         style={[
           styles.container,

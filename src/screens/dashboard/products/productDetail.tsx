@@ -14,6 +14,7 @@ import {
   Switch,
   Keyboard,
   Button,
+  Modal,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import colors from '../../../constants/colors';
@@ -1078,7 +1079,7 @@ const ProductDetail: React.FC = props => {
             </View>
           )}
 
-          {Platform.OS == 'ios' && userAccount?.cards?.[currentCardIndex]?.cardTypeID === 1 && userData.userDetails?.claims?.[1].claimValue == "1" &&
+          {Platform.OS == 'ios' && userAccount?.cards?.[currentCardIndex]?.cardTypeID === 1 && userData.userDetails?.claims?.[1]?.claimValue == "1" &&
             userAccount?.cards?.[currentCardIndex]?.canAddToAppleWallet !== false &&
             <View
               style={styles.appleWallet}>
@@ -1714,14 +1715,8 @@ const ProductDetail: React.FC = props => {
         </View>
       </ActionSheetCustom>
 
-      <ActionSheetCustom
-        scrollable={true}
-        hasDraggableIcon={true}
-        visible={actionSheetType == CARD_ACTIONS.change_pin}
-        hasScroll={false}
-        height={actionSheetHeight}
-        onPress={closeActionSheet}>
-        <View style={styles.blockContainer}>
+      <Modal visible={actionSheetType == CARD_ACTIONS.change_pin} onRequestClose={closeActionSheet}>
+      <View style={styles.blockContainer}>
           {actionSheetStatus === ACTION_SHEET_STATUSES.otp ? (
             <View style={styles.otpHeader}>
               <Text style={styles.otpTitle}>
@@ -1784,7 +1779,7 @@ const ProductDetail: React.FC = props => {
             />
           </View>
         </View>
-      </ActionSheetCustom>
+      </Modal>
      </>
      
     </DashboardLayout>

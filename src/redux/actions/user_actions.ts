@@ -36,14 +36,14 @@ import axios from 'axios';
 
 export const FetchUserDetail =
   (remember?: boolean, refetch?: boolean) => async (dispatch: any) => {
-    await dispatch({type: USER_LOADING, isUserLoading: true});
+    dispatch({type: USER_LOADING, isUserLoading: true});
     UserService.GetUserDetails().subscribe({
       next: async Response => {
         dispatch({type: FETCH_USER_DETAILS, userDetails: Response?.data?.data});
         if (remember) {
           await storage.setItem(
             AUTH_USER_INFO,
-            JSON.stringify({...Response?.data?.data, isBase: true}),
+            JSON.stringify({...(Response?.data?.data || {}), isBase: true}),
           );
         }
 
@@ -52,12 +52,13 @@ export const FetchUserDetail =
           if (info !== null) {
             storage.setItem(
               AUTH_USER_INFO,
-              JSON.stringify({...Response?.data?.data, isBase: true}),
+              JSON.stringify({...(Response?.data?.data || {}), isBase: true}),
             );
           }
         }
       },
       error: (err) => { 
+        console.log(err)
         dispatch({type: USER_LOADING, isUserLoading: false});
       },
       complete: () => {

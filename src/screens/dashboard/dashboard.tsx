@@ -233,10 +233,12 @@ const Dashboard: React.FC<IProps> = props => {
   const handleAppleBannerVisiblity = () => {
     UserService.ConfirmSeeinAppleBaner().then(res => {
       let tempDetails = {...userData};
-      let tempClaims = [...(tempDetails.userDetails?.claims || [])]
-      tempClaims[0].claimValue = "0"
-      tempDetails.userDetails = {...userData.userDetails, claims: [...tempClaims]}
-      dispatch({type: FETCH_USER_DETAILS, userDetails: tempDetails})
+      let tempClaims = [...(tempDetails?.userDetails?.claims || [])]
+      if(tempClaims[0]) {
+        tempClaims[0].claimValue = "0"
+        tempDetails.userDetails = {...userData.userDetails, claims: [...tempClaims]}
+        dispatch({type: FETCH_USER_DETAILS, userDetails: tempDetails})
+      }
     }).catch(err => {
       console.log(JSON.stringify(err?.response))
     })
@@ -254,8 +256,6 @@ const Dashboard: React.FC<IProps> = props => {
     }
 
   }, [userData.userAccounts])
-
-  
 
   return (
     <DashboardLayout>
@@ -308,7 +308,7 @@ const Dashboard: React.FC<IProps> = props => {
         />
       </ActionSheetCustom>
       <Modal
-        visible={userData?.userDetails?.claims?.[0].claimValue == "1" && Platform.OS == 'ios'}
+        visible={userData?.userDetails?.claims?.[0]?.claimValue == "1" && Platform.OS == 'ios'}
         onRequestClose={handleAppleBannerVisiblity}>
         <SafeAreaView>
           <ScrollView>

@@ -413,6 +413,7 @@ const styles = StyleSheet.create({
   dots: {
     flexDirection: 'row',
     justifyContent: 'center',
+    marginBottom: 15
   },
   dot: {
     width: 10,
