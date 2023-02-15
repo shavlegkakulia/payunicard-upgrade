@@ -16,10 +16,6 @@ import {use} from './../redux/actions/translate_actions';
 import {LOCALE_IN_STORAGE} from './../constants/defaults';
 import ErrorWrapper from '../components/ErrorWrapper';
 import storage from './../services/StorageService';
-import {
-  setJSExceptionHandler,
-  setNativeExceptionHandler,
-} from 'react-native-exception-handler';
 import AppStack from './AppStack';
 import NavigationService from '../services/NavigationService';
 import {SafeAreaView} from 'react-navigation';
@@ -36,30 +32,6 @@ import { AddCardToWallet } from './AppleWallet/AppleWallet';
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
-const handleError = (error: Error, isFatal: boolean) => {
-  console.warn({error}, 'isFatal?' + isFatal);
-};
-
-setJSExceptionHandler((error, isFatal) => {
-  handleError(error, isFatal);
-}, true);
-
-//For most use cases:
-setNativeExceptionHandler(exceptionString => {
-  // This is your custom global error handler
-  // You do stuff likehit google analytics to track crashes.
-  // or hit a custom api to inform the dev team.
-  //NOTE: alert or showing any UI change via JS
-  //WILL NOT WORK in case of NATIVE ERRORS.
-  console.warn(exceptionString);
-});
-//====================================================
-// ADVANCED use case:
-const exceptionhandler = (exceptionString: string) => {
-  // your exception handler code here
-  console.warn(exceptionString);
-};
-setNativeExceptionHandler(exceptionhandler, false, true);
 
  const AppContainer: FC = () => {
   const state = useSelector<AuthState>(
