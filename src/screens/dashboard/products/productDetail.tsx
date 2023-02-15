@@ -1715,8 +1715,9 @@ const ProductDetail: React.FC = props => {
         </View>
       </ActionSheetCustom>
 
-      <Modal visible={actionSheetType == CARD_ACTIONS.change_pin} onRequestClose={closeActionSheet}>
-      <View style={styles.blockContainer}>
+      <Modal visible={actionSheetType == CARD_ACTIONS.change_pin} transparent onRequestClose={closeActionSheet}>
+        <TouchableOpacity style={styles.actionModalContainer} activeOpacity={1} onPress={() => closeActionSheet()}>
+        <View style={styles.actionModalContent}>
           {actionSheetStatus === ACTION_SHEET_STATUSES.otp ? (
             <View style={styles.otpHeader}>
               <Text style={styles.otpTitle}>
@@ -1778,7 +1779,8 @@ const ProductDetail: React.FC = props => {
               style={styles.actionButton}
             />
           </View>
-        </View>
+        </View>       
+        </TouchableOpacity>
       </Modal>
      </>
      
@@ -1908,6 +1910,18 @@ const styles = StyleSheet.create({
   blockContainer: {
     flex: 1,
     paddingHorizontal: 20,
+  },
+  actionModalContainer: {
+    backgroundColor: '#00000050',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  actionModalContent: {
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    borderRadius: 10,
+    maxWidth: '95%'
   },
   actionSheetTitle: {
     color: colors.black,
