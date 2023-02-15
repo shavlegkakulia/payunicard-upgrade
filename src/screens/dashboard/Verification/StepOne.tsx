@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
         maxWidth: 327,
         width: '100%',
         alignSelf: 'center',
+        backgroundColor: '#FFFFFF'
     },
     addressContainer: {
         marginTop: 40
