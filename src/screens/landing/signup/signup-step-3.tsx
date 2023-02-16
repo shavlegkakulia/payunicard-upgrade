@@ -26,12 +26,13 @@ import Validation, {
   hasWrongSimbol,
   required,
 } from '../../../components/UI/Validation';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/core';
 import {tabHeight} from '../../../navigation/TabNav';
 import Routes from '../../../navigation/routes';
 import AppCheckbox from '../../../components/UI/AppCheckbox';
 import {useKeyboard} from '../../../hooks/useKeyboard';
+import { PUSH } from '../../../redux/actions/error_action';
 
 type RouteParamList = {
   params: {
@@ -58,6 +59,7 @@ const SignupStepThree: React.FC = () => {
   const [isApplyTerms, setIsApplyTerms] = useState<number>(0);
   const navigation = useNavigation<any>();
   const keyboard = useKeyboard();
+  const dispatch = useDispatch<any>();
 
   const setAgreement = (value: boolean) => {
     setIsApplyTerms(value ? 1 : 0);
@@ -68,6 +70,9 @@ const SignupStepThree: React.FC = () => {
   };
 
   const nextStep = () => {
+    if(password !== confirmPassword) {
+      dispatch(PUSH(translate.t('forgotPassword.PasswordDoesNotMatch')))
+    }
     if (Validation.validate(VALIDATION_CONTEXT)) {
       return;
     }

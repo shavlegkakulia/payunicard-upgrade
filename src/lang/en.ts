@@ -413,6 +413,7 @@ export default {
         orderCancellDate: 'Order cancellation date',
         cardAddingComplate: 'Adding card completed successfully',
         chooseCard: 'Please select a card',
+        chooseAccount: 'Please select a account',
         warning1: 'Please top up the Balance',
         warning2: '{amount} GEL',
         warning3: 'no later than',

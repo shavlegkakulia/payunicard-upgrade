@@ -81,6 +81,13 @@ class CommonService {
             });
           error.errorMessage = stringTranslator.t("generalErrors.netError");
         } else {
+          
+          if (
+            stringToObject(error.response)?.data?.error_description?.includes("ერთჯერადი კოდი არასწორია") || stringToObject(error.response)?.data?.error_description?.includes("One Time Passcode is Incorrect")
+          ) {
+            Store.dispatch<IErrorAction>({ type: PUSH_ERROR, error: stringToObject(error.response)?.data?.error_description });
+            return Promise.reject(error);
+          }
           if (stringToObject(error.response)?.data?.error !== invalid_grant && stringToObject(error.response)?.data?.error !== require_otp && stringToObject(error.response)?.data?.error !== invalid_username_or_password && stringToObject(error.response)?.data?.error !== require_password_change && stringToObject(error.response)?.data?.error !== invalid_request) {
             store.dispatch<IErrorAction>({
               type: PUSH_ERROR,
