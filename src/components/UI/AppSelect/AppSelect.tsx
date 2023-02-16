@@ -40,6 +40,7 @@ interface IItemProps {
   textStyle?: StyleProp<TextStyle>;
   defaultTitle?: string;
   itemKey?: string | undefined;
+  prefix?: string;
 }
 
 export const SelectItem: React.FC<IItemProps> = props => {
@@ -52,7 +53,7 @@ export const SelectItem: React.FC<IItemProps> = props => {
       ]}
       onPress={() => props.onItemSelect(props.item)}>
       <Text style={props.textStyle}>
-        {props.itemKey ? props.item[props.itemKey] : props.item}
+        {props.prefix ? props.prefix : ''}{props.itemKey ? props.item[props.itemKey] : props.item}
       </Text>
     </TouchableOpacity>
   );
