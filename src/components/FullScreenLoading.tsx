@@ -10,8 +10,16 @@ interface IProps {
 }
 
 const FullScreenLoader: FC<IProps> = props => {
-  const [getvisible, setgetvisible] = useState(props.visible ? true : false);
+  const [getvisible, setgetvisible] = useState(false);
   const ttl = useRef<NodeJS.Timeout>();
+
+  useEffect(() => {
+    if(props.visible) {
+      setgetvisible(true);
+    } else {
+      setgetvisible(false);
+    }
+  }, [props.visible])
   
   useEffect(() => {
     if(ttl.current) clearTimeout(ttl.current)

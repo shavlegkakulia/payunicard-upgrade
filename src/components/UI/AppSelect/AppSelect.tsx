@@ -40,6 +40,7 @@ interface IItemProps {
   textStyle?: StyleProp<TextStyle>;
   defaultTitle?: string;
   itemKey?: string | undefined;
+  prefix?: string;
 }
 
 export const SelectItem: React.FC<IItemProps> = props => {
@@ -52,7 +53,7 @@ export const SelectItem: React.FC<IItemProps> = props => {
       ]}
       onPress={() => props.onItemSelect(props.item)}>
       <Text style={props.textStyle}>
-        {props.itemKey ? props.item[props.itemKey] : props.item}
+        {props.prefix ? props.prefix : ''}{props.itemKey ? props.item[props.itemKey] : props.item}
       </Text>
     </TouchableOpacity>
   );
@@ -80,8 +81,7 @@ const AppSelect: React.FC<IProps> = props => {
           onPress={() => props.onToggle()}
         />
           <View style={[styles.modalView]}>
-            <ScrollView style={{maxHeight: dimension.height - 200}}>
-              {props.showSearchView && <AppInput
+          {props.showSearchView && <AppInput
                 key={''}
                 context={''}
                 customKey={''}
@@ -90,6 +90,7 @@ const AppSelect: React.FC<IProps> = props => {
                 style={styles.searchBox}
                 onChange={props.onSearch || ((_: string) => {})}
               />}
+            <ScrollView style={{maxHeight: dimension.height - 200}}>
               {props.isDataLoading ? (
                 <View style={styles.loader}>
                   <ActivityIndicator size={'small'} color={colors.primary} />
@@ -173,7 +174,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchBox: {
-      marginHorizontal: 15
+      marginHorizontal: 15,
+      marginBottom: 15
   },
   loader: {
     paddingTop: 20

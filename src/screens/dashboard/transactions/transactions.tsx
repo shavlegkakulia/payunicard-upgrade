@@ -66,6 +66,7 @@ import CurrencySelect from '../../../components/CurrencySelect/CurrencySelect';
 import Cover from '../../../components/Cover';
 import RNFetchBlob from 'rn-fetch-blob';
 import { EN, KA, ka_ge } from '../../../lang';
+import { PUSH } from '../../../redux/actions/error_action';
 
 const filter_items = {
   selectedAccount: 'selectedAccount',
@@ -148,7 +149,6 @@ const Transactions: React.FC = () => {
   const onSetEndtDate = (date: Date) => {
    // if (dateDiff(startDateValue, date) <= 0) return;
     setSelectedEndDate(date);
-    console.log(date)
   };
 
   const chooseAccounts = () => {
@@ -206,7 +206,7 @@ const Transactions: React.FC = () => {
     if (selectedEndDate) {
       data = {...data, endDate: `${selectedEndDate.getFullYear()}-${('0' + (selectedEndDate.getMonth() + 1)).slice(-2)}-${('0' + selectedEndDate.getDate()).slice(-2)}${endtimezone}`};
     }
-console.log('filter transaction request >> ', data);
+
     if (selectedAccount) {
       if (selectedFromCurrency) {
         data = {
@@ -521,8 +521,11 @@ console.log('filter transaction request >> ', data);
 
   const downloadTransactionDetails = () => {
     if (isPdfDownloading) return;
-
-    const data: IExportStatementsAsPdfMobileRequest = {
+    if(!selectedAccount) {
+      dispatch(PUSH(translate.t('orderCard.chooseAccount')))
+      return;
+    }
+    let data: IExportStatementsAsPdfMobileRequest = {
       AccountNumber: selectedAccount?.accountNumber,
       StartDate: `${selectedStartDate.getFullYear()}-${
         selectedStartDate.getMonth() + 1
@@ -530,8 +533,11 @@ console.log('filter transaction request >> ', data);
       EndDate: `${selectedEndDate.getFullYear()}-${
         selectedEndDate.getMonth() + 1
       }-${selectedEndDate.getDate()}`,
-      Ccy: selectedFromCurrency?.key,
+    
     };
+    if (selectedFromCurrency?.key) {
+      data = { ...data, Ccy: selectedFromCurrency?.key };
+    }
 
     setIsPdfDownloading(true);
     UserService.ExportStatementsAsPdfMobile(data).subscribe({
@@ -561,7 +567,7 @@ console.log('filter transaction request >> ', data);
     unicardStatements?.filter(statement =>
       statement.tranname?.includes(getString(searchValue)),
     );
-console.log(isBaseDate, monthCount)
+
   const fromdt = useMemo(()=>{
     return <DatePicker
     date={startDateValue}
@@ -580,14 +586,13 @@ console.log(isBaseDate, monthCount)
     mode="date"
   />
   }, [startDateValue])
-console.log('---', selectedEndDate)
+
   const todt = useMemo(() =>{
     return <DatePicker
     date={endDateVlaue}
     maximumDate={new Date()}
    // timeZoneOffsetInMinutes={-7 * 60}
     onDateChange={data => {
-      console.log('***', data)
       setDateValue(prev => {
         let startDateValue = prev.startDateValue;
      //   let endDateVlaue = new Date(data.toLocaleDateString());
@@ -600,7 +605,7 @@ console.log('---', selectedEndDate)
     mode="date"
   />
   }, [endDateVlaue])
-console.log(filteredStatements)
+
   const BottomLoading = () =>
     fetchingMore ? (
       <View style={styles.bottomLoading}>

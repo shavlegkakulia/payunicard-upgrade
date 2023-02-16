@@ -87,6 +87,9 @@ const PasswordChangeStepFour: React.FC = () => {
   };
 
   const next = () => {
+    if(password !== confirmPassword) {
+      dispatch(PUSH(translate.t('forgotPassword.PasswordDoesNotMatch')))
+    }
     if (Validation.validate(VALIDATION_CONTEXT)) {
       return;
     }

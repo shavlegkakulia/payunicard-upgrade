@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  Dimensions,
   Image,
   ImageSourcePropType,
   Keyboard,
@@ -478,6 +477,7 @@ const Settings: React.FC = () => {
   }, []);
 
   const onBiometric = () => {
+    setStartBiometric(false);
     if (biometricAvailable) {
       if (!isPassCodeEnabled) {
         togglePassCodeSwitch();
@@ -520,7 +520,7 @@ const Settings: React.FC = () => {
     <DashboardLayout>
     <>
     <FullScreenLoader background={colors.none} visible={isLoading} />
-      <BiometricAuthScreen start={startBiometric} returnStatus={getStatus} />
+      <BiometricAuthScreen start={startBiometric} returnStatus={getStatus} onSucces={onBiometric} />
       <SafeAreaView style={styles.content}>
         <ScrollView
           style={screenStyles.screenContainer}
@@ -586,7 +586,7 @@ const Settings: React.FC = () => {
               />
             </TouchableOpacity>
             {isSensorAvailable !== undefined && isSensorAvailable !== false && (
-              <TouchableOpacity style={styles.navItem} onPress={GoToBiometric}>
+              <TouchableOpacity style={styles.navItem}>
                 <View style={styles.navItemDetail}>
                   <Image
                     source={
@@ -620,7 +620,7 @@ const Settings: React.FC = () => {
                   }}
                   thumbColor={isFaceIdEnabled ? colors.white : colors.white}
                   ios_backgroundColor={colors.inputBackGround}
-                  onValueChange={onBiometric}
+                  onValueChange={GoToBiometric}
                   value={isFaceIdEnabled}
                 />
               </TouchableOpacity>

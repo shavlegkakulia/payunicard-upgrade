@@ -106,11 +106,15 @@ const SignupForm: React.FC = () => {
     }
   }, [phone, code])
 
-  useEffect(() => {
-    checkPhoneValid();
-  }, [phone, code])
+  // useEffect(() => {
+  //   if(loaded.current) {
+  //     checkPhoneValid();
+  //   }
+  //   loaded.current = true;
+  // }, [phone, code])
 
   const nextStep = () => {
+    checkPhoneValid();
     if (!code || !code?.dialCode) {
       setCodeErrorStyle({
         borderColor: colors.danger,
@@ -188,6 +192,7 @@ const SignupForm: React.FC = () => {
                       item={code}
                       onItemSelect={() => setCodeVisible(true)}
                       style={styles.countryItem}
+                      prefix='+'
                     />
                   ) : (
                     <TouchableOpacity

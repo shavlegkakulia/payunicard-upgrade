@@ -418,6 +418,7 @@ export default {
         orderCancellDate: 'შეკვეთის გაუქმების თარიღი',
         cardAddingComplate: 'ბარათის დამატება დასრულდა წარმატებით',
         chooseCard: 'გთხოვთ აირჩიეთ ბარათი',
+        chooseAccount: 'გთხოვთ აირჩიეთ ანგარიში',
         warning1: 'გთხოვთ ბალანსი შეავსოთ',
         warning2: '{amount} ლარით',
         warning3: 'არაუგვიანეს',

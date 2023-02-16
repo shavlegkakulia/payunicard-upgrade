@@ -216,7 +216,7 @@ class AuthService {
         return response;
       },
       async (error: any) => {
-        console.log('***', error)
+    //   console.log('***', error)
         let { refreshToken } = Store.getState().AuthReducer || await this.getRefreshToken();
         const stringTranslator = Store.getState().TranslateReduser;
         error.response = error.response || {};
@@ -239,7 +239,12 @@ class AuthService {
             console.log('Response 400 =>>>>>>', error?.response)
             error.message = stringTranslator.t("generalErrors.errorOccurred");
           }
-
+          if (
+            stringToObject(error.response)?.data?.error_description?.includes("ერთჯერადი კოდი არასწორია") || stringToObject(error.response)?.data?.error_description?.includes("One Time Passcode is Incorrect")
+          ) {
+            Store.dispatch<IErrorAction>({ type: PUSH_ERROR, error: stringToObject(error.response)?.data?.error_description });
+            return Promise.reject(error);
+          }
           if (stringToObject(error.response)?.data?.error_description === invalid_username_or_password) {
             Store.dispatch<IErrorAction>({ type: PUSH_ERROR, error: stringTranslator.t("generalErrors.invalidUser") });
             return Promise.reject(error);

@@ -59,6 +59,7 @@ const SignupStepTwo: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
   const [chooseDate, setChooseDate] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
   const [countries, setCountries] = useState<
     ICitizenshipCountry[] | undefined
   >();
@@ -111,7 +112,7 @@ const SignupStepTwo: React.FC = () => {
   useEffect(() => {
     getCitizenshipCountries();
   }, []);
-console.log('??', birthDate?.toISOString())
+
   const nextStep = () => {
     if (birthDate === null) {
       setDateErrorStyle({
@@ -176,6 +177,7 @@ console.log('??', birthDate?.toISOString())
     [chooseDate, birthDate],
   );
 
+const filteredCountries = useMemo(() => [...(countries || [])].filter(country => country.countryName?.includes(searchValue)), [countries, searchValue]);
 
   return (
     <KeyboardAvoidingView
@@ -234,11 +236,15 @@ console.log('??', birthDate?.toISOString())
                 </TouchableOpacity>
               )}
               <AppSelect
+                showSearchView={true}
                 itemKey="countryName"
-                elements={countries}
+                elements={filteredCountries}
                 selectedItem={selectedCountry}
                 itemVisible={countrySelectVisible}
+                searchValue={searchValue}
+                onSearch={e => setSearchValue(e)}
                 onSelect={item => {
+                  setSearchValue('');
                   setSelectedCountry(item);
                   setCountrySelectVisible(false);
                 }}
