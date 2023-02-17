@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   Appearance,
+  ActivityIndicator,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import AppButton from '../../components/UI/AppButton';
@@ -109,6 +110,7 @@ const SetLoginWithPassCode: React.FC<IProps> = props => {
 };
 
 return axios<IAuthorizationResponse>(options).then(async response => {
+  setIsLoading(false)
         if (!response.data.access_token) throw response;
 
         const date = new Date();
@@ -250,7 +252,17 @@ return axios<IAuthorizationResponse>(options).then(async response => {
 
   return (
     <View style={styles.container}>
-      {isLoading && <FullScreenLoader />}
+      {isLoading && (
+        <TouchableOpacity
+          onPress={() => setIsLoading(false)}
+          style={[styles.loader]}
+        >
+          <>
+            <ActivityIndicator size="large" color={colors.primary} />
+            <Text>pascode</Text>
+          </>
+        </TouchableOpacity>
+      )}
       <BiometricAuthScreen
         start={startBiometric}
         returnStatus={getStatus}
@@ -258,7 +270,7 @@ return axios<IAuthorizationResponse>(options).then(async response => {
       />
       <View style={styles.user}>
         <Image
-          source={{uri: props.UserData?.imageUrl}}
+          source={{ uri: props.UserData?.imageUrl }}
           style={styles.image}
           resizeMode="cover"
         />
@@ -268,81 +280,82 @@ return axios<IAuthorizationResponse>(options).then(async response => {
         <AppButton
           TextStyle={styles.changeAccountText}
           style={styles.changeAccount}
-          title={translate.t('login.loginWithAnother')}
+          title={translate.t("login.loginWithAnother")}
           onPress={props.onDismiss}
         />
       </View>
       <View style={styles.dots}>
         <View
-          style={[
-            styles.dot,
-            code && code[0] ? {...activeDotBg} : dotBg,
-          ]}></View>
+          style={[styles.dot, code && code[0] ? { ...activeDotBg } : dotBg]}
+        ></View>
         <View
-          style={[
-            styles.dot,
-            code && code[1] ? {...activeDotBg} : dotBg,
-          ]}></View>
+          style={[styles.dot, code && code[1] ? { ...activeDotBg } : dotBg]}
+        ></View>
         <View
-          style={[
-            styles.dot,
-            code && code[2] ? {...activeDotBg} : dotBg,
-          ]}></View>
+          style={[styles.dot, code && code[2] ? { ...activeDotBg } : dotBg]}
+        ></View>
         <View
-          style={[
-            styles.dot,
-            code && code[3] ? {...activeDotBg} : dotBg,
-          ]}></View>
+          style={[styles.dot, code && code[3] ? { ...activeDotBg } : dotBg]}
+        ></View>
       </View>
       <View style={styles.pad}>
         <View style={styles.tabs}>
           <TouchableOpacity
-            onPress={setNum.bind(this, '1')}
-            style={styles.keyNum}>
+            onPress={setNum.bind(this, "1")}
+            style={styles.keyNum}
+          >
             <Text style={styles.num}>1</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={setNum.bind(this, '2')}
-            style={styles.keyNum}>
+            onPress={setNum.bind(this, "2")}
+            style={styles.keyNum}
+          >
             <Text style={styles.num}>2</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={setNum.bind(this, '3')}
-            style={styles.keyNum}>
+            onPress={setNum.bind(this, "3")}
+            style={styles.keyNum}
+          >
             <Text style={styles.num}>3</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.tabs}>
           <TouchableOpacity
-            onPress={setNum.bind(this, '4')}
-            style={styles.keyNum}>
+            onPress={setNum.bind(this, "4")}
+            style={styles.keyNum}
+          >
             <Text style={styles.num}>4</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={setNum.bind(this, '5')}
-            style={styles.keyNum}>
+            onPress={setNum.bind(this, "5")}
+            style={styles.keyNum}
+          >
             <Text style={styles.num}>5</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={setNum.bind(this, '6')}
-            style={styles.keyNum}>
+            onPress={setNum.bind(this, "6")}
+            style={styles.keyNum}
+          >
             <Text style={styles.num}>6</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.tabs}>
           <TouchableOpacity
-            onPress={setNum.bind(this, '7')}
-            style={styles.keyNum}>
+            onPress={setNum.bind(this, "7")}
+            style={styles.keyNum}
+          >
             <Text style={styles.num}>7</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={setNum.bind(this, '8')}
-            style={styles.keyNum}>
+            onPress={setNum.bind(this, "8")}
+            style={styles.keyNum}
+          >
             <Text style={styles.num}>8</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={setNum.bind(this, '9')}
-            style={styles.keyNum}>
+            onPress={setNum.bind(this, "9")}
+            style={styles.keyNum}
+          >
             <Text style={styles.num}>9</Text>
           </TouchableOpacity>
         </View>
@@ -350,26 +363,26 @@ return axios<IAuthorizationResponse>(options).then(async response => {
           <TouchableOpacity onPress={onBiometric} style={styles.keyNum}>
             <Image
               source={
-                biometricType == 'Face ID' ?
-                require('./../../assets/images/Faceid-black.png')
-                :
-                biometricType == 'Touch ID' ?
-                require('./../../assets/images/Fingerprint-black.png')
-                :
-                require('./../../assets/images/Biometrics-black.png')
+                biometricType == "Face ID"
+                  ? require("./../../assets/images/Faceid-black.png")
+                  : biometricType == "Touch ID"
+                  ? require("./../../assets/images/Fingerprint-black.png")
+                  : require("./../../assets/images/Biometrics-black.png")
               }
               style={styles.otherImg}
             />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={setNum.bind(this, '0')}
-            style={styles.keyNum}>
+            onPress={setNum.bind(this, "0")}
+            style={styles.keyNum}
+          >
             <Text style={styles.num}>0</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={setNum.bind(this, '-')}
-            style={styles.keyNum}>
-            <Text style={styles.del}>{translate.t('common.delete')}</Text>
+            onPress={setNum.bind(this, "-")}
+            style={styles.keyNum}
+          >
+            <Text style={styles.del}>{translate.t("common.delete")}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -466,6 +479,12 @@ const styles = StyleSheet.create({
     lineHeight: 14,
     color: '#FF8F00',
   },
+  loader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF'
+  }
 });
 
 export default SetLoginWithPassCode;
