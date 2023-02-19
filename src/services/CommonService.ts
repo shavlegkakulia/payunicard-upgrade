@@ -10,6 +10,7 @@ import {stringToObject} from '../utils/utils';
 import {invalid_grant, invalid_request, invalid_username_or_password, require_otp, require_password_change} from '../constants/errorCodes';
 import Store from './../redux/store';
 import DeviceInfro from 'react-native-device-info';
+import { subscriptionService } from './../services/subscriptionService';
 
 class CommonService {
   constructor() {
@@ -86,6 +87,7 @@ class CommonService {
             stringToObject(error.response)?.data?.error_description?.includes("ერთჯერადი კოდი არასწორია") || stringToObject(error.response)?.data?.error_description?.includes("One Time Passcode is Incorrect")
           ) {
             Store.dispatch<IErrorAction>({ type: PUSH_ERROR, error: stringToObject(error.response)?.data?.error_description });
+            subscriptionService.sendData('otp_error', stringToObject(error.response)?.data?.error_description);
             return Promise.reject(error);
           }
           if (stringToObject(error.response)?.data?.error !== invalid_grant && stringToObject(error.response)?.data?.error !== require_otp && stringToObject(error.response)?.data?.error !== invalid_username_or_password && stringToObject(error.response)?.data?.error !== require_password_change && stringToObject(error.response)?.data?.error !== invalid_request) {

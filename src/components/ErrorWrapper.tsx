@@ -45,6 +45,7 @@ const ErrorWrapper: FC<Props> = ({children}) => {
 
     return (
         <View style={styles.container}>
+                        {children}
             {errors?.errors !== undefined &&
                 <Modal transparent>
                     <Animated.View style={{ ...styles.errorContainer, transform: [{ translateY: translateY }] }}>
@@ -53,7 +54,6 @@ const ErrorWrapper: FC<Props> = ({children}) => {
                         </Text>
                     </Animated.View>
                 </Modal>}
-            {children}
         </View>
     )
 }
@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
     },
     errorContainer: {
         backgroundColor: colors.danger,
-        zIndex: 9,
-        elevation: 9999,
+        zIndex: 9999999999,
+        elevation: 9999999999,
         position: 'absolute',
         top: 0,
         bottom: 0,

@@ -10,6 +10,7 @@ import { IAuthAction, REFRESH, SET_DEVICE_ID } from '../redux/action_types/auth_
 import { AUTH_USER_INFO, DEVICE_ID, TOKEN_EXPIRE } from '../constants/defaults';
 import DeviceInfro from 'react-native-device-info';
 import { getString } from '../utils/Converter';
+import { subscriptionService } from './../services/subscriptionService';
 
 declare module 'axios' {
   interface AxiosRequestConfig {
@@ -243,6 +244,7 @@ class AuthService {
             stringToObject(error.response)?.data?.error_description?.includes("ერთჯერადი კოდი არასწორია") || stringToObject(error.response)?.data?.error_description?.includes("One Time Passcode is Incorrect")
           ) {
             Store.dispatch<IErrorAction>({ type: PUSH_ERROR, error: stringToObject(error.response)?.data?.error_description });
+            subscriptionService.sendData('otp_error', stringToObject(error.response)?.data?.error_description);
             return Promise.reject(error);
           }
           if (stringToObject(error.response)?.data?.error_description === invalid_username_or_password) {

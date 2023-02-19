@@ -549,7 +549,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.4;
+				CURRENT_PROJECT_VERSION = 4.6;
 				DEVELOPMENT_TEAM = 8J42C4RH4D;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Payunicard/Info.plist;
@@ -558,7 +558,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.4;
+				MARKETING_VERSION = 4.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -583,7 +583,7 @@
 				CODE_SIGN_ENTITLEMENTS = Payunicard/PayunicardRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.4;
+				CURRENT_PROJECT_VERSION = 4.6;
 				DEVELOPMENT_TEAM = 8J42C4RH4D;
 				INFOPLIST_FILE = Payunicard/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Payunicard;
@@ -591,7 +591,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.4;
+				MARKETING_VERSION = 4.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

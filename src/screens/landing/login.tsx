@@ -10,7 +10,8 @@ import {
   Platform,
   BackHandler,
   Modal,
-  NativeModules
+  NativeModules,
+  ActivityIndicator
 } from 'react-native';
 import AppInput, {autoCapitalize} from './../../components/UI/AppInput';
 import AppButton from './../../components/UI/AppButton';
@@ -72,8 +73,8 @@ const LoginForm: React.FC<IPageProps> = ({loginWithPassword}) => {
   ) as ITranslateState;
   const timeoutObject = useRef<any>(null);
   const keyboardVisible = useRef<EmitterSubscription>();
-  const [username, setUserName] = useState<string | undefined>('Sh.kakulia');
-  const [password, setPassword] = useState('Shalva777*');
+  const [username, setUserName] = useState<string | undefined>('');
+  const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(0);
   const [otp, setOtp] = useState<any>(null);
   const [focused, setFocused] = useState(false);
@@ -148,6 +149,7 @@ const LoginForm: React.FC<IPageProps> = ({loginWithPassword}) => {
     storage
       .getItem('PassCodeEnbled')
       .then(async exists => {
+        setIsLoading(false); 
         if (exists !== null) {
           const _access_token = await storage.getItem('access_token');
           const _refresh_token = await storage.getItem('refresh_token');
@@ -162,7 +164,9 @@ const LoginForm: React.FC<IPageProps> = ({loginWithPassword}) => {
           setHasPasCode(false);
         }
       })
-      .finally(() => {setIsLoading(false); });
+      .finally(() => {setIsLoading(false); }).catch(() => {
+        setIsLoading(false); setHasPasCode(false)
+      });
   }, []);
 
   useEffect(() => {
@@ -343,7 +347,20 @@ const LoginForm: React.FC<IPageProps> = ({loginWithPassword}) => {
   };
 
   if (isLoading || hasPasCode === undefined) {
-    return <FullScreenLoader visible={true} />;
+   
+      <TouchableOpacity
+        onPress={() => {
+          setIsLoading(false);
+          setHasPasCode(false)
+        }}
+        style={[styles.loader]}
+      >
+        <>
+          <ActivityIndicator size="large" color={colors.primary} />
+          <Text>login</Text>
+        </>
+      </TouchableOpacity>
+   
   }
 
   let buttonContainerStyle = focused
@@ -567,6 +584,12 @@ const styles = StyleSheet.create({
   button: {
     marginVertical: Platform.OS === 'ios' ? 70 : 40,
   },
+  loader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF'
+  }
 });
 
 export default LoginForm;

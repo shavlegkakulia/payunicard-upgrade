@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LandingLayout from '../LandingLayout';
 import FirstLoad from './firstLoad';
 import Login from './login';
@@ -39,7 +39,11 @@ const Main: React.FC = () => {
             setIsLoading(false);
         }).finally(() => {
             setIsLoading(false);
+        }).catch(() => {
+            setIsLoading(false);
         })
+
+        return () => setIsLoading(false)
     }, []);
 
     if (firstLoad) {
@@ -56,7 +60,17 @@ const Main: React.FC = () => {
             <View style={styles.container}>
                 <Login loginWithPassword={route.params?.loginWithPassword} />
             </View>
-            <FullScreenLoader visible={isLoading} maxTime={2000} />
+            {isLoading && (
+        <TouchableOpacity
+          onPress={() => setIsLoading(false)}
+          style={[styles.loader]}
+        >
+          <>
+            <ActivityIndicator size="large" color={colors.primary} />
+            {/* <Text>landing</Text> */}
+          </>
+        </TouchableOpacity>
+      )}
             </>
         </LandingLayout>
     )
@@ -69,7 +83,13 @@ const styles = StyleSheet.create({
     },
     firstLoadContainer: {
         flex: 1
-    }
+    },
+    loader: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF'
+      }
 })
 
 export default Main;

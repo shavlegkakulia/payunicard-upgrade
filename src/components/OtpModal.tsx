@@ -1,27 +1,29 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
   StyleProp,
   ViewStyle,
   Modal,
-  TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
   Image,
+  Text,
 } from 'react-native';
 import FloatingLabelInput from '../containers/otp/Otp';
 import {
   ITranslateState,
   IGlobalState as ITranslateGlobalState,
 } from './../redux/action_types/translate_action_types';
-import {useSelector} from 'react-redux';
+import { useSelector} from 'react-redux';
 import {getString} from './../utils/Converter';
 import SmsRetriever from 'react-native-sms-retriever';
 import AppButton from './UI/AppButton';
+import colors from '../constants/colors';
+import { subscriptionService } from '../services/subscriptionService';
 
 interface IProps {
   otp?: string;
@@ -39,6 +41,7 @@ interface IProps {
 }
 
 const OtpModal: React.FC<IProps> = props => {
+  const [error, setError] = useState('');
   const onSmsListener = async () => {
     try {
       const registered = await SmsRetriever.startSmsRetriever();
@@ -72,6 +75,26 @@ const OtpModal: React.FC<IProps> = props => {
     };
   }, [Platform.OS]);
 
+  useEffect(() => {
+    if(error) {
+      setError('');
+    }
+  }, [props.otp])
+
+  useEffect(() => {
+    subscriptionService.getData().subscribe({
+      next: res => {
+        if(res?.key === 'otp_error') {
+          setError(res.data);
+        }
+      }
+    });
+
+    return () => {
+      subscriptionService.clearData();
+    }
+  })
+
   const translate = useSelector<ITranslateGlobalState>(
     state => state.TranslateReduser,
   ) as ITranslateState;
@@ -87,7 +110,7 @@ const OtpModal: React.FC<IProps> = props => {
         <KeyboardAvoidingView
           {...(Platform.OS === 'ios' && {behavior: 'padding'})}
           style={styles.over}>
-          <TouchableOpacity style={styles.modalClose} onPress={props.onClose}>
+          <TouchableOpacity style={styles.modalClose} onPress={() => props.onClose?.()}>
             <Image
               source={require('./../assets/images/close40x40.png')}
               style={styles.modalCloseIcon}
@@ -102,6 +125,7 @@ const OtpModal: React.FC<IProps> = props => {
               resendTitle={props.resendTitle || translate.t('otp.resend')}
               label={props.label || translate.t('otp.smsCode')}
             />
+            {error ? <Text style={styles.error}>{error}</Text> : null }
           </View>
           <View style={styles.buttons}>
             <AppButton
@@ -142,6 +166,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-around',
     paddingVertical: 40,
+  },
+  error: {
+    fontFamily: 'FiraGO-Regular',
+    fontSize: 11,
+    color: colors.danger,
+    marginTop: 7,
+    marginHorizontal: 18
   }
 });
 

@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import {View, ActivityIndicator, StyleSheet, Modal} from 'react-native';
+import {View, ActivityIndicator, StyleSheet, Modal, TouchableOpacity, Text} from 'react-native';
 import colors from '../constants/colors';
 
 interface IProps {
@@ -7,6 +7,7 @@ interface IProps {
   visible?: boolean;
   hideLoader?: boolean;
   maxTime?: number;
+  from?: string;
 }
 
 const FullScreenLoader: FC<IProps> = props => {
@@ -28,20 +29,23 @@ const FullScreenLoader: FC<IProps> = props => {
     }, props.maxTime || 5000);
 
     return () => clearTimeout(ttl.current);
-  }, [props.visible, props.maxTime]);
-  
+  }, [props.maxTime]);
+ 
   return (
     <Modal animationType="fade" visible={getvisible} transparent={true}>
-      <View
+      <TouchableOpacity onPress={() => setgetvisible(false)}
         style={[
           styles.container,
           StyleSheet.absoluteFill,
           props.background ? {backgroundColor: props?.background} : undefined,
         ]}>
         {!props.hideLoader && (
-          <ActivityIndicator size="large" color={colors.primary} />
-        )}
-      </View>
+<>
+<ActivityIndicator size="large" color={colors.primary} />
+{/* <Text>{props.from}</Text> */}
+</>
+)}
+      </TouchableOpacity>
     </Modal>
   );
 };
