@@ -21,6 +21,17 @@ const TransactionItem: React.FC<IProps> = (props) => {
     state => state.TranslateReduser,
   ) as ITranslateState;
 
+  const onFormatDate = (date?: string) => {
+    if(!date) {
+      return "";
+    }
+
+    const dateArray = date.split(' ');
+    if(dateArray.length)
+      return dateArray[0].replaceAll('-', '/');
+    return "";
+  }
+
   if(getNumber(props.unicards?.length) <= 0 && getNumber(props.statements?.length) <= 0) {
     return <View>
       <Text style={styles.emptyTransactionText}>{translate.t('transaction.transactionNotExists')}</Text>
@@ -101,7 +112,7 @@ const TransactionItem: React.FC<IProps> = (props) => {
                     <View style={styles.transactionsViewItemRight}>
                       <View style={styles.transactionsViewItemDetail}>
                         <Text style={styles.transactionsViewItemDate}>
-                          {formatDate(st.tranDate?.toString(), '/')}
+                          {onFormatDate(st.tranDate?.toString())}
                         </Text>
                         <Text
                           numberOfLines={1}

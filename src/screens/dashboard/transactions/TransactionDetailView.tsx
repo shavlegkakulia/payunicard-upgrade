@@ -21,7 +21,6 @@ import {
   getNumber,
   getString,
 } from '../../../utils/Converter';
-import { formatDate} from '../../../utils/utils';
 import envs from '../../../../config/env';
 import { ITranslateState, IGlobalState as ITranslateGlobalState } from '../../../redux/action_types/translate_action_types';
 import { useSelector } from 'react-redux';
@@ -49,6 +48,20 @@ const TRANSACTION_TYPES = {
   TRANPOS: 4,
   TRANUTILITY: 5,
 };
+
+const onFormatDate = (date?: string) => {
+  if(!date) {
+    return "";
+  }
+  const dateArray = date.split(' ');
+  let d = dateArray[0].split('/');
+  let _date: string[] = [];
+  d.forEach(el => {
+    _date.push(('0' + el).slice(el.length === 1 ? -2 : -4))
+  })
+ 
+  return _date.join('/');
+}
 
 const ViewCliring: React.FC<IProps> = props => {
   const translate = useSelector<ITranslateGlobalState>(
@@ -91,7 +104,7 @@ const ViewCliring: React.FC<IProps> = props => {
           {props.statement?.tranDate !== undefined && (
             <View style={styles.tranDateColumn}>
               <Text style={styles.textDescStyle}>
-                {formatDate(props.statement?.tranDate, '/')}
+                {onFormatDate(props.statement?.tranDate)}
               </Text>
             </View>
           )}
@@ -139,7 +152,7 @@ const ViewCliring: React.FC<IProps> = props => {
           <View style={styles.directionRow}>
             <Text style={styles.textDescStyle}>{translate.t('common.payDate')}</Text>
             <Text style={styles.textDescValueStyle}>
-              {formatDate(props.statement?.tranDate, '/')}
+              {onFormatDate(props.statement?.tranDate)}
             </Text>
           </View>
         )}
@@ -147,10 +160,10 @@ const ViewCliring: React.FC<IProps> = props => {
           <View style={styles.directionRow}>
             <Text style={styles.textDescStyle}>{translate.t('common.postDate')}</Text>
             <Text style={styles.textDescValueStyle}>
-              {formatDate(
+              {onFormatDate(
                 props.statement?.dateCreated
                   ? props.statement?.dateCreated.toString()
-                  : '', '/' 
+                  : '' 
               )}
             </Text>
           </View>
@@ -222,10 +235,7 @@ const ViewTransfer: React.FC<IProps> = props => {
           {(props.statement?.tranDate || props.statement?.dateCreated) && (
             <View style={styles.tranDateColumn}>
               <Text style={styles.textDescValueStyleNpBreak}>
-                {formatDate(
-                  props.statement?.dateCreated?.toString() ||
-                    props.statement?.tranDate, '/'
-                )}
+                {onFormatDate(props.statement?.dateCreated?.toString() || props.statement?.tranDate)}
               </Text>
             </View>
           )}
@@ -309,7 +319,7 @@ const ViewTransfer: React.FC<IProps> = props => {
           <View style={styles.directionRow}>
             <Text style={styles.textDescStyle}>{translate.t('common.payDate')}</Text>
             <Text style={styles.textDescValueStyle}>
-              {formatDate(props.statement?.tranDate, '/')}
+              {onFormatDate(props.statement?.tranDate)}
             </Text>
           </View>
         )}
@@ -317,10 +327,10 @@ const ViewTransfer: React.FC<IProps> = props => {
           <View style={styles.directionRow}>
             <Text style={styles.textDescStyle}>{translate.t('common.postDate')}</Text>
             <Text style={styles.textDescValueStyle}>
-              {formatDate(
+              {onFormatDate(
                 props.statement?.dateCreated
                   ? props.statement?.dateCreated.toString()
-                  : '', '/'
+                  : ''
               )}
             </Text>
           </View>
@@ -383,9 +393,9 @@ const ViewUtility: React.FC<IProps> = props => {
           {(props.statement?.tranDate || props.statement?.dateCreated) && (
             <View style={styles.tranDateColumn}>
               <Text style={styles.textDescStyle}>
-                {formatDate(
+                {onFormatDate(
                   props.statement?.dateCreated?.toString() ||
-                    props.statement?.tranDate, '/'
+                    props.statement?.tranDate
                 )}
               </Text>
             </View>
@@ -500,7 +510,7 @@ const ViewBlocked: React.FC<IProps> = props => {
           {props.fundStatement?.transactionDate !== undefined  && (
             <View style={styles.tranDateColumn}>
               <Text style={styles.textDescStyle}>
-                {formatDate(props.fundStatement?.transactionDate, '/')}
+                {onFormatDate(props.fundStatement?.transactionDate)}
               </Text>
             </View>
           )}
