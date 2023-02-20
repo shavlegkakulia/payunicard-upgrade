@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { from } from 'rxjs';
 import envs from './../../config/env';
+import { IEnv } from './AuthService';
 
 export class IError {
     errorMessage?: string | undefined;
@@ -188,43 +189,55 @@ export interface IPayTemplateEditResponseData {
 }
 
 class TemplatesService {
-    getTemplates() {
-        const promise = axios.get<IPayTemplates>(`${envs.API_URL}Template/PayTemplateGet?IncludeDebt=true`);
+    _envs: IEnv | any;
+  constructor() {
+    envs().then(res => this._envs = res);
+  }
+     getTemplates() {
+        
+        const promise = axios.get<IPayTemplates>(`${this._envs.API_URL}Template/PayTemplateGet?IncludeDebt=true`);
         return from(promise);
     }
 
-    deleteTemplate(payTempID: number) {
-        const promise = axios.post<ITemplateDeleteResponse>(`${envs.API_URL}Template/PayTemplateDeActivate`, { payTempID });
+     deleteTemplate(payTempID: number) {
+        
+        const promise = axios.post<ITemplateDeleteResponse>(`${this._envs.API_URL}Template/PayTemplateDeActivate`, { payTempID });
         return from(promise);
     }
 
-    addTemplate(data: IPayTemplateAddRequest) {
-        const promise = axios.post<IMPayTemplateAddResponseData>(`${envs.API_URL}Template/PayTemplateAdd`, data, {objectResponse:true});
+     addTemplate(data: IPayTemplateAddRequest) {
+        
+        const promise = axios.post<IMPayTemplateAddResponseData>(`${this._envs.API_URL}Template/PayTemplateAdd`, data, {objectResponse:true});
         return from(promise);
     }
 
-    editTemplate(data: IPayTemplateAddRequest) {
-        const promise = axios.post<IMPayTemplateAddResponseData>(`${envs.API_URL}Template/EditPayTemplate`, data, {objectResponse:true});
+     editTemplate(data: IPayTemplateAddRequest) {
+        
+        const promise = axios.post<IMPayTemplateAddResponseData>(`${this._envs.API_URL}Template/EditPayTemplate`, data, {objectResponse:true});
         return from(promise);
     }
 
-    getTransferTemplates() {
-        const promise = axios.get<IGetTemplateListByUserResponse>(`${envs.API_URL}Template/GetTransactionTemplates`);
+     getTransferTemplates() {
+        
+        const promise = axios.get<IGetTemplateListByUserResponse>(`${this._envs.API_URL}Template/GetTransactionTemplates`);
         return from(promise);
     }
 
-    addTransactionTemplate(data: IAddTransferTemplateRequest) {
-        const promise = axios.post<IAddTransferTemplateResponseData>(`${envs.API_URL}Template/AddTransactionTemplate`, data, {objectResponse:true});
+     addTransactionTemplate(data: IAddTransferTemplateRequest) {
+        
+        const promise = axios.post<IAddTransferTemplateResponseData>(`${this._envs.API_URL}Template/AddTransactionTemplate`, data, {objectResponse:true});
         return from(promise);
     }
 
-    deactivateUserTemplate(data: IDeactivateUserTemplateRequest) {
-        const promise = axios.post<IIResponseOfDeactivateUserTemplateResponse>(`${envs.API_URL}Template/DeactivateUserTemplate`, data, {objectResponse:true});
+     deactivateUserTemplate(data: IDeactivateUserTemplateRequest) {
+        
+        const promise = axios.post<IIResponseOfDeactivateUserTemplateResponse>(`${this._envs.API_URL}Template/DeactivateUserTemplate`, data, {objectResponse:true});
         return from(promise);
     }
 
-    transactionTemplateEdit(data: IPayTemplateEditRequest) {
-        const promise = axios.post<IPayTemplateEditResponseData>(`${envs.API_URL}Template/transactionTemplateEdit`, data, {objectResponse:true});
+     transactionTemplateEdit(data: IPayTemplateEditRequest) {
+        
+        const promise = axios.post<IPayTemplateEditResponseData>(`${this._envs.API_URL}Template/transactionTemplateEdit`, data, {objectResponse:true});
         return from(promise);
     }
 }

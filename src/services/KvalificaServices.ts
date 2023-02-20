@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {from} from 'rxjs';
 import envs from '../../config/env';
+import { IEnv } from './AuthService';
 import {IError} from './TemplatesService';
 
 export const getKycFullYear = (year: string) => {
@@ -73,33 +74,41 @@ export interface ICloseSessionForSdkResponseData {
 }
 
 class KvalificaService {
-  CheckKycSession() {
+  _envs: IEnv | any;
+  constructor() {
+    envs().then(res => this._envs = res);
+  }
+   CheckKycSession() {
+    
     const promise = axios.get<ICheckKycResponseData>(
-      `${envs.API_URL}Kyc/CheckKyc`,
+      `${this._envs.API_URL}Kyc/CheckKyc`,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  CheckKycForReprocess() {
+   CheckKycForReprocess() {
+    
     const promise = axios.get<ICheckKycResponseData>(
-      `${envs.API_URL}Kyc/CheckKycForReprocess`,
+      `${this._envs.API_URL}Kyc/CheckKycForReprocess`,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  GetKycSessionData() {
+   GetKycSessionData() {
+    
     const promise = axios.get<IGetUserKycDataResponseData>(
-      `${envs.API_URL}Kyc/GetSessionData?GetList=false`,
+      `${this._envs.API_URL}Kyc/GetSessionData?GetList=false`,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  CloseKycSession(id: string) {
+   CloseKycSession(id: string) {
+    
     const promise = axios.get<ICloseSessionForSdkResponseData>(
-      `${envs.API_URL}Kyc/CloseSessionForSdk?SessionId=${id}`,
+      `${this._envs.API_URL}Kyc/CloseSessionForSdk?SessionId=${id}`,
       {objectResponse: true},
     );
     return from(promise);

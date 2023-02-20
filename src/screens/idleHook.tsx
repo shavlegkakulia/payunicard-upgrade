@@ -30,11 +30,11 @@ const IdleHook: React.FC<Props> = props => {
 
   const goRefreshToken = async () => {
     let {refreshToken, accesToken} = Store.getState().AuthReducer;
-
+    const _envs = await envs();
     let authData: any = {
       scope: "Wallet_Api.Full offline_access",
-      client_id: envs.client_id,
-      client_secret: envs.client_secret,
+      client_id: _envs.client_id,
+      client_secret: _envs.client_secret,
       grant_type: "refresh_token",
       refresh_token: refreshToken
   };
@@ -53,7 +53,7 @@ const IdleHook: React.FC<Props> = props => {
       skipRefresh: true,
       headers: { 'content-type': 'application/x-www-form-urlencoded', Authorization: `Bearer ${accesToken}`},
       data,
-      url: `${envs.CONNECT_URL}connect/token`,
+      url: `${_envs.CONNECT_URL}connect/token`,
   };
   return axios<IAuthorizationResponse>(options).then(async response => {
     if (!response.data.access_token) throw response;

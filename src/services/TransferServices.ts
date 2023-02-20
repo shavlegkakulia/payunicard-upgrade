@@ -44,7 +44,8 @@ export const _addTransactionTemplate = (
   });
 };
 
-export const GetSwiftCategories = (bankName: string, swiftCode: string) => {
+export const GetSwiftCategories =  (bankName: string, swiftCode: string) => {
+  return envs().then(res => {
   let q = '';
   if (
     (swiftCode === undefined || swiftCode === '') &&
@@ -64,8 +65,9 @@ export const GetSwiftCategories = (bankName: string, swiftCode: string) => {
   }
 
   const promise = axios.get<IGetSwiftResponse>(
-    `${envs.API_URL}GetSwiftCategories?${q}`,
+    `${res.API_URL}GetSwiftCategories?${q}`,
     {objectResponse: true},
   );
   return from(promise);
+  })
 };

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { from } from 'rxjs';
 import envs from '../../config/env';
+import { IEnv } from './AuthService';
 import { IError } from './TemplatesService';
 
 export interface IGetCardOrderingTariffAmountRequest {
@@ -89,7 +90,12 @@ export interface IGetCardDetailsResponse {
 }
 
 class CardService {
-  getCardOrderingTariffAmount(data: IGetCardOrderingTariffAmountRequest) {
+  _envs: IEnv | any;
+  constructor() {
+    envs().then(res => this._envs = res);
+  }
+   getCardOrderingTariffAmount(data: IGetCardOrderingTariffAmountRequest) {
+    
     let qString = `CardTypeCount=T1_Q${data.T1Q}%3BT2_Q${data.T2Q}%3B`;
     if (data.cityId) {
       qString += `&CityId=${data.cityId}`;
@@ -98,29 +104,32 @@ class CardService {
       qString += `&AccountNumberCH=${data.accountNumberCH}`;
     }
     const promise = axios.get<IGetCardOrderingTariffAmountResponseData>(
-      `${envs.API_URL}Card/GetCardOrderingTariffAmount?${qString}`,
+      `${this._envs.API_URL}Card/GetCardOrderingTariffAmount?${qString}`,
     );
     return from(promise);
   }
 
-  GenerateBarcode(data: IGetBarcodeRequest) {
+   GenerateBarcode(data: IGetBarcodeRequest) {
+    
     const promise = axios.post<IGenerateBarcodeResponseData>(
-      `${envs.API_URL}Files/GenerateBarcode`,
+      `${this._envs.API_URL}Files/GenerateBarcode`,
       data,
     );
     return from(promise);
   }
 
-  AddUserBankCard() {
+   AddUserBankCard() {
+    
     const promise = axios.get<IAddBankCardResponseData>(
-      `${envs.API_URL}Card/addUserBankCard`,
+      `${this._envs.API_URL}Card/addUserBankCard`,
     );
     return from(promise);
   }
 
-  GetUnicardStatement(
+   GetUnicardStatement(
     data: IGetUnicardStatementRequest
   ) {
+    
     let qString = `?`;
     if (data.card) {
       qString += `card=${data.card}`;
@@ -133,13 +142,14 @@ class CardService {
     }
 
     const promise = axios.get<IGetUnicardStatementResponseData>(
-      `${envs.API_URL}Card/GetUnicardStatement${qString}`,
+      `${this._envs.API_URL}Card/GetUnicardStatement${qString}`,
     );
     return from(promise);
   }
 
-  PrepareForDigitalCard(data: IGetCardDetailsRequest) {
-    return axios.post<IGetCardDetailsResponse>( `${envs.API_URL}Card/PrepareDigitalCard`, data)
+   PrepareForDigitalCard(data: IGetCardDetailsRequest) {
+    
+    return axios.post<IGetCardDetailsResponse>( `${this._envs.API_URL}Card/PrepareDigitalCard`, data)
   }
 }
 

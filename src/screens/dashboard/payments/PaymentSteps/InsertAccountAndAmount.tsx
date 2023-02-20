@@ -447,7 +447,10 @@ const InsertAccointAndAmount: React.FC = props => {
                 <AppInput
                   keyboardType="numeric"
                   value={PaymentStore.amount}
-                  onChange={amount => onSetAmount(amount)}
+                  onChange={amount => {
+                    if(/^(\d)*(\.)?([0-9]{1})?$/gm.test(amount) || !amount)
+                    onSetAmount(amount)
+                  }}
                   context={ValidationContext}
                   placeholder={CurrencyConverter(0)}
                   customKey="amount"

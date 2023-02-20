@@ -58,14 +58,24 @@ export interface IRegisterRequest {
   personalId: string;
   citizenshipCountryID?: number;
 }
-
+export interface IEnv {
+  API_URL?: string;
+  CONNECT_URL?: string;
+  TOKEN_TTL?: number;
+  CDN_PATH?: string;
+  client_id?: string;
+  client_secret?: string;
+  googleSiteDomain?: string;
+  googleSiteKey?: string;
+}
 export interface IRegisterResponse {
   ok: boolean;
   errors: any[];
   data: any;
 }
-console.log(envs)
+
 class AuthService {
+  _envs: IEnv | any;
   constructor() {
     DeviceInfro.getUserAgent().then(r => {
       this.DeviceData = JSON.stringify({
@@ -73,6 +83,8 @@ class AuthService {
         userAgent: r
       })
     })
+
+    envs().then(res => this._envs = res);
   }
   DeviceData: string = '';
   refreshStarted: boolean = false;
@@ -105,7 +117,7 @@ class AuthService {
     await storage.removeItem('refresh_token');
   }
 
-  SignIn({ User }: { User: IAuthorizationRequest }) {
+ SignIn({ User }: { User: IAuthorizationRequest }) {
     //cleare remember data if current user is different
       storage
         .getItem(AUTH_USER_INFO)
@@ -117,13 +129,13 @@ class AuthService {
             }
           }
         });
-   
+  
         let authData: IAuthorizationRequest = {
             username: User.username,
             password: User.password,
             scope: "Wallet_Api.Full offline_access",
-            client_id: envs.client_id,
-            client_secret: envs.client_secret,
+            client_id: this._envs.client_id,
+            client_secret: this._envs.client_secret,
             grant_type: "password",
         };
         if (User.otp) {
@@ -140,13 +152,14 @@ class AuthService {
             skipRefresh: true,
             headers: { 'content-type': 'application/x-www-form-urlencoded'},
             data,
-            url: `${envs.CONNECT_URL}connect/token`,
+            url: `${this._envs.CONNECT_URL}connect/token`,
         };
         return from(axios<IAuthorizationResponse>(options));
   }
 
-  SignUp({ User }: { User: IRegisterRequest }) {
-    const promise = axios.post<IRegisterResponse>(`${envs.API_URL}User/UserPreRegistration`, User, { objectResponse: true });
+   SignUp({ User }: { User: IRegisterRequest }) {
+    
+    const promise = axios.post<IRegisterResponse>(`${this._envs.API_URL}User/UserPreRegistration`, User, { objectResponse: true });
     return from(promise);
   }
 
@@ -277,11 +290,11 @@ class AuthService {
         
         //refresh token
         this.refreshStarted = true;
-
+        
         let authData: any = {
           scope: "Wallet_Api.Full offline_access",
-          client_id: envs.client_id,
-          client_secret: envs.client_secret,
+          client_id: this._envs.client_id,
+          client_secret: this._envs.client_secret,
           grant_type: "refresh_token",
           refresh_token: refreshToken
       };
@@ -295,7 +308,7 @@ class AuthService {
         anonymous: true,
         headers: { 'content-type': 'application/x-www-form-urlencoded'},
         data,
-        url: `${envs.CONNECT_URL}connect/token`,
+        url: `${this._envs.CONNECT_URL}connect/token`,
     };
 
     return axios<IAuthorizationResponse>(options).then(async response => {

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {from} from 'rxjs';
 import envs from '../../config/env';
+import { IEnv } from './AuthService';
 import {IError} from './TemplatesService';
 
 export interface IGetDeptRequest {
@@ -202,45 +203,54 @@ export interface IGetPayBillsResponseData {
 }
 
 class TransactionService {
-  checkCostumerDebt(data: IGetDeptRequest) {
+  _envs: IEnv | any;
+  constructor() {
+    envs().then(res => this._envs = res);
+  }
+   checkCostumerDebt(data: IGetDeptRequest) {
+    
     const promise = axios.post<IGetDeptResponseData>(
-      `${envs.API_URL}Transaction/checkdept`,
+      `${this._envs.API_URL}Transaction/checkdept`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  startPaymentTransaction(data: IRegisterPayTransactionRequest) {
+   startPaymentTransaction(data: IRegisterPayTransactionRequest) {
+    
     const promise = axios.post<IRegisterPayTransactionResponseData>(
-      `${envs.API_URL}Transaction/registerpaytransaction`,
+      `${this._envs.API_URL}Transaction/registerpaytransaction`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  UnicardOtp(data: ISendUnicardOtpRequest) {
+   UnicardOtp(data: ISendUnicardOtpRequest) {
+    
     const promise = axios.post<ISendUnicardOtpResponseData>(
-      `${envs.API_URL}Transaction/SendUnicardOtp`,
+      `${this._envs.API_URL}Transaction/SendUnicardOtp`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  startPayBatchTransaction(data: IRegisterBatchPayTransactionRequest) {
+   startPayBatchTransaction(data: IRegisterBatchPayTransactionRequest) {
+    
     const promise = axios.post<IRegisterPayBatchTransactionResponseData>(
-      `${envs.API_URL}Transaction/RegisterBatchPayTransaction`,
+      `${this._envs.API_URL}Transaction/RegisterBatchPayTransaction`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  makeTransaction(toBank: boolean = false, data: IP2PTransactionRequest) {
+   makeTransaction(toBank: boolean = false, data: IP2PTransactionRequest) {
+    
     const promise = axios.post<IP2PTransactionResponseData>(
-      `${envs.API_URL}Transaction/${
+      `${this._envs.API_URL}Transaction/${
         toBank ? 'MakeP2BTransaction' : 'MakeP2PTransaction'
       }`,
       data,
@@ -249,34 +259,38 @@ class TransactionService {
     return from(promise);
   }
 
-  makeP2PForeignTransaction(data: IP2PTransactionRequest) {
+   makeP2PForeignTransaction(data: IP2PTransactionRequest) {
+    
     const promise = axios.post<IP2PTransactionResponseData>(
-      `${envs.API_URL}Transaction/MakeP2PForeignTransaction`,
+      `${this._envs.API_URL}Transaction/MakeP2PForeignTransaction`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  GetUserDataByAccountNumber(data: IGetUserDataByAccountNumberRequest) {
+   GetUserDataByAccountNumber(data: IGetUserDataByAccountNumberRequest) {
+    
     const promise = axios.post<IGetUserDataByAccountNumberResponseData>(
-      `${envs.API_URL}Transaction/GetUserDataByAccountNumber`,
+      `${this._envs.API_URL}Transaction/GetUserDataByAccountNumber`,
       data,
       {objectResponse: false},
     );
     return from(promise);
   }
 
-  TopupTransaction(data: ITopUpTransactionRequest) {
+   TopupTransaction(data: ITopUpTransactionRequest) {
+    
     const promise = axios.post<ITopUpTransactionResponseData>(
-      `${envs.API_URL}Transaction/TopupTransaction`,
+      `${this._envs.API_URL}Transaction/TopupTransaction`,
       data,
       {objectResponse: false},
     );
     return from(promise);
   }
 
-  GetPayBills(longOpID?: number, ForFundsSPExternalTranID?: string | null | undefined) {
+   GetPayBills(longOpID?: number, ForFundsSPExternalTranID?: string | null | undefined) {
+    
     let uri = '?';
     if (longOpID) {
       uri += `LongOpID=${longOpID}`;
@@ -285,7 +299,7 @@ class TransactionService {
     }
    
     const promise = axios.get<IGetPayBillsResponseData>(
-      `${envs.API_URL}Transaction/GetPayBills${uri}`,
+      `${this._envs.API_URL}Transaction/GetPayBills${uri}`,
       {objectResponse: true},
     );
     return from(promise);

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {from} from 'rxjs';
 import envs from '../../config/env';
+import { IEnv } from './AuthService';
 import {ITemplates} from './TemplatesService';
 
 export class IError {
@@ -326,100 +327,117 @@ interface IGetCoutriesData {
 }
 
 class PresentationService {
-  GetCategories(ParentID: number = 0) {
+  _envs: IEnv | any;
+  constructor() {
+    envs().then(res => this._envs = res);
+  }
+   GetCategories(ParentID: number = 0) {
+    
     const promise = axios.get<ICategoryResponse>(
-      `${envs.API_URL}GetCategories`,
+      `${this._envs.API_URL}GetCategories`,
       ParentID ? {params: {ParentID}} : {},
     );
     return from(promise);
   }
 
-  GetPaymentDetails(data: IGetPaymentDetailsRequest) {
+   GetPaymentDetails(data: IGetPaymentDetailsRequest) {
+    
     const promise = axios.get<IGetPaymentDetailsResponse>(
-      `${envs.API_URL}GetPaymentDetails`,
+      `${this._envs.API_URL}GetPaymentDetails`,
       {params: data},
     );
     return from(promise);
   }
 
-  GetMerchantServices(data: IMerchantServicesForTemplateRequest) {
+   GetMerchantServices(data: IMerchantServicesForTemplateRequest) {
+    
     const promise = axios.get<IMerchantServicesForTemplateResponseData>(
-      `${envs.API_URL}GetMerchantServices`,
+      `${this._envs.API_URL}GetMerchantServices`,
       {params: data},
     );
     return from(promise);
   }
 
-  SearchMerchants(value: string) {
+   SearchMerchants(value: string) {
+    
     const promise = axios.get<ISearchMerchantServicesResponse>(
-      `${envs.API_URL}SearchMerchantServices?Search=${value}`,
+      `${this._envs.API_URL}SearchMerchantServices?Search=${value}`,
     );
     return from(promise);
   }
 
-  GetBatchPaymentDetails(data: IGetBatchPaymentDetailsRequets[]) {
+   GetBatchPaymentDetails(data: IGetBatchPaymentDetailsRequets[]) {
+    
     const promise = axios.post<IGetBatchPaymentDetailsRequetsData>(
-      `${envs.API_URL}GetBatchPaymentDetails`,
+      `${this._envs.API_URL}GetBatchPaymentDetails`,
       {paymentDetails: data},
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  GetCitizenshipCountries() {
+   GetCitizenshipCountries() {
+    
     const promise = axios.get<ICountriesResponseData>(
-      `${envs.API_URL}GetCitizenshipCountries`,
+      `${this._envs.API_URL}GetCitizenshipCountries`,
     );
     return from(promise);
   }
 
-  getCities() {
+   getCities() {
+    
     const promise = axios.get<IIResponseOfGetCitiesResponse>(
-      `${envs.API_URL}getCities`,
+      `${this._envs.API_URL}getCities`,
     );
     return from(promise);
   }
 
-  LogError(data: ILogErrorRequest) {
+   LogError(data: ILogErrorRequest) {
+    
     const promise = axios.post<ILogErrorResponseData>(
-      `${envs.API_URL}LogError`,
+      `${this._envs.API_URL}LogError`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  getPackageTypes() {
+   getPackageTypes() {
+    
     const promise = axios.get<IResponsePackageTypeListResponseData>(
-      `${envs.API_URL}getPackageTypes`,
+      `${this._envs.API_URL}getPackageTypes`,
     );
     return from(promise);
   }
 
-  getCardTypes() {
+   getCardTypes() {
+    
     const promise = axios.get<IGetCardTypesResponseData>(
-      `${envs.API_URL}getCardTypes`,
+      `${this._envs.API_URL}getCardTypes`,
     );
     return from(promise);
   }
 
-  get_GetOffers() {
-    const promise = axios.get<IIResponseOfGeOffersResponseData>(`${envs.API_URL}GetOffers`);
+   get_GetOffers() {
+    
+    const promise = axios.get<IIResponseOfGeOffersResponseData>(`${this._envs.API_URL}GetOffers`);
     return from(promise);
   }
 
-  get_GetOfferDetail(OfferId: number, culture?:string) {
+   get_GetOfferDetail(OfferId: number, culture?:string) {
+    
     let q = '';
     if(culture) {
       q = `&Culture=${culture}`;
     }
-    const promise = axios.get<IIResponseOfGeOffersDetailsResponseData>(`${envs.API_URL}GetOffer?OfferId=${OfferId}${q}`);
+    const promise = axios.get<IIResponseOfGeOffersDetailsResponseData>(`${this._envs.API_URL}GetOffer?OfferId=${OfferId}${q}`);
     return from(promise);
   }
 
-  GetCountries() {
+   GetCountries() {
+    
     const promise = axios.get<IGetCoutriesData>(
-      `${envs.API_URL}GetCountries`
+      `${this._envs.API_URL}GetCountries`
     );
     return from(promise);
   }

@@ -67,6 +67,22 @@ const ViewCliring: React.FC<IProps> = props => {
   const translate = useSelector<ITranslateGlobalState>(
     state => state.TranslateReduser,
   ) as ITranslateState;
+  const [_envs, setEnvs] = useState<{
+    API_URL?: string;
+    CONNECT_URL?: string;
+    TOKEN_TTL?: number;
+    CDN_PATH?: string;
+    client_id?: string;
+    client_secret?: string;
+    googleSiteDomain?: string;
+    googleSiteKey?: string;
+}>({});
+
+  useEffect(() => {
+    envs().then(res => {
+      setEnvs(res);
+    })
+  }, []);
 
   return (
     <>
@@ -87,7 +103,7 @@ const ViewCliring: React.FC<IProps> = props => {
         <View style={styles.detailBox}>
           <Image
             style={styles.detailIcon}
-            source={{uri: `${envs.CDN_PATH}mccicons/shopping-icon.png`}}
+            source={{uri: `${_envs.CDN_PATH}mccicons/shopping-icon.png`}}
           />
         </View>
 
@@ -212,13 +228,29 @@ const ViewTransfer: React.FC<IProps> = props => {
   const translate = useSelector<ITranslateGlobalState>(
     state => state.TranslateReduser,
   ) as ITranslateState;
+  const [_envs, setEnvs] = useState<{
+    API_URL?: string;
+    CONNECT_URL?: string;
+    TOKEN_TTL?: number;
+    CDN_PATH?: string;
+    client_id?: string;
+    client_secret?: string;
+    googleSiteDomain?: string;
+    googleSiteKey?: string;
+}>({});
+
+  useEffect(() => {
+    envs().then(res => {
+      setEnvs(res);
+    })
+  }, []);
   return (
     <>
       <View style={[styles.directionRow, styles.transactionHeader]}>
         <View style={styles.detailBox}>
           <Image
             style={styles.detailIcon}
-            source={{uri: `${envs.CDN_PATH}mccicons/other-expances-icon.png`}}
+            source={{uri: `${_envs.CDN_PATH}mccicons/other-expances-icon.png`}}
           />
         </View>
 
@@ -370,13 +402,29 @@ const ViewUtility: React.FC<IProps> = props => {
   const translate = useSelector<ITranslateGlobalState>(
     state => state.TranslateReduser,
   ) as ITranslateState;
+  const [_envs, setEnvs] = useState<{
+    API_URL?: string;
+    CONNECT_URL?: string;
+    TOKEN_TTL?: number;
+    CDN_PATH?: string;
+    client_id?: string;
+    client_secret?: string;
+    googleSiteDomain?: string;
+    googleSiteKey?: string;
+}>({});
+
+  useEffect(() => {
+    envs().then(res => {
+      setEnvs(res);
+    })
+  }, []);
   return (
     <>
       <View style={[styles.directionRow, styles.utilityHeader]}>
         <View style={styles.detailBox}>
           <Image
             style={styles.detailIcon}
-            source={{uri: `${envs.CDN_PATH}mccicons/utility-payment-icon.png`}}
+            source={{uri: `${_envs.CDN_PATH}mccicons/utility-payment-icon.png`}}
           />
         </View>
 
@@ -487,13 +535,29 @@ const ViewBlocked: React.FC<IProps> = props => {
   const translate = useSelector<ITranslateGlobalState>(
     state => state.TranslateReduser,
   ) as ITranslateState;
+  const [_envs, setEnvs] = useState<{
+    API_URL?: string;
+    CONNECT_URL?: string;
+    TOKEN_TTL?: number;
+    CDN_PATH?: string;
+    client_id?: string;
+    client_secret?: string;
+    googleSiteDomain?: string;
+    googleSiteKey?: string;
+}>({});
+
+  useEffect(() => {
+    envs().then(res => {
+      setEnvs(res);
+    })
+  }, []);
   return (
     <>
       <View style={[styles.directionRow, styles.utilityHeader]}>
         <View style={styles.detailBox}>
           <Image
             style={styles.detailIcon}
-            source={{uri: `${envs.CDN_PATH}mccicons/holded-icon.png`}}
+            source={{uri: `${_envs.CDN_PATH}mccicons/holded-icon.png`}}
           />
         </View>
 

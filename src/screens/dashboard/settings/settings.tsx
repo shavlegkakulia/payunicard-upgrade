@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -75,6 +75,7 @@ import {
 } from '../../../redux/action_types/auth_action_types';
 import { useNavigation } from '@react-navigation/native';
 import packageJson from './../../../../package.json';
+import AppCheckbox from '../../../components/UI/AppCheckbox';
 
 const rnBiometrics = new ReactNativeBiometrics();
 
@@ -95,7 +96,35 @@ const Settings: React.FC = () => {
   const [otp, setOtp] = useState<string>();
   const [otpModalVisible, setOtpModalVisible] = useState<boolean>(false);
   const [isTrstedProcessing, setIsTrustedProcessing] = useState<boolean>(false);
-  const dispatch = useDispatch<any>();;
+  const dispatch = useDispatch<any>();
+  const [mode, setMode] = useState<boolean | undefined>(undefined);
+  useEffect(() => {
+    storage.getItem('mode').then(res => {
+      if(res) {
+        setMode(true);
+      } else {
+        setMode(false);
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    (async () => {
+      if(mode !== undefined) {
+        await storage.removeItem('PassCodeEnbled');
+        await storage.removeItem('PassCode');
+        await storage.removeItem('Biometric');
+        
+        setIsFaceIdEnabled(false);
+        setIsPassCodeEnabled(false);
+      }
+      if(mode === true) {
+        await storage.setItem('mode', '*');
+      } else if(mode === false) {
+        await storage.removeItem('mode');
+      }
+    })();
+  }, [mode]);
 
   const togglePassCodeSwitch = () => {
     storage.getItem('PassCode').then(async data => {
@@ -115,6 +144,7 @@ const Settings: React.FC = () => {
           await storage.removeItem('PassCodeEnbled');
           await storage.removeItem('Biometric');
           setIsPassCodeEnabled(false);
+          setIsFaceIdEnabled(false);
         } else {
           await storage.setItem('PassCodeEnbled', '1');
           setIsPassCodeEnabled(true);
@@ -122,10 +152,16 @@ const Settings: React.FC = () => {
       }
     });
   };
-
+// useEffect(() => {
+//   (async() => {
+//     await storage.removeItem('PassCodeEnbled');
+//   await storage.removeItem('PassCode');
+//   })();
+// })
   const GoToPassCode = () => NavigationService.navigate(Routes.setPassCode);
 
   const GoToBiometric = () => {
+    mustStartBiometrics.current = true;
     setStartBiometric(true);
   };
 
@@ -264,20 +300,29 @@ const Settings: React.FC = () => {
       retry: true,
     });
   };
-
+const mustStartBiometrics = useRef(false);
   const init = async () => {
     const PassCodeExists = await storage.getItem('PassCode');
     const PassCodeEnbledExists = await storage.getItem('PassCodeEnbled');
-    const BiometricExists = await storage.getItem('Biometric');
 
     if (PassCodeExists !== null && PassCodeEnbledExists !== null) {
       setIsPassCodeEnabled(true);
 
-      if (BiometricExists !== null) {
+      if (mustStartBiometrics.current) {
         setIsFaceIdEnabled(true);
+        await storage.setItem('Biometric', '*');
       }
     }
   };
+
+  useEffect(() => {
+    storage.getItem('Biometric').then(res => {
+      if(res) {
+        setIsFaceIdEnabled(true);
+      }
+    })
+    
+  }, [])
 
   const openChoosePhotos = () => {
     setGetPhoto(true);
@@ -711,6 +756,13 @@ const Settings: React.FC = () => {
           <View style={styles.versionBox}>
             <Text>App version:{' '}</Text>
             <Text>{packageJson.version}</Text>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'flex-start', marginTop: 20, marginLeft: 16}}>
+          <AppCheckbox clicked={e => {
+            if(e) {
+              setMode(true)
+            } else setMode(false)
+          }} label={'isProduction'} customKey={''} context={''} value={mode} />
           </View>
         </ScrollView>
         <ActionSheetCustom

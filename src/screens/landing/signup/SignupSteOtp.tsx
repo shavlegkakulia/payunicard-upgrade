@@ -56,6 +56,22 @@ const SignupSteOtp: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [GoogleToken, setGoogleToken] = useState<string | undefined>();
   const navigation = useNavigation<any>();
+  const [_envs, setEnvs] = useState<{
+    API_URL?: string;
+    CONNECT_URL?: string;
+    TOKEN_TTL?: number;
+    CDN_PATH?: string;
+    client_id?: string;
+    client_secret?: string;
+    googleSiteDomain?: string;
+    googleSiteKey?: string;
+}>({});
+
+  useEffect(() => {
+    envs().then(res => {
+      setEnvs(res);
+    })
+  }, []);
 
   const SendPhoneOTP = () => {
     NetworkService.CheckConnection(() => {
@@ -159,13 +175,16 @@ const SignupSteOtp: React.FC = () => {
       setGoogleToken(token);
     }
   };
+  if(!_envs.googleSiteKey) {
+    return;
+  }
   return (
     <>
       <GetRecaptcha
         ref={captchaRef}
         action={action}
-        siteKey={envs.googleSiteKey}
-        siteUrl={envs.googleSiteDomain}
+        siteKey={getString(_envs.googleSiteKey)}
+        siteUrl={getString(_envs.googleSiteKey)}
       />
 
       <KeyboardAvoidingView

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { from } from 'rxjs';
 import envs from '../../config/env';
+import { IEnv } from './AuthService';
 import { IError } from './TemplatesService';
 
 export interface ICurrencyConverterAmountByDirRequest {
@@ -27,9 +28,14 @@ export interface ICurrencyConverterAmountByDirResponseData {
 }
 
 class CurrencyService {
-    CurrencyConverterCalculatror(data: ICurrencyConverterAmountByDirRequest) {
+    _envs: IEnv | any;
+    constructor() {
+      envs().then(res => this._envs = res);
+    }
+     CurrencyConverterCalculatror(data: ICurrencyConverterAmountByDirRequest) {
+    
         const promise = axios.post<ICurrencyConverterAmountByDirResponseData>(
-            `${envs.API_URL}Currency/CurrencyConverterCalculatror`,
+            `${this._envs.API_URL}Currency/CurrencyConverterCalculatror`,
             data,
             { objectResponse: true },
         );

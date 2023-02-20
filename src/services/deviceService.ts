@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {from} from 'rxjs';
 import envs from '../../config/env';
+import { IEnv } from './AuthService';
 import {IError} from './TemplatesService';
 
 export interface IGenerateDeviceIdRequest {
@@ -46,26 +47,33 @@ export interface IUpdateDeviceStatusResponseData {
 }
 
 class DeviceService {
-  GenerateDeviceId(data: IGenerateDeviceIdRequest) {
+  _envs: IEnv | any;
+  constructor() {
+    envs().then(res => this._envs = res);
+  }
+   GenerateDeviceId(data: IGenerateDeviceIdRequest) {
+    
     const promise = axios.post<IGenerateDeviceIdResponseData>(
-      `${envs.API_URL}Device/GenerateDeviceId`,
+      `${this._envs.API_URL}Device/GenerateDeviceId`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  GetDevices() {
+   GetDevices() {
+    
     const promise = axios.get<IGetDevicesResponseData>(
-      `${envs.API_URL}Device/GetDevices`,
+      `${this._envs.API_URL}Device/GetDevices`,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  UpdateDeviceStatus(id: number) {
+   UpdateDeviceStatus(id: number) {
+    
     const promise = axios.post<IUpdateDeviceStatusResponseData>(
-      `${envs.API_URL}Device/UpdateDeviceStatus`,
+      `${this._envs.API_URL}Device/UpdateDeviceStatus`,
       {Id: id},
       {objectResponse: true},
     );

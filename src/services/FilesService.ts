@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {from} from 'rxjs';
 import envs from '../../config/env';
+import { IEnv } from './AuthService';
 import {IError} from './TemplatesService';
 
 export enum ImageType {
@@ -29,9 +30,14 @@ export interface IIResponseOfUploadFileResponse {
 }
 
 class FilesService {
-  uploadImage(data: IUploadFileRequest) {
+  _envs: IEnv | any;
+  constructor() {
+    envs().then(res => this._envs = res);
+  }
+   uploadImage(data: IUploadFileRequest) {
+    
     const promise = axios.post<IIResponseOfUploadFileResponse>(
-      `${envs.API_URL}Files/UploadImage`,
+      `${this._envs.API_URL}Files/UploadImage`,
       data,
     );
     return from(promise);

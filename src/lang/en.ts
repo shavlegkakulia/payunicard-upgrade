@@ -156,6 +156,7 @@ export default {
         password: 'Password',
         newPassword: 'New Password',
         oldPassword: 'Old Password',
+        repeatPassword: 'Repeat Password',
         remember: 'Remember',
         login: 'Sign In',
         signup: 'Sign Up',

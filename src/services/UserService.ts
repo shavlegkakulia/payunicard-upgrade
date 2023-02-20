@@ -3,6 +3,7 @@ import {from} from 'rxjs';
 import {minusMonthFromDate} from '../utils/utils';
 import envs from '../../config/env';
 import {IError} from './TemplatesService';
+import { IEnv } from './AuthService';
 
 export interface IUserDetails {
   customerVerificationStatusCode?: string | '';
@@ -702,28 +703,32 @@ export interface IExportStatementsAsPdfMobileResponseData {
 }
 
 class UserService {
-  GetUserDetails() {
+  _envs: IEnv | any;
+  constructor() {
+    envs().then(res => this._envs = res);
+  }
+   GetUserDetails() {
     const promise = axios.get<IUserResponse>(
-      `${envs.API_URL}User/GetUserDetails`,
+      `${this._envs.API_URL}User/GetUserDetails`,
     );
     return from(promise);
   }
 
-  GetUserAccounts() {
+   GetUserAccounts() {
     const promise = axios.get<IUserAccountResponse>(
-      `${envs.API_URL}User/GetAccountBalanceByccy`,
+      `${this._envs.API_URL}User/GetAccountBalanceByccy`,
     );
     return from(promise);
   }
 
-  GetUserTotalBalance() {
+   GetUserTotalBalance() {
     const promise = axios.get<IUserTotalBalance>(
-      `${envs.API_URL}User/GetUserTotalBalance`,
+      `${this._envs.API_URL}User/GetUserTotalBalance`,
     );
     return from(promise);
   }
 
-  GetUserAccountStatements(data: IUserAccountsStatementRequest = {}) {
+   GetUserAccountStatements(data: IUserAccountsStatementRequest = {}) {
     if (!data.rowCount) {
       data.rowCount = 10;
     }
@@ -736,221 +741,246 @@ class UserService {
       data.endDate = new Date();
       data.startDate = minusMonthFromDate(10 * 12);
     }
-
+    
     const promise = axios.post<IUserAccountsStatement>(
-      `${envs.API_URL}User/GetUserAccountsStatementNew`,
+      `${this._envs.API_URL}User/GetUserAccountsStatementNew`,
       data,
     );
     return from(promise);
   }
 
-  GetUserProducts() {
+   GetUserProducts() {
+    
     const promise = axios.get<IUserProductsResponse>(
-      `${envs.API_URL}User/GetUserProducts`,
+      `${this._envs.API_URL}User/GetUserProducts`,
     );
     return from(promise);
   }
 
-  GetPasswordResetData(userName?: string) {
+   GetPasswordResetData(userName?: string) {
+    
     const promise = axios.get<IPasswordResetDataResponse>(
-      `${envs.API_URL}User/GetPasswordResetData`,
+      `${this._envs.API_URL}User/GetPasswordResetData`,
       {params: {userName}},
     );
     return from(promise);
   }
 
-  ResetPassword(data: IResetPasswordRequest) {
+   ResetPassword(data: IResetPasswordRequest) {
+    
     const promise = axios.post<IResetPasswordResponseData>(
-      `${envs.API_URL}User/ResetPassword`,
+      `${this._envs.API_URL}User/ResetPassword`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  CheckUser(data: ICheckUserPersonalIdRequest) {
+   CheckUser(data: ICheckUserPersonalIdRequest) {
+    
     const promise = axios.post<ICheckUserResponseData>(
-      `${envs.API_URL}User/CheckUser`,
+      `${this._envs.API_URL}User/CheckUser`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  GetUnicards() {
+   GetUnicards() {
+    
     const promise = axios.get<IGetUnicardsResponseData>(
-      `${envs.API_URL}Card/GetUnicards`
+      `${this._envs.API_URL}Card/GetUnicards`
     );
     return from(promise);
   }
 
-  GetCustomerEmploymentStatusTypes() {
+   GetCustomerEmploymentStatusTypes() {
+    
     const promise = axios.get<IGetCustomerEmploymentStatusTypesResponseData>(
-      `${envs.API_URL}User/GetCustomerEmploymentStatusTypes`,
+      `${this._envs.API_URL}User/GetCustomerEmploymentStatusTypes`,
     );
     return from(promise);
   }
 
-  GetCustomerWorkTypes() {
+   GetCustomerWorkTypes() {
+    
     const promise = axios.get<IGetCustomerWorkTypesResponseData>(
-      `${envs.API_URL}User/GetCustomerWorkTypes`,
+      `${this._envs.API_URL}User/GetCustomerWorkTypes`,
     );
     return from(promise);
   }
 
-  GetCustomerExpectedTurnoverTypes() {
+   GetCustomerExpectedTurnoverTypes() {
+    
     const promise = axios.get<IGetCustomerExpectedTurnoverTypesResponseData>(
-      `${envs.API_URL}User/GetCustomerExpectedTurnoverTypes`,
+      `${this._envs.API_URL}User/GetCustomerExpectedTurnoverTypes`,
     );
     return from(promise);
   }
 
-  GetTransactionDetails(data: GetTransactionDetailsRequest) {
+   GetTransactionDetails(data: GetTransactionDetailsRequest) {
+    
     const promise = axios.post<IGetTransactionDetailsResponseData>(
-      `${envs.API_URL}User/GetTransactionDetails`,
+      `${this._envs.API_URL}User/GetTransactionDetails`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  GetUserBankCards() {
+   GetUserBankCards() {
+    
     const promise = axios.get<IGetUserBankCardsResponseData>(
-      `${envs.API_URL}User/GetUserBankCards`,
+      `${this._envs.API_URL}User/GetUserBankCards`,
     );
     return from(promise);
   }
 
-  CustomerRegistration(data: ICustomerRegistrationNewRequest) {
+   CustomerRegistration(data: ICustomerRegistrationNewRequest) {
+    
     const promise = axios.post<IIResponseOfCustomerRegistrationNewResponse>(
-      `${envs.API_URL}User/Registration/CustomerRegistration`,
+      `${this._envs.API_URL}User/Registration/CustomerRegistration`,
       data,
       //{objectResponse: true},
     );
     return from(promise);
   }
 
-  FinishCostumerRegistration(data: IFinishCustomerRegistrationRequest) {
+   FinishCostumerRegistration(data: IFinishCustomerRegistrationRequest) {
+    
     const promise = axios.post<IFinishCustomerRegistrationResponseData>(
-      `${envs.API_URL}User/FinishCustomerRegistration`,
+      `${this._envs.API_URL}User/FinishCustomerRegistration`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  customerPackageRegistration(
+   customerPackageRegistration(
     data: ICustomerPackageRegistrationRequest | undefined,
   ) {
+    
     const promise = axios.post<ICustomerPackageRegistrationResponseData>(
-      `${envs.API_URL}User/CustomerPackageRegistration`,
+      `${this._envs.API_URL}User/CustomerPackageRegistration`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  CustomerBatchPackageRegistration(
+   CustomerBatchPackageRegistration(
     data: ICustomerBatchPackageRegistrationRequest | undefined,
   ) {
+    
     const promise = axios.post<ICustomerPackageRegistrationResponseData>(
-      `${envs.API_URL}User/CustomerBatchPackageRegistration`,
+      `${this._envs.API_URL}User/CustomerBatchPackageRegistration`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  getCardListWEB(customerId: number | undefined) {
+   getCardListWEB(customerId: number | undefined) {
+    
     const promise = axios.get<IGetCardListWEBResponseData>(
-      `${envs.API_URL}User/GetCardListWEB?${customerId}`,
+      `${this._envs.API_URL}User/GetCardListWEB?${customerId}`,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  CancelPackageWEB(data: ICancelPackageWEBRequest | undefined) {
+   CancelPackageWEB(data: ICancelPackageWEBRequest | undefined) {
+    
     const promise = axios.post<ICancelPackageWEBResponseData>(
-      `${envs.API_URL}User/CancelPackageWEB`,
+      `${this._envs.API_URL}User/CancelPackageWEB`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  exportUserAccountStatementsAsPdf(tranID: number | undefined) {
+   exportUserAccountStatementsAsPdf(tranID: number | undefined) {
+    
     const promise = axios.get<string>(
-      `${envs.API_URL}User/ExportUserAccountStatementsAsPdf?TranID=${tranID}`,
+      `${this._envs.API_URL}User/ExportUserAccountStatementsAsPdf?TranID=${tranID}`,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  getUserBlockedFunds(
+   getUserBlockedFunds(
     data?: IGetUserBlockedBlockedFundslistRequest | undefined,
   ) {
+    
     const promise = axios.post<IGetUserBlockedBlockedFundslistResponseData>(
-      `${envs.API_URL}User/GetUserBlockedFunds`,
+      `${this._envs.API_URL}User/GetUserBlockedFunds`,
       {data},
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  updateUserProfileImage(data?: IUpdateUserProfileImageRequest | undefined) {
+   updateUserProfileImage(data?: IUpdateUserProfileImageRequest | undefined) {
+    
     const promise = axios.post<IIResponseOfUpdateUserProfileImageResponse>(
-      `${envs.API_URL}User/UpdateUserProfileImage`,
+      `${this._envs.API_URL}User/UpdateUserProfileImage`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  getUserProfileData() {
+   getUserProfileData() {
+    
     const promise = axios.get<IGetUserProfileDataResponseData>(
-      `${envs.API_URL}User/GetUserProfileData`,
+      `${this._envs.API_URL}User/GetUserProfileData`,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  editUserProfileData(data: IEditUserProfileDataRequest) {
+   editUserProfileData(data: IEditUserProfileDataRequest) {
+    
     const promise = axios.put<IIEditUserProfileDataResponseData>(
-      `${envs.API_URL}User/EditUserProfileData`,
+      `${this._envs.API_URL}User/EditUserProfileData`,
       {data},
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  ChangeUserPassword(data: IChangeUserPasswordRequest) {
+   ChangeUserPassword(data: IChangeUserPasswordRequest) {
+    
     const promise = axios.post<IChangeUserPasswordResponseData>(
-      `${envs.API_URL}User/ChangeUserPassword`,
+      `${this._envs.API_URL}User/ChangeUserPassword`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  changePassBySystem(data: IChangePassBySystemRequest) {
+   changePassBySystem(data: IChangePassBySystemRequest) {
+    
     const promise = axios.post<IChangePassBySystemResponseData>(
-      `${envs.API_URL}User/ChangePassBySystem`,
+      `${this._envs.API_URL}User/ChangePassBySystem`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  changeConditionRisklevelUFC(data: IChangeConditionRisklevelUFCRequest) {
+   changeConditionRisklevelUFC(data: IChangeConditionRisklevelUFCRequest) {
+    
     const promise = axios.post<IChangeConditionRisklevelUFCResponseData>(
-      `${envs.API_URL}User/ChangeConditionRisklevelUFC`,
+      `${this._envs.API_URL}User/ChangeConditionRisklevelUFC`,
       data,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  ExportStatementsAsPdfMobile(data: IExportStatementsAsPdfMobileRequest) {
+   ExportStatementsAsPdfMobile(data: IExportStatementsAsPdfMobileRequest) {
+    
     let query = '';
     if(data.AccountNumber) {
       query += `AccountNumber=${data.AccountNumber}&`
@@ -965,35 +995,38 @@ class UserService {
       query += `StartDate=${data.StartDate}`
     }
     const promise = axios.get<IExportStatementsAsPdfMobileResponseData>(
-      `${envs.API_URL}User/ExportStatementsAsPdfMobile?${query}`,
+      `${this._envs.API_URL}User/ExportStatementsAsPdfMobile?${query}`,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  ExportUserAccountStatementsAsPdfMobile(TranID: number) {
+   ExportUserAccountStatementsAsPdfMobile(TranID: number) {
+    
     const promise = axios.get<IExportStatementsAsPdfMobileResponseData>(
-      `${envs.API_URL}User/ExportUserAccountStatementsAsPdfMobile?TranID=${TranID}`,
+      `${this._envs.API_URL}User/ExportUserAccountStatementsAsPdfMobile?TranID=${TranID}`,
       {objectResponse: true},
     );
     return from(promise);
   }
   //apple wallet prinum service for refactor
    CheckAddToWalletAvailability(data: any[]) {
+    
     let requestData = {
       cards: [...data]
     }
     console.log('requestdata',requestData)
-    return  axios.post(`${envs.API_URL}Card/Fpans`, requestData)
+    return  axios.post(`${this._envs.API_URL}Card/Fpans`, requestData)
   }
 
-  ConfirmSeeinAppleBaner(){
+   ConfirmSeeinAppleBaner(){
+    
     let requestData = {
       claimType: 'AppleBanner',
       claimValue: '0'
     }
     console.log('requestdata',requestData)
-    return  axios.post(`${envs.API_URL}User/SetUserClaims`, requestData)
+    return  axios.post(`${this._envs.API_URL}User/SetUserClaims`, requestData)
   }
 }
 

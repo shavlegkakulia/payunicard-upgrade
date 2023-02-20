@@ -92,8 +92,10 @@ function dispatch({
   });
 }
 
-const GoBack = () => {
-  backHandler();
+const GoBack = (skipbackHandler?: boolean) => {
+  if(!skipbackHandler) {
+    backHandler();
+  }
   _navigator?.goBack();
 };
 

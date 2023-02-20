@@ -185,6 +185,23 @@ const ProductDetail: React.FC = props => {
   const [openOtpModal, setOpenOtpModal] = useState<boolean>(false);
   const [otpLoader, setOtpLoader] = useState<boolean>(true);
 
+  const [_envs, setEnvs] = useState<{
+    API_URL?: string;
+    CONNECT_URL?: string;
+    TOKEN_TTL?: number;
+    CDN_PATH?: string;
+    client_id?: string;
+    client_secret?: string;
+    googleSiteDomain?: string;
+    googleSiteKey?: string;
+}>({});
+
+  useEffect(() => {
+    envs().then(res => {
+      setEnvs(res);
+    })
+  }, []);
+
   const onSetOtp = (value: string) => {
     setOtp(value);
     if (otp?.length === 4) {
@@ -1130,7 +1147,7 @@ const ProductDetail: React.FC = props => {
                   }}>
                   <View style={styles.sectionContainerItemImageContainer}>
                     <Image
-                      source={{ uri: `${envs.CDN_PATH}utility/home.png` }}
+                      source={{ uri: `${_envs.CDN_PATH}utility/home.png` }}
                       style={styles.toolsIcon}
                       resizeMode="contain"
                     />
@@ -1157,7 +1174,7 @@ const ProductDetail: React.FC = props => {
                       }}>
                       <View style={styles.sectionContainerItemImageContainer}>
                         <Image
-                          source={{ uri: `${envs.CDN_PATH}utility/internet.png` }}
+                          source={{ uri: `${_envs.CDN_PATH}utility/internet.png` }}
                           style={[styles.toolsIcon, isDisabled]}
                           resizeMode="contain"
                         />
@@ -1186,7 +1203,7 @@ const ProductDetail: React.FC = props => {
                       }}>
                       <View style={styles.sectionContainerItemImageContainer}>
                         <Image
-                          source={{ uri: `${envs.CDN_PATH}utility/phone.png` }}
+                          source={{ uri: `${_envs.CDN_PATH}utility/phone.png` }}
                           style={[styles.toolsIcon, isDisabled]}
                           resizeMode="contain"
                         />
@@ -1222,7 +1239,7 @@ const ProductDetail: React.FC = props => {
                       }}>
                       <View style={styles.sectionContainerItemImageContainer}>
                         <Image
-                          source={{ uri: `${envs.CDN_PATH}utility/mobile.png` }}
+                          source={{ uri: `${_envs.CDN_PATH}utility/mobile.png` }}
                           style={styles.toolsIcon}
                           resizeMode="contain"
                         />
@@ -1247,7 +1264,7 @@ const ProductDetail: React.FC = props => {
                       }}>
                       <View style={styles.sectionContainerItemImageContainer}>
                         <Image
-                          source={{ uri: `${envs.CDN_PATH}utility/parking.png` }}
+                          source={{ uri: `${_envs.CDN_PATH}utility/parking.png` }}
                           style={[styles.toolsIcon, isDisabled]}
                           resizeMode="contain"
                         />
@@ -1276,7 +1293,7 @@ const ProductDetail: React.FC = props => {
                       }}>
                       <View style={styles.sectionContainerItemImageContainer}>
                         <Image
-                          source={{ uri: `${envs.CDN_PATH}utility/game.png` }}
+                          source={{ uri: `${_envs.CDN_PATH}utility/game.png` }}
                           style={[styles.toolsIcon, isDisabled]}
                           resizeMode="contain"
                         />

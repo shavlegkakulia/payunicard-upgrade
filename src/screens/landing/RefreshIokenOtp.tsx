@@ -36,11 +36,11 @@ const RefreshTokenOtp: React.FC = () => {
   const goRefreshToken = async () => {
     setIsLoading(true);
     const refreshToken = await AuthService.getRefreshToken();
-
+    const _envs = await envs();
     let authData: any = {
       scope: "Wallet_Api.Full offline_access",
-      client_id: envs.client_id,
-      client_secret: envs.client_secret,
+      client_id: _envs.client_id,
+      client_secret: _envs.client_secret,
       grant_type: "refresh_token",
       refresh_token: refreshToken,
       Otp: otpGuid
@@ -55,7 +55,7 @@ const RefreshTokenOtp: React.FC = () => {
     anonymous: true,
     headers: { 'content-type': 'application/x-www-form-urlencoded'},
     data,
-    url: `${envs.CONNECT_URL}connect/token`,
+    url: `${_envs.CONNECT_URL}connect/token`,
 };
 
 return axios<IAuthorizationResponse>(options).then(async response => {

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {from} from 'rxjs';
 import envs from '../../config/env';
+import { IEnv } from './AuthService';
 import { IError } from './TemplatesService';
 
 export interface IOTPServiceRequest {
@@ -50,47 +51,54 @@ export interface ISubmitPhoneOtpByUserRequest {
 }
 
 class OTPService {
-  SendPhoneOTP({OTP}: {OTP: IOTPServiceRequest}) {
+  _envs: IEnv | any;
+  constructor() {
+    envs().then(res => this._envs = res);
+  }
+   SendPhoneOTP({OTP}: {OTP: IOTPServiceRequest}) {
+    
     const promise = axios.post<IResponse>(
-      `${envs.API_URL}OTP/SendPhoneOTP`,
+      `${this._envs.API_URL}OTP/SendPhoneOTP`,
       OTP,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  SendRegistraionOtpMobile({OTP, GoogleToken}: {OTP: IOTPServiceRequest, GoogleToken?: string}) {
+   SendRegistraionOtpMobile({OTP, GoogleToken}: {OTP: IOTPServiceRequest, GoogleToken?: string}) {
+    
     const promise = axios.post<IResponse>(
-      `${envs.API_URL}OTP/SendRegistrationOtpMobile`,
+      `${this._envs.API_URL}OTP/SendRegistrationOtpMobile`,
       OTP,
       {objectResponse: true, headers: {GoogleToken: GoogleToken}},
     );
     return from(promise);
   }
 
-  SubmitPhoneOTP({OTP}: {OTP: ISubmitPhoneOTP}) {
+   SubmitPhoneOTP({OTP}: {OTP: ISubmitPhoneOTP}) {
     
     const promise = axios.post<IResponse>(
-      `${envs.API_URL}OTP/SubmitPhoneOTP`,
+      `${this._envs.API_URL}OTP/SubmitPhoneOTP`,
       OTP,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  GeneratePhoneOtpByUser({OTP}: {OTP: GeneratePhoneOtpByUserRequest}) {
+   GeneratePhoneOtpByUser({OTP}: {OTP: GeneratePhoneOtpByUserRequest}) {
+    
     const promise = axios.post<IGeneratePhoneOtpByUserResponse>(
-      `${envs.API_URL}User/GeneratePhoneOtpByUser`,
+      `${this._envs.API_URL}User/GeneratePhoneOtpByUser`,
       OTP,
       {objectResponse: true},
     );
     return from(promise);
   }
 
-  SubmitPhoneOtpByUser({OTP}: {OTP: ISubmitPhoneOtpByUserRequest}) {
+   SubmitPhoneOtpByUser({OTP}: {OTP: ISubmitPhoneOtpByUserRequest}) {
     
     const promise = axios.post<ISubmitPhoneOtpByUserResponseData>(
-      `${envs.API_URL}User/SubmitPhoneOtpByUser`,
+      `${this._envs.API_URL}User/SubmitPhoneOtpByUser`,
       OTP,
       {objectResponse: true},
     );

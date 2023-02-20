@@ -181,6 +181,22 @@ const PaymentMethods: React.FC = () => {
     IAccountBallance[] | undefined
   >();
   let detailCurrencies: ICurrency[] = [];
+  const [_envs, setEnvs] = useState<{
+    API_URL?: string;
+    CONNECT_URL?: string;
+    TOKEN_TTL?: number;
+    CDN_PATH?: string;
+    client_id?: string;
+    client_secret?: string;
+    googleSiteDomain?: string;
+    googleSiteKey?: string;
+}>({});
+
+  useEffect(() => {
+    envs().then(res => {
+      setEnvs(res);
+    })
+  }, []);
 
   useEffect(() => {
     let userAccounts = [...(userData?.userAccounts || [])];
@@ -286,7 +302,7 @@ const PaymentMethods: React.FC = () => {
             <View style={styles.terminalItemContainer}>
               <View style={styles.terminalItem}>
                 <Image
-                  source={{uri: `${envs.CDN_PATH}payment_icons/tbcpay.png`}}
+                  source={{uri: `${_envs.CDN_PATH}payment_icons/tbcpay.png`}}
                   resizeMode="contain"
                   style={styles.terminalLogo}
                 />
@@ -296,7 +312,7 @@ const PaymentMethods: React.FC = () => {
             <View style={styles.terminalItemContainer}>
               <View style={styles.terminalItem}>
                 <Image
-                  source={{uri: `${envs.CDN_PATH}payment_icons/oppapay.png`}}
+                  source={{uri: `${_envs.CDN_PATH}payment_icons/oppapay.png`}}
                   resizeMode="contain"
                   style={styles.terminalLogo}
                 />
