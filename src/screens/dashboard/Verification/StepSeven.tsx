@@ -17,7 +17,7 @@ import colors from '../../../constants/colors';
 import { EN, KA, ka_ge } from '../../../lang';
 import { ITranslateState, IGlobalState as ITranslateGlobalState } from '../../../redux/action_types/translate_action_types';
 import {IKCData} from '../../../services/KvalificaServices';
-import { formatDate } from '../../../utils/utils';
+import { onFormatDate } from '../../../utils/utils';
 import { documentTypes } from './Index';
 
 interface IProps {
@@ -171,7 +171,7 @@ const StepSeven: React.FC<IProps> = props => {
               <View style={[styles.InputBox, dateValidErrorStyle]}>
                 <Text style={styles.birthDateValue}>
                   {validTo ? (
-                    formatDate(validTo?.toString()).split('.').join('/')
+                    onFormatDate(validTo?.toString())
                   ) : (
                     <>
                       {translate.t('verification.dateOfExpire')}
@@ -184,7 +184,7 @@ const StepSeven: React.FC<IProps> = props => {
               <View style={[styles.InputBox, dateErrorStyle]}>
                 <Text style={styles.birthDateValue}>
                   {issueDate ? (
-                    formatDate(issueDate?.toString()).split('.').join('/')
+                    onFormatDate(issueDate?.toString()).split('.')
                   ) : (
                     <>
                       {translate.t('verification.DateOfIssue')}

@@ -421,7 +421,10 @@ export default {
         warning4: '{year} {day} {month} 00:00 AM',
         warning5: 'Otherwise your order will be cancelled',
         seeAfterTopup: 'Once the Amount is Credited to the Account, \nthe Delivery Time will be Calculated',
-        maxOrderCards: 'You Can Order 6 Cards. You Have Already Ordered {count} Card(s)'
+        maxOrderCards: 'You Can Order 6 Cards. You Have Already Ordered {count} Card(s)',
+        youCanOrderVisa: "You can only order {count} more VISA card",
+        youCantOrderVisa: "You cannot order any more VISA cards",
+        youCanOrderMax: "You already have {count} cards. You can order maximum {max} cards.",
     },
     notifications: {
         emptycontent: 'Your Notifications\n\ntab is empty'

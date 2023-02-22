@@ -26,6 +26,7 @@ import { ITranslateState, IGlobalState as ITranslateGlobalState } from '../../..
 import { useSelector } from 'react-redux';
 import Cover from '../../../components/Cover';
 import RNFetchBlob from 'rn-fetch-blob';
+import { onFormatDate } from '../../../utils/utils';
 
 interface IProps {
   statement: IGetTransactionDetailsResponse | undefined;
@@ -48,20 +49,6 @@ const TRANSACTION_TYPES = {
   TRANPOS: 4,
   TRANUTILITY: 5,
 };
-
-const onFormatDate = (date?: string) => {
-  if(!date) {
-    return "";
-  }
-  const dateArray = date.split(' ');
-  let d = dateArray[0].split('/');
-  let _date: string[] = [];
-  d.forEach(el => {
-    _date.push(('0' + el).slice(el.length === 1 ? -2 : -4))
-  })
- 
-  return _date.join('/');
-}
 
 const ViewCliring: React.FC<IProps> = props => {
   const translate = useSelector<ITranslateGlobalState>(

@@ -15,7 +15,7 @@ import {
   CurrencyConverter,
   CurrencySimbolConverter,
 } from '../../../utils/Converter';
-import {formatDate} from '../../../utils/utils';
+import {onFormatDate} from '../../../utils/utils';
 import {cardTypeIds} from '../cardsStore/TarriffCalculator';
 import userStatuses from '../../../constants/userStatuses';
 import {PACKET_TYPE_IDS} from './index';
@@ -127,10 +127,7 @@ const OrderedCard: React.FC<IProps> = props => {
                 <Text style={styles.orderedCardCancellation}>
                   {translate.t('orderCard.orderCancellDate')}:{' '}
                   <Text style={styles.bolder}>
-                    {formatDate(props.card.orderCancelDate?.toString())
-                      .split('.')
-                      .join('/')
-                      .toString()}
+                    {onFormatDate(props.card.orderCancelDate?.toString())}
                     , 00:00
                   </Text>{' '}
                 </Text>

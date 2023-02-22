@@ -4,6 +4,7 @@ import TemplatesService, {
   IAddTransferTemplateRequest, IError,
 } from './TemplatesService';
 import envs from '../../config/env';
+import { IEnv } from './AuthService';
 
 export interface IGetSwiftResponseDataItem { 
   bankName?: string,
@@ -44,30 +45,38 @@ export const _addTransactionTemplate = (
   });
 };
 
-export const GetSwiftCategories =  (bankName: string, swiftCode: string) => {
-  return envs().then(res => {
-  let q = '';
-  if (
-    (swiftCode === undefined || swiftCode === '') &&
-    (bankName === undefined || bankName === '')
-  ) {
-    q = 'bankName=biv';
+class Swift {
+  _envs: IEnv | any;
+  constructor() {
+    envs().then(res => this._envs = res);
   }
-  if (bankName === undefined || bankName === '') {
-    q = 'bankName=biv';
-  }
-  if (bankName !== undefined && bankName !== '') {
-    q = 'bankName=' + bankName;
-  }
+  GetSwiftCategories (bankName: string, swiftCode: string){
+ 
+    let q = '';
+    if (
+      (swiftCode === undefined || swiftCode === '') &&
+      (bankName === undefined || bankName === '')
+    ) {
+      q = 'bankName=biv';
+    }
+    if (bankName === undefined || bankName === '') {
+      q = 'bankName=biv';
+    }
+    if (bankName !== undefined && bankName !== '') {
+      q = 'bankName=' + bankName;
+    }
+  
+    if (swiftCode !== undefined && swiftCode !== '') {
+      q = '&swiftCode=' + swiftCode;
+    }
+  
+    const promise = axios.get<IGetSwiftResponse>(
+      `${this._envs.API_URL}GetSwiftCategories?${q}`,
+      {objectResponse: true},
+    );
+    return from(promise);
 
-  if (swiftCode !== undefined && swiftCode !== '') {
-    q = '&swiftCode=' + swiftCode;
-  }
+  };
+}
 
-  const promise = axios.get<IGetSwiftResponse>(
-    `${res.API_URL}GetSwiftCategories?${q}`,
-    {objectResponse: true},
-  );
-  return from(promise);
-  })
-};
+export default new Swift();

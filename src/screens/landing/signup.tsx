@@ -28,7 +28,7 @@ import OTPService, {
 import NetworkService from '../../services/NetworkService';
 import FloatingLabelInput from '../../containers/otp/Otp';
 import DatePicker from 'react-native-date-picker';
-import {formatDate} from '../../utils/utils';
+import {onFormatDate} from '../../utils/utils';
 import { getString } from '../../utils/Converter';
 import SmsRetriever from 'react-native-sms-retriever';
 // import analytics from '@react-native-firebase/analytics';
@@ -271,7 +271,7 @@ const SignupForm: React.FC<IProps> = props => {
            
               <Text style={styles.InputBoxTitle}>{translate.t('common.birthDate')}</Text>
             
-              <Text style={styles.birthDateValue}>{formatDate(birthDate?.toString()).split('.').join('/')}</Text>
+              <Text style={styles.birthDateValue}>{onFormatDate(birthDate?.toString())}</Text>
             
           </View>
         </TouchableOpacity>

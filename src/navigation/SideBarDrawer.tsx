@@ -44,6 +44,7 @@ const SidebarTouchableItem: React.FC<ITouchableProps> = props => {
   const dispatch = useDispatch<any>();
 
   const onHandle = () => {
+    if(!props.route) return;
     const currentRoute = props.route;
 
     dispatch({
@@ -60,7 +61,7 @@ const SidebarTouchableItem: React.FC<ITouchableProps> = props => {
     imgUrl = props.iconUrl;
   }
   return (
-    <TouchableOpacity style={styles.touchable} onPress={onHandle}>
+    <TouchableOpacity style={styles.touchable} onPress={onHandle} activeOpacity={props.route ? 0.7 : 1}>
       <View style={styles.icon}>
         {props.iconUrl && <Image source={imgUrl} style={styles.drawerIcon} />}
         <Text
@@ -111,7 +112,7 @@ const SideBarDrawer: React.FC<any> = props => {
               />
             </View>
             <Text style={styles.userName}>
-              {userState.userDetails?.username}
+            {userState.userDetails?.name} {userState.userDetails?.surname}
             </Text>
           </View>
           <View style={styles.navs}>
@@ -177,6 +178,15 @@ const SideBarDrawer: React.FC<any> = props => {
               route={Routes.Settings}
               iconUrl={require('./../assets/images/settings.png')}
               activeIconUrl={require('./../assets/images/settings_active.png')}
+              activeRoute={currentNav}
+            />
+            <View style={styles.line}></View>
+            <SidebarTouchableItem
+              {...props}
+              title={userState.userDetails?.username}
+              route={undefined}
+              iconUrl={require('./../assets/images/icon-man-40x40.png')}
+              activeIconUrl={require('./../assets/images/icon-man-40x40.png')}
               activeRoute={currentNav}
             />
           </View>
@@ -258,6 +268,13 @@ const styles = StyleSheet.create({
   navs: {
     padding: 10,
   },
+  line: {
+    flex: 1,
+    borderBottomColor: colors.baseBackgroundColor,
+    borderBottomWidth: 1,
+    paddingTop: 10,
+    marginBottom: 10
+  }
 });
 
 export default SideBarDrawer;

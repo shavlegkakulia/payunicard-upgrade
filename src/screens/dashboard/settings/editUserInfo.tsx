@@ -8,6 +8,7 @@ import {
   Image,
 } from 'react-native';
 import {useSelector} from 'react-redux';
+import { onFormatDate } from '../../../utils/utils';
 import FullScreenLoader from '../../../components/FullScreenLoading';
 import AppInput from '../../../components/UI/AppInput';
 import colors from '../../../constants/colors';
@@ -145,9 +146,7 @@ const EditUserInfo: React.FC = () => {
                 </Text>
                 <View style={styles.infoNode}>
                   <Text style={styles.infoValue}>
-                    {new Date(profileDataEdited?.birthDate)
-                      .getFullYear()
-                      .toString()}
+                    {onFormatDate(profileDataEdited?.birthDate)}
                   </Text>
                 </View>
               </View>

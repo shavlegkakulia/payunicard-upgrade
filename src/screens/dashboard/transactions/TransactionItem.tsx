@@ -1,12 +1,13 @@
 import React from "react";
 import { Image, Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
+import { onFormatDate } from "../../../utils/utils";
 import colors from "../../../constants/colors";
 import { ITranslateState, IGlobalState as ITranslateGlobalState } from "../../../redux/action_types/translate_action_types";
 import { ITransaction } from "../../../services/CardService";
 import { IFund, IStatements } from "../../../services/UserService";
 import { CurrencyConverter, CurrencySimbolConverter, getNumber } from "../../../utils/Converter";
-import { formatDate } from "../../../utils/utils";
+
 
 interface IProps {
     unicards?: ITransaction[];
@@ -20,17 +21,6 @@ const TransactionItem: React.FC<IProps> = (props) => {
   const translate = useSelector<ITranslateGlobalState>(
     state => state.TranslateReduser,
   ) as ITranslateState;
-
-  const onFormatDate = (date?: string) => {
-    if(!date) {
-      return "";
-    }
-
-    const dateArray = date.split(' ');
-    if(dateArray.length)
-      return dateArray[0].replaceAll('-', '/');
-    return "";
-  }
 
   if(getNumber(props.unicards?.length) <= 0 && getNumber(props.statements?.length) <= 0) {
     return <View>
@@ -59,7 +49,7 @@ const TransactionItem: React.FC<IProps> = (props) => {
                   <View style={styles.transactionsViewItemRight}>
                     <View style={styles.transactionsViewItemDetail}>
                       <Text style={styles.transactionsViewItemDate}>
-                        {formatDate(statement.transactionDate?.toString(), '/')}
+                        {onFormatDate(statement.transactionDate?.toString())}
                       </Text>
                       <Text
                         numberOfLines={1}
@@ -156,7 +146,7 @@ const TransactionItem: React.FC<IProps> = (props) => {
                 <View style={styles.transactionsViewItemRight}>
                   <View style={styles.transactionsViewItemDetail}>
                     <Text style={styles.transactionsViewItemDate}>
-                      {formatDate(statement.datetime?.toString(), '/')}
+                      {onFormatDate(statement.datetime?.toString())}
                     </Text>
                     <Text
                       numberOfLines={1}

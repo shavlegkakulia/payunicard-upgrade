@@ -95,6 +95,7 @@ const TarriffCalculator: React.FC = props => {
     visaCount: 0,
     mcCount: 0,
   });
+  const [warning, setWarning] = useState("");
   const dispatch = useDispatch<any>();
 
   const userData = useSelector<IUserGlobalState>(
@@ -157,6 +158,7 @@ const TarriffCalculator: React.FC = props => {
   };
 
   const setCardsCount = (card: ICardType, operation: string = '+') => {
+    setWarning("");
     const c = [...(cardTypes || [])];
     const index = c.findIndex(cd => cd.name === card.name);
 
@@ -247,9 +249,7 @@ const TarriffCalculator: React.FC = props => {
         c[index].isChecked = false;
         setCardTypes(c);
       }
-      dispatch(
-        PUSH(translate.t('orderCard.maxOrderCards').replace('{count}', (visaCount + mcCount).toString())),
-      );
+      setWarning(translate.t('orderCard.youCanOrderMax').replace('{count}', (visaCount + mcCount).toString()).replace('{max}', (6 - (visaCount + mcCount)).toString()));
       return;
     }
 
@@ -259,11 +259,7 @@ const TarriffCalculator: React.FC = props => {
           c[index].isChecked = false;
           setCardTypes(c);
         }
-        dispatch(
-          PUSH(
-            translate.t('orderCard.maxOrderCards').replace('{count}', (visaCount).toString()),
-          ),
-        );
+        setWarning(visaCount < 2 ? translate.t('orderCard.youCanOrderVisa').replace('{count}', (visaCount).toString()) : translate.t('orderCard.youCantOrderVisa'));
         return;
       }
     }
@@ -439,6 +435,10 @@ const TarriffCalculator: React.FC = props => {
               )}
 
               {tab}
+
+              {warning ? <Text style={styles.errorText}>
+                {warning}
+              </Text> : null}
              
          
               {route.params?.package?.paketTypeId !== 2 && <View style={styles.swiths}>
@@ -649,6 +649,12 @@ const styles = StyleSheet.create({
   button: {
     marginVertical: 40,
   },
+  errorText: {
+    fontFamily: 'FiraGO-Book',
+    fontSize: 10,
+    lineHeight: 17,
+    color: colors.danger,
+  }
 });
 
 export default TarriffCalculator;

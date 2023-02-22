@@ -28,7 +28,7 @@ import {
 } from '../../../redux/action_types/translate_action_types';
 import { IKCData } from '../../../services/KvalificaServices';
 import { ICitizenshipCountry } from '../../../services/PresentationServive';
-import { formatDate } from '../../../utils/utils';
+import {  onFormatDate } from '../../../utils/utils';
 import {IVerficationState, IGlobalState as IVERIFICATIONSTATE} from '../../../redux/action_types/verification_action_types';
 
 export enum ESex {
@@ -264,7 +264,7 @@ const StepEight: React.FC<IProps> = props => {
           <View style={[styles.InputBox, dateErrorStyle]}>
             <Text style={styles.birthDateValue}>
               {bdate ? (
-                formatDate(bDate?.toString()).split('.').join('/')
+                onFormatDate(bDate?.toString())
               ) : (
                 <>
                   {translate.t('common.month') +

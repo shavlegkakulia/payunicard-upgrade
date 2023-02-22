@@ -76,8 +76,7 @@ import {
 } from '../../../redux/action_types/translate_action_types';
 import SmsRetriever from 'react-native-sms-retriever';
 import {ka_ge} from '../../../lang';
-import {
-  GetSwiftCategories,
+import TransferServices, {
   IGetSwiftResponseDataItem,
 } from '../../../services/TransferServices';
 import AppSelect, {
@@ -468,7 +467,8 @@ const MakeP2PForeignTransaction = (data: IP2PTransactionRequest) => {
    if(swiftSearchRef.current) clearTimeout(swiftSearchRef.current);
     swiftSearchRef.current = setTimeout(() => {
       setSwiftDataFetching(true);
-      GetSwiftCategories(bankName, swiftCode).subscribe({
+      
+      TransferServices.GetSwiftCategories(bankName, swiftCode).subscribe({
         next: Response => {
           if (Response.data.ok) {
             setSwiftData(Response.data.data?.categories);

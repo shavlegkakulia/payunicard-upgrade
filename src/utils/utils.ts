@@ -39,6 +39,13 @@ export const formatDate = (
   return newdate;
 };
 
+export const onFormatDate = (date?: string) => {
+  if(!date) {
+    return "";
+  }
+  return date?.split(' ')?.[0] || "";
+}
+
 export const minusMonthFromDate = (
   minusmonthcount: number = 1,
   date: Date | string | undefined = undefined,

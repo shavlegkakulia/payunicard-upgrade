@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosHeaders } from 'axios';
 import NetInfo from '@react-native-community/netinfo';
 import store from './../redux/store';
 import {
@@ -30,11 +30,13 @@ class CommonService {
     let requestInterceptor = axios.interceptors.request.use(config => {
       let langKey = store.getState().TranslateReduser.key || ka_ge;
       if(!config.headers) {
-        config.headers = {}
+        config.headers = AxiosHeaders.accessor([]);
       }
       config.headers['langcode'] = LANG_KEYS[langKey];
       config.headers['User-Agent'] = this.DeviceData;
       config.headers['appVersion'] = DeviceInfro.getVersion();
+      config.headers['x-options'] = 'DateFormatNew';
+
 
       return config;
     });

@@ -183,6 +183,7 @@ class AuthService {
 
         config.headers['User-Agent'] = this.DeviceData;
         config.headers['appVersion'] = DeviceInfro.getVersion();
+        config.headers['x-options'] = 'DateFormatNew';
     };
 
     const waitForRefresh = (config?: AxiosRequestConfig) => {

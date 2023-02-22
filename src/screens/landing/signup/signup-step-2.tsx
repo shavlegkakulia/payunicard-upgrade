@@ -23,7 +23,7 @@ import Validation, {
 } from '../../../components/UI/Validation';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-native-date-picker';
-import { formatDate } from '../../../utils/utils';
+import { onFormatDate } from '../../../utils/utils';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { tabHeight } from '../../../navigation/TabNav';
 import Routes from '../../../navigation/routes';
@@ -204,7 +204,7 @@ const filteredCountries = useMemo(() => [...(countries || [])].filter(country =>
 
                 <Text style={styles.birthDateValue}>
                   {birthDate ? (
-                    formatDate(birthDate?.toISOString()).split('.').join('/')
+                    onFormatDate(birthDate?.toISOString())?.split('T')?.[0]?.split('-').reverse().join('/')
                   ) : (
                     <>
                       {translate.t('common.month') +
