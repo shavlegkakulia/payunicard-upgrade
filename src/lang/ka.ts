@@ -65,6 +65,7 @@ export default {
         walletTitle: "უნისაფულე",
         addAppleWalletEasy: "დაამატეთ თქვენი Visa ბარათი Apple Pay-ში, მარტივად",
         llcPayunicard: 'შპს „ფეი უნიქარდი“',
+        username: 'მომხმარებლის სახელი'
     },
 
     generalErrors: {

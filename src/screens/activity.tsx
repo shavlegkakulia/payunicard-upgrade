@@ -19,6 +19,7 @@ import {Logout} from '../redux/actions/auth_actions';
 import {t} from '../redux/actions/translate_actions';
 import { subscriptionService } from '../services/subscriptionService';
 import BackgroundTimer from 'react-native-background-timer';
+import { CloseDrawer } from '../services/NavigationService';
 
 interface IProps {
   timeForInactivity: number;
@@ -54,6 +55,12 @@ class UserInactivity extends PureComponent<IProps, any> {
   onAction = (value: boolean) => {
     if (!value) {
       this.props.logout && this.props.logout();
+      if(CloseDrawer && CloseDrawer[0]) {
+        CloseDrawer[0]();
+        if(CloseDrawer?.[1]) {
+          CloseDrawer[1]();
+        }
+      }
     }
   };
 
@@ -215,7 +222,15 @@ class UserInactivity extends PureComponent<IProps, any> {
                       color={colors.black}
                       TextStyle={styles.buttonText}
                       title={this.props.t && this.props.t('common.logout')}
-                      onPress={() => this.props.logout && this.props.logout()}
+                      onPress={() => {
+                        this.props.logout && this.props.logout();
+                        if(CloseDrawer && CloseDrawer[0]) {
+                          CloseDrawer[0]();
+                          if(CloseDrawer?.[1]) {
+                            CloseDrawer[1]();
+                          }
+                        }
+                      }}
                     />
                     <AppButton
                       style={[styles.modalButton, styles.buttonTwo]}

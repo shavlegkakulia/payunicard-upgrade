@@ -63,6 +63,7 @@ export default {
         female: 'Female',
         addAppleWalletEasy: 'Add Your Visa card to Apple Pay. Setup is easy',
         llcPayunicard: '"Pay Unicard" LLC',
+        username: 'Username'
     },
     generalErrors: {
         errorOccurred: 'An Error Occurred',

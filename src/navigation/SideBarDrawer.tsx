@@ -156,22 +156,7 @@ const SideBarDrawer: React.FC<any> = props => {
               activeIconUrl={require('./../assets/images/transactions_active.png')}
               activeRoute={currentNav}
             />
-            {/* <SidebarTouchableItem
-              {...props}
-              title="ჩემი ლოიალობა"
-              route={''}
-              iconUrl={require('./../assets/images/loiality.png')}
-              activeIconUrl={require('./../assets/images/loiality_active.png')}
-              activeRoute={currentNav}
-            />
-            <SidebarTouchableItem
-              {...props}
-              title="ვალუტის კურსები"
-              route={''}
-              iconUrl={require('./../assets/images/converter.png')}
-              activeIconUrl={require('./../assets/images/converter_active.png')}
-              activeRoute={currentNav}
-            /> */}
+  
             <SidebarTouchableItem
               {...props}
               title={translate.t('tabNavigation.settings')}
@@ -181,14 +166,11 @@ const SideBarDrawer: React.FC<any> = props => {
               activeRoute={currentNav}
             />
             <View style={styles.line}></View>
-            <SidebarTouchableItem
-              {...props}
-              title={userState.userDetails?.username}
-              route={undefined}
-              iconUrl={require('./../assets/images/icon-man-40x40.png')}
-              activeIconUrl={require('./../assets/images/icon-man-40x40.png')}
-              activeRoute={currentNav}
-            />
+            <View>
+              <Text style={styles.userNameTitle}>{translate.t('common.username')}</Text>
+              <Text style={styles.userNameValue}>{userState.userDetails?.username}</Text>
+            </View>
+
           </View>
         </View>
         <AppButton
@@ -274,6 +256,20 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingTop: 10,
     marginBottom: 10
+  },
+  userNameTitle: {
+    marginLeft: 10,
+    fontFamily: 'FiraGO-Medium',
+    fontSize: 14,
+    lineHeight: 18.8,
+    color: colors.black
+  },
+  userNameValue: {
+    marginLeft: 10,
+    fontFamily: 'FiraGO-Book',
+    fontSize: 14,
+    lineHeight: 18.8,
+    color: colors.dark
   }
 });
 
