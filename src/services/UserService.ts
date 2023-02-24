@@ -703,6 +703,7 @@ export interface IExportStatementsAsPdfMobileResponseData {
 }
 
 export interface IConsolidated {
+  [index: string]: number | string,
   availableInEUR: number,
   availableInGBP: number,
   availableInGEL: number,

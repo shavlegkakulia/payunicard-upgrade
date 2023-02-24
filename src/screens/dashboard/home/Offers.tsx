@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   offersContainer: {
     height: 190,
     flex: 1,
-    marginTop: 33,
+    marginTop: 16,
   },
   offersContainerHeader: {
     flexDirection: 'row',

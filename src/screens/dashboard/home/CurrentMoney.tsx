@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   currentMoneyBox: {
-    marginTop: 35,
+    marginTop: 16,
     paddingHorizontal: 8,
   },
 });

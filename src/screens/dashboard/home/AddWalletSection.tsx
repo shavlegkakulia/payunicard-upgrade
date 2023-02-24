@@ -33,7 +33,7 @@ const AddWalletSection = () => {
 
 const styles = StyleSheet.create({
   accountStatusView: {
-    marginTop: 20,
+    marginTop: 16,
     minHeight: 46,
     backgroundColor: colors.white,
     flex: 1,
