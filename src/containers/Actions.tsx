@@ -15,6 +15,7 @@ import {subscriptionService} from '../services/subscriptionService';
 interface IProps {
   title: string;
   sendHeader: (element: JSX.Element | null) => void;
+  oncallback: () => void;
 }
 
 const Actions: React.FC<IProps> = props => {
@@ -28,6 +29,7 @@ const Actions: React.FC<IProps> = props => {
       SUBSCRIBTION_KEYS.OPEN_CREATE_TRANSFER_TEMPLATE,
       true,
     );
+    props.oncallback();
   };
 
   const openCreatePayment = () => {
@@ -35,18 +37,22 @@ const Actions: React.FC<IProps> = props => {
       SUBSCRIBTION_KEYS.OPEN_CREATE_PAYMENT_TEMPLATE,
       true,
     );
+    props.oncallback();
   };
 
   const openCardsStore = () => {
     subscriptionService.sendData(SUBSCRIBTION_KEYS.OPEN_CARDS_STOTE, true);
+    props.oncallback();
   };
 
   const TopUp = () => {
     subscriptionService.sendData(SUBSCRIBTION_KEYS.START_TOPUP, true);
+    props.oncallback();
   };
 
   const AddBankCard = () => {
     subscriptionService.sendData(SUBSCRIBTION_KEYS.ADD_BANK_CARD, true);
+    props.oncallback();
   };
 
   useEffect(() => {

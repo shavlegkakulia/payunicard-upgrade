@@ -702,6 +702,23 @@ export interface IExportStatementsAsPdfMobileResponseData {
   data?: IExportStatementsAsPdfMobileResponse | undefined;
 }
 
+export interface IConsolidated {
+  availableInEUR: number,
+  availableInGBP: number,
+  availableInGEL: number,
+  availableInRUB: number,
+  availableInTRY: number,
+  availableInUSD: number,
+  balanceInEUR: number,
+  balanceInGBP: number,
+  balanceInGEL: number,
+  balanceInRUB: number,
+  balanceInTRY: number,
+  balanceInUSD: number,
+  productName: string,
+  imageUrl: string
+}
+
 class UserService {
   _envs: IEnv | any;
   constructor() {
@@ -1027,6 +1044,14 @@ class UserService {
     }
     console.log('requestdata',requestData)
     return  axios.post(`${this._envs.API_URL}User/SetUserClaims`, requestData)
+  }
+
+  Consolidated() {
+    const promise = axios.get<{data: {products: Array<IConsolidated>}, ok: boolean, errors: null | []}>(
+      `${this._envs.API_URL}User/products/consolidated`,
+      {objectResponse: true},
+    );
+    return from(promise);
   }
 }
 

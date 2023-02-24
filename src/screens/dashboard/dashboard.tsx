@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { ScrollView, View, RefreshControl, Platform, Modal, Image, Text, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import ActionSheetCustom from './../../components/actionSheet';
+
 import colors from '../../constants/colors';
 import userStatuses from '../../constants/userStatuses';
 import {
@@ -23,7 +23,6 @@ import CurrentMoney from './home/CurrentMoney';
 import TransactionsList from './transactions/TransactionsList';
 import Routes from '../../navigation/routes';
 import { subscriptionService } from '../../services/subscriptionService';
-import Actions from '../../containers/Actions';
 import SUBSCRIBTION_KEYS from '../../constants/subscribtionKeys';
 import { NAVIGATION_ACTIONS } from '../../redux/action_types/navigation_action_types';
 import { useNavigationState } from '@react-navigation/native';
@@ -59,9 +58,8 @@ const Dashboard: React.FC<IProps> = props => {
   const [refreshing, setRefreshing] = useState(false);
   const [hasWalletCards, setHasWalletCards] = useState<boolean>(false);
 
-  const [actionsSheetHeader, setActionsSheetHeader] =
-    useState<JSX.Element | null>(null);
-  const [actionsVisible, setActionsVisible] = useState(false);
+
+
   const userData = useSelector<IUserGlobalState>(
     state => state.UserReducer,
   ) as IUserState;
@@ -80,7 +78,6 @@ const Dashboard: React.FC<IProps> = props => {
       NavigationService.navigate(Routes.Verification, { verificationStep: 1, fetchCountries: true });
     }
   };
-
   const _routes = useNavigationState(state => state.routes);
 
   const transferToUni = () => {
@@ -98,9 +95,7 @@ const Dashboard: React.FC<IProps> = props => {
     });
   };
 
-  const closeActionSheet = () => {
-    setActionsVisible(false);
-  };
+
 
   const FetchUserData = () => {
     NetworkService.CheckConnection(() => {
@@ -191,44 +186,44 @@ const Dashboard: React.FC<IProps> = props => {
   const actionSHeetCloseDelay = debounce((e: Function) => e(), 1000);
 
   useEffect(() => {
-    subscriptionService.getData().subscribe(data => {
+    const sub = subscriptionService.getData().subscribe(data => { console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data)
       if (
-        data?.key === SUBSCRIBTION_KEYS.OPEN_ACTIONS_ACTIONSHEET &&
-        !actionsVisible
-      ) {
-        setActionsVisible(true);
-      } else if (
         data?.key === SUBSCRIBTION_KEYS.OPEN_CREATE_TRANSFER_TEMPLATE
       ) {
         actionSHeetCloseDelay(transferToUni);
-        closeActionSheet();
+   
       } else if (data?.key === SUBSCRIBTION_KEYS.FETCH_USER_ACCOUNTS) {
         dispatch(FetchUserAccounts());
       } else if (data?.key === SUBSCRIBTION_KEYS.OPEN_CARDS_STOTE) {
         actionSHeetCloseDelay(() =>
           NavigationService.navigate(Routes.CardsStore),
         );
-        closeActionSheet();
+  
       } else if (data?.key === SUBSCRIBTION_KEYS.START_TOPUP) {
         actionSHeetCloseDelay(() =>
           NavigationService.navigate(Routes.TopupFlow),
         );
-        closeActionSheet();
+       
       } else if (data?.key === SUBSCRIBTION_KEYS.ADD_BANK_CARD) {
         actionSHeetCloseDelay(() =>
           NavigationService.navigate(Routes.addBankCard),
         );
-        closeActionSheet();
+    
       } else if (data?.key === SUBSCRIBTION_KEYS.OPEN_CREATE_PAYMENT_TEMPLATE) {
         actionSHeetCloseDelay(() =>
           NavigationService.navigate(Routes.CreatePayTemplate),
         );
-        closeActionSheet();
+     
       }
     });
 
-    return () => subscriptionService.clearData();
+    return () => {
+      sub.unsubscribe();
+      subscriptionService.clearData();
+    }
   }, []);
+
+
 
   const handleAppleBannerVisiblity = () => {
     UserService.ConfirmSeeinAppleBaner().then(res => {
@@ -248,7 +243,7 @@ const Dashboard: React.FC<IProps> = props => {
     }, 1000))
   }
 
-  const ActionsSheetHeight = 440;
+
 
   useEffect(() => {
     if (userData.userAccounts && Platform.OS == 'ios') {
@@ -294,19 +289,7 @@ const Dashboard: React.FC<IProps> = props => {
         </View>
       </ScrollView>
 
-      <ActionSheetCustom
-        header={actionsSheetHeader}
-        scrollable={true}
-        hasDraggableIcon={false}
-        visible={actionsVisible}
-        hasScroll={true}
-        height={ActionsSheetHeight}
-        onPress={closeActionSheet}>
-        <Actions
-          title={translate.t('plusSign.chooseService')}
-          sendHeader={setActionsSheetHeader}
-        />
-      </ActionSheetCustom>
+
       <Modal
         visible={userData?.userDetails?.claims?.[0]?.claimValue == "1" && Platform.OS == 'ios'}
         onRequestClose={handleAppleBannerVisiblity}>

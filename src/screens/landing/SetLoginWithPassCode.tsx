@@ -169,7 +169,7 @@ return axios<IAuthorizationResponse>(options).then(async response => {
             setCode(undefined);
           }
         }
-      }).catch(e => console.log(e.response));
+      }).finally(() => setCode(undefined)).catch(e => console.log(e))
     } else {
       dispatch(PUSH(translate.t('generalErrors.passCodeError')));
       setCode(undefined);
@@ -259,7 +259,6 @@ return axios<IAuthorizationResponse>(options).then(async response => {
         >
           <>
             <ActivityIndicator size="large" color={colors.primary} />
-            <Text>pascode</Text>
           </>
         </TouchableOpacity>
       )}
@@ -480,10 +479,12 @@ const styles = StyleSheet.create({
     color: '#FF8F00',
   },
   loader: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: 'transparent',
+    elevation: 9999999999999999,
+    zIndex: 99999999999999999999
   }
 });
 

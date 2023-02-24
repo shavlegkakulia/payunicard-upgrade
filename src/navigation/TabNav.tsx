@@ -13,10 +13,11 @@ import {
   IGlobalState as ITranslateGlobalState,
 } from './../redux/action_types/translate_action_types';
 import NavigationService from './../services/NavigationService';
-import { subscriptionService } from './../services/subscriptionService';
 import { getString } from './../utils/Converter';
 import Routes from './routes';
-
+import ActionSheetCustom from './../components/actionSheet';
+import Actions from '../containers/Actions';
+const ActionsSheetHeight = 440;
 export const tabHeight = 67;
 
 const RouteIcons: any = {};
@@ -63,11 +64,16 @@ const TabNav = () => {
     state => state.NavigationReducer,
   ) as INavigationState;
 
+  const [actionsSheetHeader, setActionsSheetHeader] =
+  useState<JSX.Element | null>(null);
+  const [actionsVisible, setActionsVisible] = useState(false);
+
   const openActionSheet = () => {
-    subscriptionService.sendData(
-      SUBSCRIBTION_KEYS.OPEN_ACTIONS_ACTIONSHEET,
-      true,
-    );
+    setActionsVisible(true);
+  };
+
+  const closeActionSheet = () => {
+    setActionsVisible(false);
   };
 
   const onHandle = (nav: string | undefined) => {
@@ -85,7 +91,7 @@ const TabNav = () => {
     setCurrentNav(navStore.currentRoute);
   }, [navStore.currentRoute]);
 
-  return (
+  return (<>
     <View style={styles.botomTab}>
       <NavItem
         active={currentNav === Routes.Home || currentNav === Routes.Dashboard}
@@ -122,6 +128,21 @@ const TabNav = () => {
         title={translate.t('tabNavigation.transfers')}
       />
     </View>
+    <ActionSheetCustom
+        header={actionsSheetHeader}
+        scrollable={true}
+        hasDraggableIcon={false}
+        visible={actionsVisible}
+        hasScroll={true}
+        height={ActionsSheetHeight}
+        onPress={closeActionSheet}>
+        <Actions
+          title={translate.t('plusSign.chooseService')}
+          sendHeader={setActionsSheetHeader}
+          oncallback={closeActionSheet}
+        />
+      </ActionSheetCustom>
+    </>
   );
 };
 

@@ -24,6 +24,8 @@ import { getString } from '../../utils/Converter';
 import SmsRetriever from 'react-native-sms-retriever';
 import AsyncStorage from '../../services/StorageService';
 import { TOKEN_EXPIRE } from '../../constants/defaults';
+import { stringToObject } from '../../utils/utils';
+import { require_otp } from '../../constants/errorCodes';
 
 const RefreshTokenOtp: React.FC = () => {
   const translate = useSelector<ITranslateGlobalState>(
@@ -35,6 +37,7 @@ const RefreshTokenOtp: React.FC = () => {
 
   const goRefreshToken = async () => {
     setIsLoading(true);
+
     const refreshToken = await AuthService.getRefreshToken();
     const _envs = await envs();
     let authData: any = {
@@ -43,8 +46,13 @@ const RefreshTokenOtp: React.FC = () => {
       client_secret: _envs.client_secret,
       grant_type: "refresh_token",
       refresh_token: refreshToken,
-      Otp: otpGuid
   };
+  if(otpGuid) {
+    authData = {
+      ...authData,
+      Otp: otpGuid
+    }
+  }
 
   const data = Object.keys(authData)
   .map((key) => `${key}=${encodeURIComponent(authData[key])}`)
@@ -89,8 +97,11 @@ return axios<IAuthorizationResponse>(options).then(async response => {
     refreshToken: response.data.refresh_token,
     isAuthenticated: true,
   });
-}).catch(() => {
-  nav.goBack();
+}).catch((error) => {
+  if (stringToObject(error.response)?.data?.error !== require_otp) {
+    nav.goBack();
+  }
+ 
 })
 .finally(() => setIsLoading(false));
   };

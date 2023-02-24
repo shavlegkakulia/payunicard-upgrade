@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import {useSelector} from 'react-redux';
+import UserService, { IConsolidated } from '../../../services/UserService';
 import colors from '../../../constants/colors';
 import currencies, { GEL } from '../../../constants/currencies';
 import { ka_ge } from '../../../lang';
@@ -22,7 +23,7 @@ import {
 } from '../../../redux/action_types/user_action_types';
 import NavigationService from '../../../services/NavigationService';
 import screenStyles from '../../../styles/screens';
-import {CurrencyConverter} from '../../../utils/Converter';
+import {CurrencyConverter, CurrencySimbolConverter} from '../../../utils/Converter';
 
 const ProductsView: React.FC = () => {
   const translate = useSelector<ITranslateGlobalState>(
@@ -31,6 +32,17 @@ const ProductsView: React.FC = () => {
   const userData = useSelector<IUserGlobalState>(
     state => state.UserReducer,
   ) as IUserState;
+  const [consolidates, setConsolidates] = useState<Array<IConsolidated>>();
+
+  useEffect(() => {
+    UserService.Consolidated().subscribe({
+      next: response => {
+        if(response.data.ok) {
+          setConsolidates(response.data.data.products);
+        }
+      }
+    })
+  }, []);
 
   return (
     <TouchableOpacity
@@ -54,10 +66,10 @@ const ProductsView: React.FC = () => {
           style={styles.loadingBox}
         />
       ) : (
-        userData.userProducts?.map((product, index) => (
+        consolidates?.map((product, index) => (
           <View style={styles.ProductsViewItem} key={`products${index}`}>
             <Image
-              source={{uri: product.imageURL}}
+              source={{uri: product.imageUrl}}
               style={styles.productsViewLogo}
             />
             <View style={styles.productsItemRight}>
@@ -65,10 +77,32 @@ const ProductsView: React.FC = () => {
                 <Text style={styles.productsViewItemTitle}>
                   {product.productName}
                 </Text>
+                <View style={styles.productCurrencies}>
                 <Text style={styles.productsViewItemValue}>
-                  {CurrencyConverter(product.balance)}
-                  {translate.key === ka_ge ? currencies.GEL : GEL}
+                  {CurrencyConverter(product.balanceInGEL)}
+                  {CurrencySimbolConverter(currencies.GEL)}
                 </Text>
+                <Text style={styles.productsViewItemValue}>
+                  {CurrencyConverter(product.balanceInUSD)}
+                  {CurrencySimbolConverter(currencies.USD)}
+                </Text>
+                <Text style={styles.productsViewItemValue}>
+                  {CurrencyConverter(product.balanceInEUR)}
+                  {CurrencySimbolConverter(currencies.EUR)}
+                </Text>
+                <Text style={styles.productsViewItemValue}>
+                  {CurrencyConverter(product.balanceInGBP)}
+                  {CurrencySimbolConverter(currencies.GBP)}
+                </Text>
+                <Text style={styles.productsViewItemValue}>
+                  {CurrencyConverter(product.balanceInTRY)}
+                  {CurrencySimbolConverter(currencies.TRY)}
+                </Text>
+                <Text style={styles.productsViewItemValue}>
+                  {CurrencyConverter(product.balanceInRUB)}
+                  {CurrencySimbolConverter(currencies.RUR)}
+                </Text>
+                </View>
               </View>
               {userData.userProducts &&
                 index != userData.userProducts.length - 1 && (
@@ -121,10 +155,12 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   productsItemRightInner: {
-    flexDirection: 'row',
     flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  productCurrencies: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   productsViewItemTitle: {
     fontFamily: 'FiraGO-Book',
@@ -133,7 +169,7 @@ const styles = StyleSheet.create({
     color: colors.labelColor,
   },
   productsViewItemValue: {
-    fontFamily: 'FiraGO-Medium',
+    fontFamily: 'FiraGO-Book',
     fontSize: 14,
     lineHeight: 17,
     color: colors.black,
