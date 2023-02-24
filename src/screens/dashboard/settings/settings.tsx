@@ -5,6 +5,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Modal,
+  PermissionsAndroid,
   Platform,
   ScrollView,
   StyleSheet,
@@ -219,6 +220,10 @@ const Settings: React.FC = () => {
   };
 
   const choosePhoto = async () => {
+    PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+    )
+      .then(async () => {
     const result = await launchImageLibrary({
       mediaType: 'photo',
       selectionLimit: 1,
@@ -231,9 +236,17 @@ const Settings: React.FC = () => {
       const { base64, fileName } = result.assets[0];
       uploadImage(getString(fileName), getString(base64));
     }
+  });
   };
 
   const ctakePhoto = async () => {
+    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
+      title: "App Camera Permission",
+      message: "App needs access to your camera ",
+      buttonNeutral: "Ask Me Later",
+      buttonNegative: "Cancel",
+      buttonPositive: "OK",
+    }).then(async () => {
     const result = await launchCamera(
       {
         mediaType: 'photo',
@@ -251,6 +264,7 @@ const Settings: React.FC = () => {
       uploadImage(getString(fileName), getString(base64));
       //updateUserProfileImage(getString(base64).replace(/'/g, "'"));
     }
+  })
   };
 
   const refetchDelay = debounce((e: Function) => e(), 1000);
