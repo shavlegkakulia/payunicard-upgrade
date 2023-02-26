@@ -118,6 +118,12 @@ const AppStack: React.FC = () => {
       if (res?.key === 'force_redirect') {
         NavigationService.navigate(Routes.Landing);
       }
+
+      if (res?.key === 'close_drower') {
+        if (isDrawerOpened.current) {
+          sideDraver.current?.closeDrawer();
+        }
+      }
     });
 
     return () => {
