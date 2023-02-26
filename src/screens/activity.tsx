@@ -55,11 +55,9 @@ class UserInactivity extends PureComponent<IProps, any> {
   onAction = (value: boolean) => {
     if (!value) {
       this.props.logout && this.props.logout();
-      if(CloseDrawer && CloseDrawer[0]) {
-        CloseDrawer[0]();
-        if(CloseDrawer?.[1]) {
-          CloseDrawer[1]();
-        }
+      subscriptionService.sendData('close_drower', true);
+      if(CloseDrawer?.[1]) {
+        CloseDrawer[1]();
       }
     }
   };
@@ -224,11 +222,9 @@ class UserInactivity extends PureComponent<IProps, any> {
                       title={this.props.t && this.props.t('common.logout')}
                       onPress={() => {
                         this.props.logout && this.props.logout();
-                        if(CloseDrawer && CloseDrawer[0]) {
-                          CloseDrawer[0]();
-                          if(CloseDrawer?.[1]) {
-                            CloseDrawer[1]();
-                          }
+                        subscriptionService.sendData('close_drower', true);
+                        if(CloseDrawer?.[1]) {
+                          CloseDrawer[1]();
                         }
                       }}
                     />

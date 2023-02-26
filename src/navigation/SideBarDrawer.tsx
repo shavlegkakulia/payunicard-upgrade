@@ -29,6 +29,7 @@ import {
   ITranslateState,
   IGlobalState as ITranslateGlobalState,
 } from '../redux/action_types/translate_action_types';
+import { subscriptionService } from '../services/subscriptionService';
 
 interface ITouchableProps {
   navigation: any;
@@ -51,7 +52,7 @@ const SidebarTouchableItem: React.FC<ITouchableProps> = props => {
       type: NAVIGATION_ACTIONS.SET_CURRENT_ROUTE,
       currentRoute: currentRoute,
     });
-    CloseDrawer && CloseDrawer[0]();
+    subscriptionService.sendData('close_drower', true);
     NavigationService.navigate(props.route);
   };
   let imgUrl: ImageSourcePropType;
@@ -96,7 +97,7 @@ const SideBarDrawer: React.FC<any> = props => {
   }, [navStore.currentRoute]);
 
   const signOut = useCallback(async () => {
-    CloseDrawer && CloseDrawer[0]();
+    subscriptionService.sendData('close_drower', true);
     await sleep(dispatch(Logout()), 1500);
   }, []);
 

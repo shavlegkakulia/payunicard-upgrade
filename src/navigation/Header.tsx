@@ -12,6 +12,7 @@ import  NavigationService, {
 import Routes from './routes';
 import { SvgXml } from 'react-native-svg';
 import { payLogo, payLogo_en } from '../constants/svgXmls';
+import { subscriptionService } from '../services/subscriptionService';
 
 const DefaultOptions = ({
   navigation,
@@ -44,7 +45,7 @@ const DefaultOptions = ({
       <View>
         <TouchableOpacity
           style={styles.hamburger}
-          onPress={() => OpenDrawer && OpenDrawer[0]()}>
+          onPress={() => subscriptionService.sendData('open_drower', true)}>
           <Image
             source={require('./../assets/images/hamburger.png')}
             style={styles.rightItem}
@@ -91,7 +92,7 @@ export const DefaultOptionsDrawer = ({
   ),
   headerRight: () => (
     <View>
-      <TouchableOpacity style={styles.hamburger} onPress={() => OpenDrawer && OpenDrawer[0]()}>
+      <TouchableOpacity style={styles.hamburger} onPress={() => subscriptionService.sendData('open_drower', true)}>
         <Image
           source={require('./../assets/images/hamburger.png')}
           style={styles.rightItem}

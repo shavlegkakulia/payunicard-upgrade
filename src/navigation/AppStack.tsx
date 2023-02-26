@@ -101,7 +101,7 @@ const AppStack: React.FC = () => {
   const routes = useNavigationState(state => state?.routes);
 
   useEffect(() => {
-    const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+    const sub = BackHandler.addEventListener('hardwareBackPress', () => { console.log('********+++++++')
       if (isDrawerOpened.current) {
         sideDraver.current?.closeDrawer();
         return true;
@@ -117,6 +117,12 @@ const AppStack: React.FC = () => {
     const red_sub = subscriptionService.getData().subscribe(res => {
       if (res?.key === 'force_redirect') {
         NavigationService.navigate(Routes.Landing);
+      }
+      if(res?.key === 'close_drower') {
+        sideDraver.current?.closeDrawer();
+      }
+      if(res?.key === 'open_drower') {
+        sideDraver.current?.openDrawer();
       }
     });
 
@@ -138,8 +144,6 @@ const AppStack: React.FC = () => {
       onDrawerClose={() => (isDrawerOpened.current = false)}
       ref={drawer => {
         sideDraver.current = drawer;
-        NavigationService.setDrawerOpen(sideDraver.current?.openDrawer, 0);
-        NavigationService.setDrawerClose(sideDraver.current?.closeDrawer, 0);
       }}
       renderNavigationView={props => <SideBarDrawer props={props} />}>
       <>
