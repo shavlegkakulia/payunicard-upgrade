@@ -123,7 +123,7 @@ export const PasswordValidation: React.FC<IPwdValidationProps> = props => {
           containsLower: ContainsLowercase.test(value),
           containsSpecial: ContainsSpecialCharacter.test(value),
           containsNumeric: ContainsNumeric.test(value),
-          hasWrongSimbol: (value.length && value.indexOf('.') < 0 && value.indexOf('@') < 0) ? true : false
+          hasWrongSimbol: (value.length && value.indexOf('.') < 0 && value.indexOf('@') < 0) ? ContainsSpecialCharacter.test(value) ? true : false : false
         };
       });
     } catch (_) {}

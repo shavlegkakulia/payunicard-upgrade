@@ -181,7 +181,8 @@ export default {
         passwordValidationSection5: 'ერთ ციფრს',
         passwordValidationSection6: 'ერთ სპეციალურ სიმბოლოს (გარდა წერტილისა და @ სიმბოლოსი)',
         simpleRegistrationComplate: 'მარტივი რეგისტრაცია დასრულებულია',
-        addCardsToPoints: 'დაამატეთ ლოიალობის ბარათები და დააგროვეთ ქულები'
+        addCardsToPoints: 'დაამატეთ ლოიალობის ბარათები და დააგროვეთ ქულები',
+        phoneNotValid: 'ტელეფონის ნომერი არავალიდურია'
     },
     plusSign: {
         chooseService: 'აირჩიეთ სერვისი',

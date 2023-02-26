@@ -95,7 +95,7 @@ const PasswordReset: React.FC = () => {
   const checkUser = () => {
     NetworkService.CheckConnection(() => {
       setIsLoading(true);
-      let User: ICheckUserPersonalIdRequest = {userName: email};
+      let User: ICheckUserPersonalIdRequest = {userName: email, personalID: personalNumber};
       UserService.CheckUser(User).subscribe({
         next: Response => {
         

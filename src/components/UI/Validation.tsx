@@ -57,8 +57,8 @@ const Validation: IParams = {
                     errors.push(true)
                 }
             }
-            el.types.map((r: string) => { 
-                switch (r) {
+            el.types.map((r: string) => {
+                switch (r) { 
                     case required:
                         if (!el.value || (el.value &&  !el.value.trim())) {
                             hasError = true; 
@@ -102,7 +102,7 @@ const Validation: IParams = {
                         }
                         break;
                         case hasWrongSimbol:
-                            if(el?.value && (el.value.indexOf('.') >= 0 || el.value.indexOf('@') >= 0)) {
+                            if(el?.value && (el?.value.indexOf('.') >= 0 || el?.value.indexOf('@') >= 0) || !ContainsSpecialCharacter.test(el?.value)) {
                                 hasError = true; 
                                 errors.push(true)
                             }

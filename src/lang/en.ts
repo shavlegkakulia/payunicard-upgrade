@@ -174,7 +174,8 @@ export default {
         passwordValidationSection5: 'One Number',
         passwordValidationSection6: 'One Special Character (Except the Dot and @ Symbol)',
         simpleRegistrationComplate: 'მარტივი რეგისტრაცია დასრულებულია',
-        addCardsToPoints: 'Add Loyalty Card and Collect Point'
+        addCardsToPoints: 'Add Loyalty Card and Collect Point',
+        phoneNotValid: 'Invalid Phone Number'
     },
     plusSign: {
         chooseService: 'Choose Service',

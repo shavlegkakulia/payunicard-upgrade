@@ -23,7 +23,7 @@ import Validation, {
 } from '../../../components/UI/Validation';
 import { useDispatch, useSelector } from 'react-redux';
 import DatePicker from 'react-native-date-picker';
-import { onFormatDate } from '../../../utils/utils';
+import { minusMonthFromDate, onFormatDate } from '../../../utils/utils';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { tabHeight } from '../../../navigation/TabNav';
 import Routes from '../../../navigation/routes';
@@ -160,10 +160,10 @@ const SignupStepTwo: React.FC = () => {
         cancelText={translate.t('common.cancel')}
         confirmText={translate.t('common.confirm')}
         locale={translate.key === ka_ge ? KA : EN}
-        maximumDate={new Date()}
+        maximumDate={minusMonthFromDate(18*12)}
         open={chooseDate}
         date={birthDate || new Date()}
-        onDateChange={() => { }}
+        onDateChange={(d) => console.log(d)}
         timeZoneOffsetInMinutes={-7 * 60}
         onConfirm={date => {
           setChooseDate(false);
@@ -174,10 +174,10 @@ const SignupStepTwo: React.FC = () => {
         }}
       />
     ),
-    [chooseDate, birthDate],
+    [chooseDate, birthDate, translate],
   );
 
-const filteredCountries = useMemo(() => [...(countries || [])].filter(country => country.countryName?.includes(searchValue)), [countries, searchValue]);
+const filteredCountries = useMemo(() => [...(countries || [])].filter(country => country.countryName?.toLowerCase()?.includes(searchValue.toLowerCase())), [countries, searchValue]);
 
   return (
     <KeyboardAvoidingView
@@ -260,7 +260,7 @@ const filteredCountries = useMemo(() => [...(countries || [])].filter(country =>
               value={personalId}
               onChange={onPersonalNumberHandle}
               keyboardType={selectedCountry?.countryID == 79 ? 'numeric' : 'default'}
-              maxLength={selectedCountry?.countryID == 79 ? 11 : 21}
+              maxLength={selectedCountry?.countryID == 79 ? 11 : selectedCountry?.countryID === 231 ? 9 : 21}
               minLength={selectedCountry?.countryID == 79 ? 11 : 4}
               placeholder={selectedCountry == undefined || selectedCountry?.countryID == 79 ? translate.t('common.personalNumber') : translate.t('verification.passportNumber')}
             />

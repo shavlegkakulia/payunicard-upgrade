@@ -111,14 +111,14 @@ const Settings: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      if(mode !== undefined) {
-        await storage.removeItem('PassCodeEnbled');
-        await storage.removeItem('PassCode');
-        await storage.removeItem('Biometric');
+      // if(mode !== undefined) {
+      //   await storage.removeItem('PassCodeEnbled');
+      //   await storage.removeItem('PassCode');
+      //   await storage.removeItem('Biometric');
         
-        setIsFaceIdEnabled(false);
-        setIsPassCodeEnabled(false);
-      }
+      //   setIsFaceIdEnabled(false);
+      //   setIsPassCodeEnabled(false);
+      // }
       if(mode === true) {
         await storage.setItem('mode', '*');
       } else if(mode === false) {
@@ -635,11 +635,11 @@ const mustStartBiometrics = useRef(false);
               <Switch
                 style={styles.check}
                 trackColor={{
-                  false: colors.inputBackGround,
+                  false: colors.dark,
                   true: colors.primary,
                 }}
-                thumbColor={isPassCodeEnabled ? colors.white : colors.white}
-                ios_backgroundColor={colors.inputBackGround}
+                thumbColor={colors.inputBackGround}
+                ios_backgroundColor={colors.dark}
                 onValueChange={togglePassCodeSwitch}
                 value={isPassCodeEnabled}
               />
@@ -674,11 +674,11 @@ const mustStartBiometrics = useRef(false);
                 <Switch
                   style={styles.check}
                   trackColor={{
-                    false: colors.inputBackGround,
+                    false: colors.dark,
                     true: colors.primary,
                   }}
-                  thumbColor={isFaceIdEnabled ? colors.white : colors.white}
-                  ios_backgroundColor={colors.inputBackGround}
+                  thumbColor={colors.inputBackGround}
+                  ios_backgroundColor={colors.dark}
                   onValueChange={GoToBiometric}
                   value={isFaceIdEnabled}
                 />
@@ -731,11 +731,11 @@ const mustStartBiometrics = useRef(false);
               <Switch
                 style={styles.check}
                 trackColor={{
-                  false: colors.inputBackGround,
+                  false: colors.dark,
                   true: colors.primary,
                 }}
-                thumbColor={trust ? colors.white : colors.white}
-                ios_backgroundColor={colors.inputBackGround}
+                thumbColor={colors.inputBackGround}
+                ios_backgroundColor={colors.dark}
                 onValueChange={onSwitch}
                 value={trust}
               />

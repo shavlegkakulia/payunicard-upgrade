@@ -45,26 +45,27 @@ const SignupForm: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [surname, setSurname] = useState<string>('');
   const [maxLengt, setMaxLength] = useState<number | undefined>();
+  const [minLength, setMinLength] = useState<number | undefined>();
   const [code, setCode] = useState<ICountry>();
   const [codeVisible, setCodeVisible] = useState<boolean>(false);
   const [codeErrorStyle, setCodeErrorStyle] = useState<StyleProp<ViewStyle>>(
     {},
   );
   const [phoneErrorStyle, setPhoneErrorStyle] = useState<StyleProp<ViewStyle>>(
-    {},
+    undefined,
   );
   const [countries, setCountries] = useState<Array<ICountry>>();
   const navigation = useNavigation<any>();
   const keyboard = useKeyboard();
 
-  const onSetCode = (c: any) => {
-    if(c.dial_code === '+995') {
-      setMaxLength(9);
+  const onSetCode = (c: ICountry) => {
+    if(c.dialCode === '+995') {
       setPhone(undefined);
     } else {
       setMaxLength(undefined);
     }
-    
+    setMaxLength(c.maxDIG);
+    setMinLength(c.minDIG);
     setCode(c);
   }
 
@@ -101,7 +102,7 @@ const SignupForm: React.FC = () => {
       return false;
     }
     else {
-      setPhoneErrorStyle({});
+      setPhoneErrorStyle(undefined);
       return true;
     }
   }, [phone, code])
@@ -151,7 +152,7 @@ const SignupForm: React.FC = () => {
           const c = response.data.data.countries?.filter(c => c.dialCode === '995');
       
           if(c.length) {
-            setCode(c[0]);
+            onSetCode(c[0]);
           }
         }
       })
@@ -183,6 +184,7 @@ const SignupForm: React.FC = () => {
               >
                 {translate.t("signup.startRegister")}
               </Text>
+              <View> 
               <View style={{ flexDirection: "row" }}>
                 <View style={[styles.countryBox]}>
                   {code?.dialCode ? (
@@ -234,7 +236,7 @@ const SignupForm: React.FC = () => {
                   maxLength={maxLengt}
                 />
               </View>
-
+              {phoneErrorStyle ? <Text style={styles.phoneError}>{translate.t('signup.phoneNotValid')}</Text> : null}</View>
               <Appinput
                 requireds={[required]}
                 customKey="name"
@@ -323,6 +325,13 @@ const styles = StyleSheet.create({
   button: {
     marginBottom: tabHeight + 40,
   },
+  phoneError: {
+    color: colors.danger, 
+    marginTop: -12, 
+    marginBottom: 12, 
+    marginLeft: 10, 
+    fontSize: 9
+  }
 });
 
 export default SignupForm;
