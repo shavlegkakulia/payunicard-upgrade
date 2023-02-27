@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Image,
   Text,
@@ -19,7 +19,7 @@ import {
   IUserState,
   IGloablState,
 } from '../redux/action_types/user_action_types';
-import NavigationService, {CloseDrawer} from '../services/NavigationService';
+import NavigationService from '../services/NavigationService';
 import {
   INavigationState,
   IGlobalState as INavGlobalState,
@@ -38,12 +38,14 @@ interface ITouchableProps {
   iconUrl: ImageSourcePropType;
   activeIconUrl: ImageSourcePropType;
   onActive: (name: string) => void;
+  closDdrower?: () => void;
 }
 
 const SidebarTouchableItem: React.FC<ITouchableProps> = props => {
   const dispatch = useDispatch<any>();
-
+  const navDelayRef = useRef<NodeJS.Timeout>();
   const onHandle = () => {
+    if(navDelayRef.current) clearTimeout(navDelayRef.current);
     if(!props.route) return;
     const currentRoute = props.route;
 
@@ -51,8 +53,10 @@ const SidebarTouchableItem: React.FC<ITouchableProps> = props => {
       type: NAVIGATION_ACTIONS.SET_CURRENT_ROUTE,
       currentRoute: currentRoute,
     });
-    CloseDrawer && CloseDrawer[0]();
-    NavigationService.navigate(props.route);
+    props?.closDdrower?.();
+    navDelayRef.current = setTimeout(() => {
+      NavigationService.navigate(props.route);
+    }, 1000);
   };
   let imgUrl: ImageSourcePropType;
   if (props.activeRoute === props.route) {
@@ -83,7 +87,7 @@ const SideBarDrawer: React.FC<any> = props => {
     state => state.TranslateReduser,
   ) as ITranslateState;
   const dispatch = useDispatch<any>();
-  const [currentNav, setCurrentNav] = useState<string | undefined>(Routes.Home);
+  const [currentNav, setCurrentNav] = useState<string>(Routes.Home);
   const userState = useSelector<IGloablState>(
     state => state.UserReducer,
   ) as IUserState;
@@ -92,11 +96,11 @@ const SideBarDrawer: React.FC<any> = props => {
   ) as INavigationState;
 
   useEffect(() => {
-    setCurrentNav(navStore.currentRoute);
+    setCurrentNav(navStore.currentRoute || "");
   }, [navStore.currentRoute]);
 
   const signOut = useCallback(async () => {
-    CloseDrawer && CloseDrawer[0]();
+    props.closDdrower?.();
     await sleep(dispatch(Logout()), 1500);
   }, []);
 
@@ -118,6 +122,7 @@ const SideBarDrawer: React.FC<any> = props => {
           <View style={styles.navs}>
             <SidebarTouchableItem
               {...props}
+              closDdrower={props.closDdrower}
               title={translate.t('tabNavigation.home')}
               route={Routes.Dashboard}
               iconUrl={require('./../assets/images/home.png')}
@@ -126,6 +131,7 @@ const SideBarDrawer: React.FC<any> = props => {
             />
             <SidebarTouchableItem
               {...props}
+              closDdrower={props.closDdrower}
               title={translate.t('tabNavigation.myProducts')}
               route={Routes.Products}
               iconUrl={require('./../assets/images/products.png')}
@@ -134,6 +140,7 @@ const SideBarDrawer: React.FC<any> = props => {
             />
             <SidebarTouchableItem
               {...props}
+              closDdrower={props.closDdrower}
               title={translate.t('tabNavigation.myPayments')}
               route={Routes.Payments}
               iconUrl={require('./../assets/images/payments.png')}
@@ -142,6 +149,7 @@ const SideBarDrawer: React.FC<any> = props => {
             />
             <SidebarTouchableItem
               {...props}
+              closDdrower={props.closDdrower}
               title={translate.t('tabNavigation.myTransfers')}
               route={Routes.Transfers}
               iconUrl={require('./../assets/images/transfers.png')}
@@ -150,6 +158,7 @@ const SideBarDrawer: React.FC<any> = props => {
             />
             <SidebarTouchableItem
               {...props}
+              closDdrower={props.closDdrower}
               title={translate.t('tabNavigation.myTransactions')}
               route={Routes.Transactions}
               iconUrl={require('./../assets/images/transactions.png')}
@@ -159,6 +168,7 @@ const SideBarDrawer: React.FC<any> = props => {
   
             <SidebarTouchableItem
               {...props}
+              closDdrower={props.closDdrower}
               title={translate.t('tabNavigation.settings')}
               route={Routes.Settings}
               iconUrl={require('./../assets/images/settings.png')}

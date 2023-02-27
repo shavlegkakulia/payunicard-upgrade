@@ -147,7 +147,7 @@ const AppStack: React.FC = () => {
         NavigationService.setDrawerOpen(sideDraver.current?.openDrawer, 0);
         NavigationService.setDrawerClose(sideDraver.current?.closeDrawer, 0);
       }}
-      renderNavigationView={props => <SideBarDrawer props={props} />}>
+      renderNavigationView={props => <SideBarDrawer props={props} closDdrower={sideDraver.current?.closeDrawer}   />}>
       <>
         <StatusBar
           backgroundColor={colors.baseBackgroundColor}
