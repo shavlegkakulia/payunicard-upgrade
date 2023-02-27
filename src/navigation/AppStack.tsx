@@ -88,9 +88,9 @@ import { useNavigationState } from '@react-navigation/core';
 
 
 const appStack = createStackNavigator();
+export let SideDrawer: DrawerLayout | null = null;
 
 const AppStack: React.FC = () => {
-  const sideDraver = useRef<DrawerLayout | null>();
   const translate = useSelector<ITranslateGlobalState>(
     state => state.TranslateReduser,
   ) as ITranslateState;
@@ -103,7 +103,7 @@ const AppStack: React.FC = () => {
   useEffect(() => {
     const sub = BackHandler.addEventListener('hardwareBackPress', () => {
       if (isDrawerOpened.current) {
-        sideDraver.current?.closeDrawer();
+        SideDrawer?.closeDrawer();
         return true;
       } else {
         return false;
@@ -121,7 +121,7 @@ const AppStack: React.FC = () => {
 
       if (res?.key === 'close_drower') {
         if (isDrawerOpened.current) {
-          sideDraver.current?.closeDrawer();
+          SideDrawer?.closeDrawer();
         }
       }
     });
@@ -143,11 +143,9 @@ const AppStack: React.FC = () => {
       onDrawerOpen={() => (isDrawerOpened.current = true)}
       onDrawerClose={() => (isDrawerOpened.current = false)}
       ref={drawer => {
-        sideDraver.current = drawer;
-        NavigationService.setDrawerOpen(sideDraver.current?.openDrawer, 0);
-        NavigationService.setDrawerClose(sideDraver.current?.closeDrawer, 0);
+        SideDrawer = drawer;
       }}
-      renderNavigationView={props => <SideBarDrawer props={props} closDdrower={sideDraver.current?.closeDrawer}   />}>
+      renderNavigationView={props => <SideBarDrawer props={props} />}>
       <>
         <StatusBar
           backgroundColor={colors.baseBackgroundColor}

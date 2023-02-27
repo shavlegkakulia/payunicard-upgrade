@@ -6,12 +6,11 @@ import {Image, View, TouchableOpacity, StyleSheet, Text, Platform} from 'react-n
 import colors from '../constants/colors';
 import {headerHeight} from '../constants/defaults';
 import { ka_ge } from '../lang';
-import  NavigationService, {
-  OpenDrawer,
-} from '../services/NavigationService';
+import  NavigationService from '../services/NavigationService';
 import Routes from './routes';
 import { SvgXml } from 'react-native-svg';
 import { payLogo, payLogo_en } from '../constants/svgXmls';
+import {SideDrawer} from './AppStack';
 
 const DefaultOptions = ({
   navigation,
@@ -44,7 +43,7 @@ const DefaultOptions = ({
       <View>
         <TouchableOpacity
           style={styles.hamburger}
-          onPress={() => OpenDrawer && OpenDrawer[0]()}>
+          onPress={() =>  SideDrawer?.openDrawer()}>
           <Image
             source={require('./../assets/images/hamburger.png')}
             style={styles.rightItem}
@@ -91,7 +90,7 @@ export const DefaultOptionsDrawer = ({
   ),
   headerRight: () => (
     <View>
-      <TouchableOpacity style={styles.hamburger} onPress={() => OpenDrawer && OpenDrawer[0]()}>
+      <TouchableOpacity style={styles.hamburger} onPress={() => SideDrawer?.openDrawer()}>
         <Image
           source={require('./../assets/images/hamburger.png')}
           style={styles.rightItem}

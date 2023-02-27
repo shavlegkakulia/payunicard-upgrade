@@ -29,6 +29,7 @@ import {
   ITranslateState,
   IGlobalState as ITranslateGlobalState,
 } from '../redux/action_types/translate_action_types';
+import { SideDrawer } from './AppStack';
 
 interface ITouchableProps {
   navigation: any;
@@ -38,7 +39,6 @@ interface ITouchableProps {
   iconUrl: ImageSourcePropType;
   activeIconUrl: ImageSourcePropType;
   onActive: (name: string) => void;
-  closDdrower?: () => void;
 }
 
 const SidebarTouchableItem: React.FC<ITouchableProps> = props => {
@@ -53,9 +53,10 @@ const SidebarTouchableItem: React.FC<ITouchableProps> = props => {
       type: NAVIGATION_ACTIONS.SET_CURRENT_ROUTE,
       currentRoute: currentRoute,
     });
-    props?.closDdrower?.();
+    //
+    NavigationService.navigate(props.route);
     navDelayRef.current = setTimeout(() => {
-      NavigationService.navigate(props.route);
+      SideDrawer?.closeDrawer();
     }, 1000);
   };
   let imgUrl: ImageSourcePropType;

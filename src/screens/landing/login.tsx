@@ -73,8 +73,8 @@ const LoginForm: React.FC<IPageProps> = ({loginWithPassword}) => {
   ) as ITranslateState;
   const timeoutObject = useRef<any>(null);
   const keyboardVisible = useRef<EmitterSubscription>();
-  const [username, setUserName] = useState<string | undefined>('Sh.kakulia');
-  const [password, setPassword] = useState('Shalva777*');
+  const [username, setUserName] = useState<string | undefined>('');
+  const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(0);
   const [otp, setOtp] = useState<any>(null);
   const [focused, setFocused] = useState(false);

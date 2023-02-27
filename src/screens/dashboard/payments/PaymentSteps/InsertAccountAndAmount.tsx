@@ -448,7 +448,7 @@ const InsertAccointAndAmount: React.FC = props => {
                   keyboardType="numeric"
                   value={PaymentStore.amount}
                   onChange={amount => {
-                    if(/^(\d)*(\.)?([0-9]{1})?$/gm.test(amount) || !amount)
+                  //  if(/^(\d)*(\.)?([0-9]{1})?$/gm.test(amount) || !amount)
                     onSetAmount(amount)
                   }}
                   context={ValidationContext}

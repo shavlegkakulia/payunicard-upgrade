@@ -31,7 +31,7 @@ const testEnvironmentVariables = {
 export default async() => {
    return await AsyncStorage.getItem('mode').then(res => {
     if(!res) {
-        return devEnvironmentVariables;
+        return prodEnvironmentVariables;
     } else {
         return prodEnvironmentVariables;
     }

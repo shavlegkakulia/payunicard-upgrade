@@ -771,13 +771,13 @@ const mustStartBiometrics = useRef(false);
             <Text>App version:{' '}</Text>
             <Text>{packageJson.version}</Text>
           </View>
-          <View style={{flexDirection: 'row', justifyContent: 'flex-start', marginTop: 20, marginLeft: 16}}>
+          {/* <View style={{flexDirection: 'row', justifyContent: 'flex-start', marginTop: 20, marginLeft: 16}}>
           <AppCheckbox clicked={e => {
             if(e) {
               setMode(true)
             } else setMode(false)
           }} label={'isProduction'} customKey={''} context={''} value={mode} />
-          </View>
+          </View> */}
         </ScrollView>
         <ActionSheetCustom
           scrollable={true}

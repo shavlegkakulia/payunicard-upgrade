@@ -3,20 +3,21 @@ import {BackHandler, Dimensions, View, StyleSheet} from 'react-native';
 import {DrawerLayout} from 'react-native-gesture-handler';
 import colors from '../constants/colors';
 import UnicardView from '../containers/UnicardView';
-import NavigationService from '../services/NavigationService';
 import {tabHeight} from './TabNav';
+
+export let UnicardSideDrawer: DrawerLayout | null = null;
+
 type Props = {
   children: JSX.Element,
 };
 const DashboardLayoutRightDarwer: React.FC<Props> = props => {
-  const sideDraver = useRef<DrawerLayout | null>();
   const screenWidth = Dimensions.get('window').width;
   const isDrawerOpened = useRef<boolean>();
 
   useEffect(() => {
     const sub = BackHandler.addEventListener('hardwareBackPress', () => {
       if (isDrawerOpened.current) {
-        sideDraver.current?.closeDrawer();
+        UnicardSideDrawer?.closeDrawer();
         return true;
       } else {
         return false;
@@ -36,9 +37,7 @@ const DashboardLayoutRightDarwer: React.FC<Props> = props => {
       onDrawerOpen={() => (isDrawerOpened.current = true)}
       onDrawerClose={() => (isDrawerOpened.current = false)}
       ref={drawer => {
-        sideDraver.current = drawer;
-        NavigationService.setDrawerClose(sideDraver.current?.closeDrawer, 1);
-        NavigationService.setDrawerOpen(sideDraver.current?.openDrawer, 1);
+        UnicardSideDrawer = drawer;
       }}
       renderNavigationView={() => <UnicardView />}>
       <View style={styles.container}>{props.children}</View>

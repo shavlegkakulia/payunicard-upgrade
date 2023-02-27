@@ -10,7 +10,13 @@ import {
 import { useSelector } from "react-redux";
 import UserService, { IConsolidated } from "../../../services/UserService";
 import colors from "../../../constants/colors";
-import currencies, { EUR, GBP, GEL, TRY, USD } from "../../../constants/currencies";
+import currencies, {
+  EUR,
+  GBP,
+  GEL,
+  TRY,
+  USD,
+} from "../../../constants/currencies";
 import Routes from "../../../navigation/routes";
 import {
   ITranslateState,
@@ -47,12 +53,13 @@ const ProductsView: React.FC = () => {
         setIsLoading(false);
       },
       error: () => {
-        setIsLoading(false)
-      }
-    })
+        setIsLoading(false);
+      },
+    });
   }, []);
 
-  const ordered = (accs: IConsolidated) => { console.log(accs)
+  const ordered = (accs: IConsolidated) => {
+    console.log(accs);
     const returnArray: { name: string; value: string | number }[] = [];
     const objArray: { name: string; value: string | number }[] = [];
     Object.keys(accs).forEach((key) =>
@@ -187,22 +194,41 @@ const ProductsView: React.FC = () => {
                 </Text>
                 <View style={styles.productCurrencies}>
                   {ordered(product)?.map((el) => (
-                    <Text key={el.name} style={styles.productsViewItemValue}>
-                      {CurrencyConverter(el.value)} {' '}
-                      {CurrencySimbolConverter(
-                        el.name.includes(GEL)
-                          ? currencies.GEL
-                          : el.name.includes(USD)
-                          ? currencies.USD
-                          : el.name.includes(EUR)
-                          ? currencies.EUR
-                          : el.name.includes(GBP)
-                          ? currencies.GBP
-                          : el.name.includes(TRY)
-                          ? currencies.TRY
-                          : currencies.RUR
-                      )}
-                    </Text>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text key={el.name} style={styles.productsViewItemValue}>
+                        {CurrencyConverter(el.value).trim()}
+                      </Text>
+                      <View
+                        style={{
+                          width: 15,
+                          justifyContent: "flex-end",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            textAlign: "right",
+                            fontFamily: "FiraGO-Book",
+                            fontSize: 14,
+                            lineHeight: 17,
+                            color: colors.black,
+                          }}
+                        >
+                          {CurrencySimbolConverter(
+                            el.name.includes(GEL)
+                              ? currencies.GEL
+                              : el.name.includes(USD)
+                              ? currencies.USD
+                              : el.name.includes(EUR)
+                              ? currencies.EUR
+                              : el.name.includes(GBP)
+                              ? currencies.GBP
+                              : el.name.includes(TRY)
+                              ? currencies.TRY
+                              : currencies.RUR
+                          )}
+                        </Text>
+                      </View>
+                    </View>
                   ))}
                   {/* <Text style={styles.productsViewItemValue}>
                   {CurrencyConverter(product.balanceInGEL)}
@@ -282,19 +308,19 @@ const styles = StyleSheet.create({
   },
   productsItemRightInner: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   productCurrencies: {
-    alignItems: 'flex-end'
+    alignItems: "flex-end",
   },
   productsViewItemTitle: {
     fontFamily: "FiraGO-Medium",
     fontSize: 14,
     lineHeight: 17,
     color: colors.labelColor,
-    marginBottom: 3
+    marginBottom: 3,
   },
   productsViewItemValue: {
     fontFamily: "FiraGO-Book",

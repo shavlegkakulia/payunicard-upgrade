@@ -19,6 +19,7 @@ import {Logout} from '../redux/actions/auth_actions';
 import {t} from '../redux/actions/translate_actions';
 import { subscriptionService } from '../services/subscriptionService';
 import BackgroundTimer from 'react-native-background-timer';
+import { UnicardSideDrawer } from '../navigation/DashboardLayoutRightDarwer';
 
 interface IProps {
   timeForInactivity: number;
@@ -55,6 +56,7 @@ class UserInactivity extends PureComponent<IProps, any> {
     if (!value) {
       this.props.logout && this.props.logout();
       subscriptionService.sendData('close_drower', true);
+      UnicardSideDrawer?.closeDrawer();
     }
   };
 
@@ -219,6 +221,7 @@ class UserInactivity extends PureComponent<IProps, any> {
                       onPress={() => {
                         this.props.logout && this.props.logout();
                         subscriptionService.sendData('close_drower', true);
+                        UnicardSideDrawer?.closeDrawer();
                       }}
                     />
                     <AppButton

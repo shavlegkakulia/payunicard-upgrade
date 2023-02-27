@@ -5,12 +5,6 @@ import Routes from '../navigation/routes';
 // import analytics from '@react-native-firebase/analytics';
 
 let _navigator: NavigationContainerRef<ReactNavigation.RootParamList> | undefined = undefined;
-export let OpenDrawer:
-  | ((options?: DrawerMovementOption | undefined) => void)[]
-  | undefined = [() => {}, () => {}];
-export let CloseDrawer:
-  | ((options?: DrawerMovementOption | undefined) => void)[]
-  | undefined = [() => {}, () => {}];
 
 let backHandler = () => {};
 
@@ -22,20 +16,6 @@ let currentRoute: string = Routes.Home;
 
 function setCurrentRoute(routeName: string) {
   currentRoute = routeName;
-}
-
-function setDrawerOpen(
-  ref: ((options?: DrawerMovementOption | undefined) => void) | undefined,
-  index: number,
-) {
-  if (OpenDrawer && ref) OpenDrawer[index] = ref;
-}
-
-function setDrawerClose(
-  ref: ((options?: DrawerMovementOption | undefined) => void) | undefined,
-  index: number,
-) {
-  if (CloseDrawer && ref) CloseDrawer[index] = ref;
 }
 
 function setTopLevelNavigator(navigatorRef: NavigationContainerRef<ReactNavigation.RootParamList>) {
@@ -105,8 +85,6 @@ export default {
   _navigator,
   navigate,
   setTopLevelNavigator,
-  setDrawerOpen,
-  setDrawerClose,
   setCurrentRoute,
   currentRoute,
   dispatch,

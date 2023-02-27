@@ -2,13 +2,13 @@ import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import {useSelector} from 'react-redux';
+import { UnicardSideDrawer } from '../../../navigation/DashboardLayoutRightDarwer';
 import colors from '../../../constants/colors';
 import { unicardLogoAction } from '../../../constants/svgXmls';
 import {
   ITranslateState,
   IGlobalState as ITranslateGlobalState,
 } from '../../../redux/action_types/translate_action_types';
-import {OpenDrawer} from '../../../services/NavigationService';
 import screenStyles from '../../../styles/screens';
 
 const UnicardAction: React.FC = () => {
@@ -17,7 +17,7 @@ const UnicardAction: React.FC = () => {
   ) as ITranslateState;
 
   const openUnicardSidebar = () => {
-    OpenDrawer && OpenDrawer[1]();
+    UnicardSideDrawer?.openDrawer();
   };
 
   return (
