@@ -245,7 +245,7 @@ const PayAll: React.FC<INavigationProps> = props => {
       if (isNaN(parseInt(newDebt))) {
         _templates[templateIndex].debt = undefined;
       } else {
-        _templates[templateIndex].debt = parseInt(newDebt);
+        _templates[templateIndex].debt = parseFloat(newDebt);
         setTemplates([..._templates]);
       }
     }

@@ -234,7 +234,7 @@ const TransferConvertation: React.FC<INavigationProps> = props => {
       ccy: TransfersStore.selectedFromCurrency?.key,
       buyCcy: TransfersStore.selectedToCurrency?.key,
       fromBaseAmount: fromBaseAmount,
-      amountFROM: isNaN(parseInt(_amount)) ? 0 : parseInt(_amount),
+      amountFROM: isNaN(parseInt(_amount)) ? 0 : parseFloat(_amount),
     };
 
     calculationTimeoutRef.current = setTimeout(() => {
