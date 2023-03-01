@@ -84,6 +84,7 @@ interface IInputeProps {
   autoFocus?: boolean;
   editable?: boolean;
   maxLength?: number;
+  selectTextOnFocus?: boolean;
 }
 
 interface IPwdValidationProps {
@@ -263,6 +264,7 @@ const AppInput = React.forwardRef(
               placeholderTextColor={colors.placeholderColor}
               editable={props.editable}
               maxLength={props.maxLength || 1000}
+              selectTextOnFocus={props.selectTextOnFocus}
             />
             {props.secureTextEntry && (
               <TouchableOpacity

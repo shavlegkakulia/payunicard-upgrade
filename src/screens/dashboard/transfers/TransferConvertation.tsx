@@ -261,8 +261,8 @@ const TransferConvertation: React.FC<INavigationProps> = props => {
               return;
             }
 
-            if (fromBaseAmount) setAmountTo(ammount?.toFixed(2).toString());
-            else setAmount(getNumber(ammount?.toFixed(2)).toString());
+            if (fromBaseAmount) setAmountTo(ammount?.toString());
+            else setAmount(ammount?.toString() || '0');
           }
         },
         complete: () => {
@@ -507,6 +507,13 @@ const TransferConvertation: React.FC<INavigationProps> = props => {
       makeTransaction();
     }
   };
+  const formtNumberForDigit = (num?: string) => {
+    const pointIndex = num?.indexOf('.');
+    if(pointIndex && pointIndex >= 0) {
+      return num?.substring(0, pointIndex + 5);
+    }
+    return num;
+  }
   const translate = useSelector<ITranslateGlobalState>(
     state => state.TranslateReduser,
   ) as ITranslateState;
@@ -706,6 +713,7 @@ const TransferConvertation: React.FC<INavigationProps> = props => {
                       keyboardType="numeric"
                       style={amountErrorStyle}
                       onChange={updateAmountFrom}
+                      selectTextOnFocus={true}
                     />
                   </View>
 
@@ -719,6 +727,7 @@ const TransferConvertation: React.FC<INavigationProps> = props => {
                       keyboardType="numeric"
                       style={amountToErrorStyle}
                       onChange={updateAmountTo}
+                      selectTextOnFocus={true}
                     />
                   </View>
                 </View>
@@ -726,7 +735,9 @@ const TransferConvertation: React.FC<INavigationProps> = props => {
                 <View style={{marginTop: 20}}>
                   <Text>
                   {translate.t('transfer.currencyRate')} : 1{CurrencySimbolConverter(baseCcyFrom, translate.key)} ={' '}
-                    {currencyRate?.toFixed(2)}
+                    {/* {currencyRate?.toString()} */}
+                    {formtNumberForDigit(currencyRate?.toString())}
+                    {/* {currencyRate?.toString()?.match(/^-?\d+(?:\.\d{0,2})?/)?.[0]} */}
                     {CurrencySimbolConverter(baseCcyTo, translate.key)}
                   </Text>
                 </View>

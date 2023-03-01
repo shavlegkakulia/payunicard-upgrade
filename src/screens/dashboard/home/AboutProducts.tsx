@@ -59,7 +59,6 @@ const ProductsView: React.FC = () => {
   }, []);
 
   const ordered = (accs: IConsolidated) => {
-    console.log(accs);
     const returnArray: { name: string; value: string | number }[] = [];
     const objArray: { name: string; value: string | number }[] = [];
     Object.keys(accs).forEach((key) =>
