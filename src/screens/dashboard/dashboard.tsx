@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { ScrollView, View, RefreshControl, Platform, Modal, Image, Text, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView } from 'react-native';
+import { ScrollView, View, RefreshControl, Platform, Modal, Image, Text, StyleSheet, Dimensions, TouchableOpacity, SafeAreaView, NativeModules, Button } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import colors from '../../constants/colors';
@@ -58,7 +58,7 @@ const Dashboard: React.FC<IProps> = props => {
   const [refreshing, setRefreshing] = useState(false);
   const [hasWalletCards, setHasWalletCards] = useState<boolean>(false);
 
-
+  const { HelloGPay } = NativeModules; // this is the same name we returned 
 
   const userData = useSelector<IUserGlobalState>(
     state => state.UserReducer,
@@ -251,7 +251,15 @@ const Dashboard: React.FC<IProps> = props => {
     }
 
   }, [userData.userAccounts])
-
+  const Change = () => {
+    HelloGPay.sayHello("Aman", (err: any, msg: any) => {
+     if (err) {
+      console.log(err);
+      return;
+     }
+    console.log(msg)
+   })
+ }
   return (
     <DashboardLayout>
      <>
@@ -264,6 +272,7 @@ const Dashboard: React.FC<IProps> = props => {
             onRefresh={onRefresh}
           />
         }>
+          <Button title='native' onPress={() => Change()} />
         <View style={screenStyles.wraperWithShadow}>
           <AccountStatusView onStartVerification={start_verification} />
         </View>

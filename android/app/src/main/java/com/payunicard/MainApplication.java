@@ -2,7 +2,7 @@ package com.payunicard;
 
 import android.app.Application;
 import android.content.Context;
-
+import com.payunicard.GPayPackage;
 import androidx.appcompat.app.AppCompatDelegate;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
@@ -31,7 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
-           //packages.add(new RNFetchBlobPackage());
+          packages.add(new GPayPackage());
           return packages;
         }
 
