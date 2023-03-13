@@ -58,8 +58,8 @@ const Dashboard: React.FC<IProps> = props => {
   const [refreshing, setRefreshing] = useState(false);
   const [hasWalletCards, setHasWalletCards] = useState<boolean>(false);
 
-  const { HelloGPay } = NativeModules; // this is the same name we returned 
-
+  const { GPayModule } = NativeModules; // this is the same name we returned 
+console.log(NativeModules)
   const userData = useSelector<IUserGlobalState>(
     state => state.UserReducer,
   ) as IUserState;
@@ -252,13 +252,7 @@ const Dashboard: React.FC<IProps> = props => {
 
   }, [userData.userAccounts])
   const Change = () => {
-    HelloGPay.sayHello("Aman", (err: any, msg: any) => {
-     if (err) {
-      console.log(err);
-      return;
-     }
-    console.log(msg)
-   })
+    GPayModule.handleAddToGooglePayClick();
  }
   return (
     <DashboardLayout>
