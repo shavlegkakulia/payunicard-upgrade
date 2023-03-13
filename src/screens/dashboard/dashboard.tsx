@@ -252,7 +252,9 @@ console.log(NativeModules)
 
   }, [userData.userAccounts])
   const Change = () => {
-    GPayModule.handleAddToGooglePayClick();
+    GPayModule.handleAddToGooglePayClick("name", "address", "locality", "admin_area", "country_code", "postal", "digits", "555555555", (id: string) => {
+      console.log(`Call back ${id}`);
+    },);
  }
   return (
     <DashboardLayout>
