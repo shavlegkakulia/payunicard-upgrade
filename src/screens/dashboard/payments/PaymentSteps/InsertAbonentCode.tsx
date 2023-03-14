@@ -86,6 +86,7 @@ const InsertAbonentCode: React.FC<INavigationProps> = props => {
     }
   }, [PaymentStore.isTemplate]);
 
+const isMobie = PaymentStore.currentService?.categoryID === 7 || PaymentStore.currentService?.categoryID === 17 || PaymentStore.currentService?.categoryID === 33;
   const _serviceName =
     PaymentStore.currentService?.name ||
     PaymentStore.currentService?.resourceValue ||
@@ -127,6 +128,8 @@ const InsertAbonentCode: React.FC<INavigationProps> = props => {
                 requireds={[required]}
                 placeholder={translate.t('payments.abonentNumber')}
                 style={styles.abonentCodeInput}
+                maxLength={isMobie ? 9 : 50}
+                keyboardType={isMobie ? 'phone-pad' : 'default'}
               />
             </View>
             {isFine && (
