@@ -115,7 +115,7 @@ export default {
         newPasswordTitle: 'ჩაწერეთ ახალი პაროლი',
         newPassword: 'ახალი პაროლი',
         PasswordDoesNotMatch: 'Პაროლი არ ემთხვევა',
-        confirmPassword: 'დაადასტურეთ ახალი პაროლი'
+        confirmPassword: 'დაადასტურეთ პაროლი'
     },
     tabNavigation: {
         home: "მთავარი",
