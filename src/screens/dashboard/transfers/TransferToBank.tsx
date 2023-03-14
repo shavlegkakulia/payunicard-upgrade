@@ -728,6 +728,7 @@ const TransferToBank: React.FC<INavigationProps> = props => {
                 : translate.t('common.next')
             }
             style={styles.handleButton}
+            disabled={(route.params.transferStep === Routes.Internatinal_set_otp && (!otp || otp?.length < 4))}
           />
         </View>
       </KeyboardAvoidingView>

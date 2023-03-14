@@ -1083,6 +1083,7 @@ return () => {
                 ? translate.t('common.close')
                 : translate.t('common.next')
             }
+            disabled={(route.params.transferStep === Routes.Internatinal_set_otp && (!otp || otp?.length < 4))}
             style={styles.handleButton}
           />
         </View>
