@@ -565,6 +565,7 @@ const TransferConvertation: React.FC<INavigationProps> = props => {
                     accountVisible={fromAccountVisible}
                     onSelect={account => onFromAccountSelect(account)}
                     onToggle={() => setFromAccountVisible(!fromAccountVisible)}
+                    notSelectable={TransfersStore.selectedToAccount}
                   />
                 </View>
 
@@ -598,6 +599,7 @@ const TransferConvertation: React.FC<INavigationProps> = props => {
                     accountVisible={toAccountVisible}
                     onSelect={account => onToAccountSelect(account)}
                     onToggle={() => setToAccountVisible(!toAccountVisible)}
+                    notSelectable={TransfersStore.selectedFromAccount}
                   />
                 </View>
               </View>
