@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
   },
   modalText: {
     fontFamily: 'FiraGO-Book',
-    fontSize: 16,
+    fontSize: 15,
     lineHeight: 19,
     color: colors.labelColor,
     textAlign: 'center',
@@ -294,20 +294,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   modalButton: {
-    flex: 5,
-    paddingVertical: 7,
-    maxHeight: 38,
+    flex: 1,
+    height: 38,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   buttonOne: {
-    marginRight: 10,
+    marginRight: 8,
   },
   buttonTwo: {
-    marginLeft: 10,
+    marginLeft: 8,
   },
   buttonText: {
     fontFamily: 'FiraGO-Book',
-    fontSize: 14,
-    lineHeight: 19,
+    fontSize: 12,
+    lineHeight: 15,
   },
 });
 

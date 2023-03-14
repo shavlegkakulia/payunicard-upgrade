@@ -193,7 +193,7 @@ const ProductsView: React.FC = () => {
                 </Text>
                 <View style={styles.productCurrencies}>
                   {ordered(product)?.map((el) => (
-                    <View style={{ flexDirection: "row" }}>
+                    <View style={{ flexDirection: "row" }} key={`currency${el.name}${index}`}>
                       <Text key={el.name} style={styles.productsViewItemValue}>
                         {CurrencyConverter(el.value).trim()}
                       </Text>
