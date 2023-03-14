@@ -470,6 +470,7 @@ const Transactions: React.FC = () => {
   };
 
   const downloadPdfFromPath = async (path: string, callback: () => void) => {
+    const android = RNFetchBlob.android
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
     ).then(() => {
@@ -510,8 +511,12 @@ const Transactions: React.FC = () => {
               configfb.addAndroidDownloads.path,
               res.data,
               'base64',
-            );
-            RNFetchBlob.ios.previewDocument(configfb.addAndroidDownloads.path);
+            ).then(() => {
+              RNFetchBlob.ios.previewDocument(configfb.addAndroidDownloads.path);
+            })
+            
+          } else {
+            android.actionViewIntent(res.path(), 'application/pdf')
           }
         }).finally(() => callback()).catch(() => callback());
     }).catch(() => {

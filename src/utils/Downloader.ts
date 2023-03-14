@@ -2,6 +2,7 @@ import { PermissionsAndroid, Platform } from "react-native";
 import RNFetchBlob from "rn-fetch-blob";
 
 const downloadPdfFromPath = async ({path, fileName, returnValue}: {path: string, fileName?: string, returnValue?: (vlue: boolean) => void}) => {
+  const android = RNFetchBlob.android
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
     ).then(() => {
@@ -44,8 +45,12 @@ const downloadPdfFromPath = async ({path, fileName, returnValue}: {path: string,
               configfb.addAndroidDownloads.path,
               res.data,
               "base64"
-            );
-            RNFetchBlob.ios.previewDocument(configfb.addAndroidDownloads.path);
+            ).then(() => {
+              RNFetchBlob.ios.previewDocument(configfb.addAndroidDownloads.path);
+            })
+            
+          } else {
+            android.actionViewIntent(res.path(), 'application/pdf')
           }
           returnValue?.(true);
         }).catch(() => returnValue?.(false));

@@ -1,7 +1,7 @@
 
 import {StackNavigationOptions} from '@react-navigation/stack';
 import React from 'react';
-import {Image, View, TouchableOpacity, StyleSheet, Text, Platform} from 'react-native';
+import {Image, View, TouchableOpacity, StyleSheet, Text, Platform, Dimensions} from 'react-native';
 
 import colors from '../constants/colors';
 import {headerHeight} from '../constants/defaults';
@@ -190,9 +190,10 @@ const styles = StyleSheet.create({
   back: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     marginRight: 20,
-    paddingVertical: 5,
+    minWidth: 45,
+    alignSelf: 'center'
   },
   backImg: {
     marginRight: 12,
@@ -209,7 +210,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: colors.black,
     fontSize: 14,
-    maxWidth: '100%',
+    lineHeight: 17,
+    maxWidth: Dimensions.get('screen').width - 150,
   },
   rightTitle: {
     fontFamily: 'FiraGO-Bold',

@@ -611,6 +611,7 @@ const TransactionDetailView: React.FC<IPageProps> = props => {
   const [isPdfDownloading, setIsPdfDownloading] = useState<boolean>(false);
 
   const downloadPdfFromPath = async (path: string, callback: () => void) => {
+    const android = RNFetchBlob.android
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
     ).then(() => {
@@ -651,8 +652,12 @@ const TransactionDetailView: React.FC<IPageProps> = props => {
               configfb.addAndroidDownloads.path,
               res.data,
               'base64',
-            );
-            RNFetchBlob.ios.previewDocument(configfb.addAndroidDownloads.path);
+            ).then(() => {
+              RNFetchBlob.ios.previewDocument(configfb.addAndroidDownloads.path);
+            });
+   
+          } else {
+            android.actionViewIntent(res.path(), 'application/pdf')
           }
         }).finally(() => callback()).catch(() => callback());
     }).catch(() => {
