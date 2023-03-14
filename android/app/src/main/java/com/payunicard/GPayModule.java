@@ -53,39 +53,41 @@ public class GPayModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void handleAddToGooglePayClick(String name, String address1, String locality, String administrative_area,
             String country_code, String postal_code, String last_digits, String phone_number, Callback callBack) {
+        String payload = "{'foo' : 'bar'}";
+        String encodedPayload = Base64.getEncoder().withoutPadding().encodeToString(payload.getBytes());
+        byte[] opc = encodedPayload.getBytes();
 
-      //  OPCHelper opcHelper = new OPCHelper(activity);
-      //  if (opcHelper.isOPCSet()) {
-            String payload = "{'foo' : 'bar'}";
-            String encodedPayload = Base64.getEncoder().withoutPadding().encodeToString(payload.getBytes());
-            byte[] opc = encodedPayload.getBytes();
+        UserAddress userAddress = UserAddress.newBuilder()
+                .setName(name)
+                .setAddress1(address1)
+                .setLocality(locality)
+                .setAdministrativeArea(administrative_area)
+                .setCountryCode(country_code)
+                .setPostalCode(postal_code)
+                .setPhoneNumber(phone_number)
+                .build();
 
-            UserAddress userAddress = UserAddress.newBuilder()
-                    .setName(name)
-                    .setAddress1(address1)
-                    .setLocality(locality)
-                    .setAdministrativeArea(administrative_area)
-                    .setCountryCode(country_code)
-                    .setPostalCode(postal_code)
-                    .setPhoneNumber(phone_number)
-                    .build();
+        PushTokenizeRequest pushTokenizeRequest = new PushTokenizeRequest.Builder()
+                .setOpaquePaymentCard(opc)
+                .setNetwork(TapAndPay.CARD_NETWORK_VISA)
+                .setTokenServiceProvider(TapAndPay.TOKEN_PROVIDER_VISA)
+                .setDisplayName(name)
+                .setLastDigits(last_digits)
+                .setUserAddress(userAddress)
+                .build();
 
-            PushTokenizeRequest pushTokenizeRequest = new PushTokenizeRequest.Builder()
-                    .setOpaquePaymentCard(opc)
-                    .setNetwork(TapAndPay.CARD_NETWORK_VISA)
-                    .setTokenServiceProvider(TapAndPay.TOKEN_PROVIDER_VISA)
-                    .setDisplayName(name)
-                    .setLastDigits(last_digits)
-                    .setUserAddress(userAddress)
-                    .build();
-
-            callBack.invoke(last_digits);
+        try {
             tapAndPayClient.pushTokenize(activity, pushTokenizeRequest, REQUEST_CODE_PUSH_TOKENIZE);
-      //  }
+        } catch (Exception e) {
+            callBack.invoke(e.getMessage());
+        }
+
+        callBack.invoke(last_digits);
     }
 
-    // @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_PUSH_TOKENIZE) {
             if (resultCode == RESULT_CANCELED) {
                 // TODO: Handle provisioning failure here.
@@ -99,4 +101,5 @@ public class GPayModule extends ReactContextBaseJavaModule {
         // TODO: Handle results for other request codes.
         // ...
     }
+
 }
