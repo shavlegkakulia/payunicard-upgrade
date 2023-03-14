@@ -103,7 +103,7 @@ export default {
         tvInternet: 'ტელევიზია და ინტერნეტი',
         telephone: 'ტელეფონი',
         mobile: 'მობილური კავშირი',
-        parking:' პარკირება და ჯარიმები',
+        parking:'პარკირება და ჯარიმები',
         gambling: 'აზარტული თამაშები'
     },
     password: {

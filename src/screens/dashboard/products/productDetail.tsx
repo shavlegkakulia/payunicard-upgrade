@@ -1484,7 +1484,7 @@ const ProductDetail: React.FC = props => {
                 <Text style={styles.transfersSectionContainerTitle}>
                   {translate.t('products.manageCard')}
                 </Text>
-                <PaginationDots step={cardSectionStep} length={2} />
+                {userAccount?.type !== PACKET_TYPE_IDS.wallet && <PaginationDots step={cardSectionStep} length={2} />}
               </View>
             </>
           )}
@@ -1573,7 +1573,7 @@ const ProductDetail: React.FC = props => {
                       />
                     </View>
                     <View style={styles.sectionContainerItemDetails}>
-                      {breackWords(translate.t('plusSign.topUp'))}
+                      {breackWords(translate.t('plusSign.topUp').replace(' ', ''))}
                     </View>
                   </TouchableOpacity>
                 </View>
