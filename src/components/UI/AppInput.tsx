@@ -330,6 +330,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingLeft: 10
   },
   eye: {
     width: 22,

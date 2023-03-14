@@ -127,7 +127,7 @@ const InsertAccointAndAmount: React.FC = props => {
     ) {
       dispatch(
         PUSH(
-          `${translate.t('common.maxPayAmount')} ${
+          `${translate.t('common.maxPayfAmount')} ${
             PaymentStore.paymentDetails?.maxAmount
           }${CurrencySimbolConverter(GEL, translate.key)}`,
         ),
@@ -456,6 +456,7 @@ const InsertAccointAndAmount: React.FC = props => {
                   customKey="amount"
                   requireds={[required, hasNumeric]}
                   style={styles.amountInput}
+                  selectTextOnFocus={true}
                 />
               </View>
 
