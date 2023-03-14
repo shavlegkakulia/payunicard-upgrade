@@ -152,7 +152,7 @@ export default {
     onboard: {
         firstScreenDesc: 'გახსენი საფულე დისტანციურად',
         secondScreenDesc: 'მიიღე უფასო არასაბანკო VISA/MASTERCARD ბარათი',
-        thirdScreenDesc: 'კომუნალურები, სესხები, კონვერტაცია, გზავნილები',
+        thirdScreenDesc: 'კომუნალურები, კონვერტაცია, გზავნილები',
         fourthScreenDesc: 'დაგროვების და ფასდაკლების ბარათები ერთ აპლიკაციაში',
         wallet: 'დაამატე ფეიუნიქარდის Visa ბარათები Apple Wallet-ში'
     },

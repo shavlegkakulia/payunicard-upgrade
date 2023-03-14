@@ -93,7 +93,7 @@ const FirstLoad: React.FC<IPageProps> = props => {
       {
         desc: {
           en: 'Utilities, loans, conversion, remittances',
-          ka: 'კომუნალურები, სესხები, კონვერტაცია, გზავნილები',
+          ka: 'კომუნალურები, კონვერტაცია, გზავნილები',
           //translate.t('onboard.thirdScreenDesc')
         },
         imgUrl: require('../../assets/images/load_screen_3.png'),
